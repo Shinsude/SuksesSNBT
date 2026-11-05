@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pertemuan 8 — Pola Huruf & Angka | SNBT Learning Center</title>
+  <meta name="description" content="Belajar deret angka dan deret huruf untuk UTBK-SNBT: cara mencari selisih, pola ganda, dan posisi abjad." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/materi.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="brand">
+        <span class="brand__logo">SN</span>
+        <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html#subtes">Subtes</a>
+        <a href="../index.html#fitur">Fitur</a>
+        <a href="../materi.html">Materi</a>
+        <a href="../index.html#cta">Mulai Belajar</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="materi-main">
+    <a href="penalaran-umum.html" class="head-link-back">← Daftar Pertemuan Penalaran Umum</a>
+    <div style="margin-top:16px;">
+      <span class="materi-badge">Penalaran Umum · Pertemuan 8</span>
+      <h1 class="materi-title">Pola Huruf &amp; Angka</h1>
+      <p class="materi-lead">Deret terlihat menakutkan, tapi semua soal deret bisa dipecahkan dengan satu senjata: menghitung selisih antar angka/huruf.</p>
+    </div>
+
+    <!-- Penjelasan -->
+    <section class="materi-section">
+      <h2><span class="emoji">📘</span> Penjelasan Materi</h2>
+
+      <p><strong>Rahasia utama:</strong> setiap deret punya aturan yang berulang. Yang kamu lakukan cuma menemukan aturannya. Alat utamanya: <strong>tulis selisih (jarak) antar elemen yang bersebelahan</strong>, lalu lihat — selisihnya sendiri membentuk pola.</p>
+
+      <p><strong>Pola deret angka yang paling sering keluar:</strong></p>
+
+      <table class="materi-table">
+        <thead>
+          <tr><th>Pola</th><th>Contoh</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Selisih tetap</td><td>3, 7, 11, 15 (masing-masing +4)</td></tr>
+          <tr><td>Selisih bertambah teratur</td><td>2, 3, 5, 8, 12 (+1, +2, +3, +4 …)</td></tr>
+          <tr><td>Selisih dikali 2</td><td>1, 2, 4, 8, 16 (×2)</td></tr>
+          <tr><td>Jumlah dua sebelumnya</td><td>3, 5, 8, 13 (5+8=13 — ala Fibonacci)</td></tr>
+          <tr><td>Lompat satu elemen</td><td>2, 9, 4, 13, 6, 17 (naik ganda sekaligus: ganjil &amp; genap)</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>Untuk deret huruf, anggap tertulis di atas huruf:</strong> A = 1, B = 2, C = 3 … Z = 26. Lalu perhatikan hurufnya: selisih posisi antar huruf biasanya harus +2, lalu +3, lalu +4 — atau tetap. Ibu : huruf pertambahannya sendiri pun bisa membentuk pola.</p>
+
+      <div class="box">
+        <p style="margin:0;"><strong>Langkah menghadapi soal deret:</strong> (1) tulis ulang deretnya renggang; (2) hitung selisih antar elemen; (3) jika tak terlihat, hitung selisih dari selisihnya (kusebut <em>deret dan deret</em>); (4) terapkan aturan yang ketemu untuk elemen terakhir.</p>
+      </div>
+
+      <p><strong>Waspadai jebakan:</strong> beberapa deret bercampur dua aturan (dua sub-deret yang selang-seling). Kalau selisih lurus tak ketemu, coba pisahkan elemen nomor ganjil dan genap.</p>
+    </section>
+
+    <!-- Contoh Soal -->
+    <section class="materi-section">
+      <h2><span class="emoji">✍️</span> Contoh Soal &amp; Pembahasan</h2>
+
+      <div class="box box--soal">
+        <span class="box__label">📝 Soal</span>
+        <p>Perhatikan deret: <em>3, 4, 7, 11, 18, 29, …</em></p>
+        <p>Angka berapa yang tepat menggantikan titik-titik?</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> 41</li>
+          <li><span class="opt">B.</span> 45</li>
+          <li class="is-correct"><span class="opt">C.</span> 47</li>
+          <li><span class="opt">D.</span> 49</li>
+        </ul>
+      </div>
+
+      <div class="box box--pembahasan">
+        <span class="box__label">💡 Pembahasan</span>
+        <ol class="steps">
+          <li><strong>Hitung selisih antar angka:</strong> 4−3=1, 7−4=3, 11−7=4, 18−11=7, 29−18=11.</li>
+          <li><strong>Kerjakan deretan selisihnya:</strong> 1, 3, 4, 7, 11 — makin dua angka bersebelahan saling dijumlahkan! (1+3=4; 3+4=7; 4+7=11.)</li>
+          <li>Itu sama artinya dengan: setiap anggota = <strong>jumlah dua anggota sebelumnya</strong>. Cek: 11 + 18 = 29 ✓.</li>
+          <li><strong>Terapkan ke elemen berikutnya:</strong> 18 + 29 = <strong>47</strong>.</li>
+          <li><strong>Kenapa D menggoda?</strong> 29 + 11? bukan pasangan berpegangan — pasangan terakhir yang benar adalah 18 &amp; 29. Selalu ambil <em>dua elemen terakhir</em>.</li>
+          <li><strong>Kenapa B dan A salah?</strong> hasil menebak selisih lurus (+16, ala deret biasa) — padahal selisihnya sendiri sudah membentuk pola berbeda.</li>
+        </ol>
+        <span class="answer">Jawaban: C</span><br />
+        <span class="admin-principle">⚠️ Prinsip: kalau selisih lurus tidak ketemu, periksa selisihnya lagi — biasanya itu deret keduanya.</span>
+      </div>
+    </section>
+
+    <!-- Latihan Mandiri -->
+    <section class="materi-section">
+      <h2><span class="emoji">🏋️</span> Latihan Mandiri</h2>
+
+      <div class="box box--latihan">
+        <span class="box__label">🎯 Soal Latihan</span>
+        <p>Perhatikan deret huruf: <em>B, D, G, K, P, …</em></p>
+        <p>Huruf yang tepat menggantikan titik-titik adalah …</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> U</li>
+          <li class="is-correct"><span class="opt">B.</span> V</li>
+          <li><span class="opt">C.</span> W</li>
+          <li><span class="opt">D.</span> X</li>
+        </ul>
+
+        <div class="box box--pembahasan" style="margin-top:14px;">
+          <span class="box__label">🔑 Pembahasan Singkat</span>
+          <ol class="steps">
+            <li>Ubah ke angka posisi: B=2, D=4, G=7, K=11, P=16.</li>
+            <li>Selisih: 4−2=<strong>+2</strong>, 7−4=<strong>+3</strong>, 11−7=<strong>+4</strong>, 16−11=<strong>+5</strong>.</li>
+            <li>Selisihnya bertambah satu-satu, jadi langkah berikutnya <strong>+6</strong>: posisi 16 + 6 = 22.</li>
+            <li>Huruf ke-22 adalah <strong>V</strong> (X itu ke-24 — jangan terkecoh!).</li>
+          </ol>
+          <span class="answer">Jawaban: B</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rangkuman -->
+    <section class="materi-section">
+      <h2><span class="emoji">📌</span> Rangkuman</h2>
+      <div class="box box--rangkuman">
+        <span class="box__label">🎯 Setelah pertemuan ini, kamu harus bisa:</span>
+        <ul class="check-list">
+          <li>Menghitung selisih antar elemen sebagai langkah pertama menyebaskan deret.</li>
+          <li>Mengenali pola umum: selisih tetap, selisih bertambah, selisih dikali 2, jumlah dua sebelumnya.</li>
+          <li>Mengubah huruf menjadi posisi angka (A=1 … Z=26) dan menghitung selisihnya.</li>
+          <li>Mencoba memisahkan deret menjadi dua sub-deret kalau selisih lurus tidak ketemu.</li>
+          <li>Menolak jebakan opsi yang posisinya terdekat tapi tidak tepat (V vs X).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigasi -->
+    <nav class="materi-nav">
+      <a href="pu-pertemuan-7.html" class="btn btn--ghost">← Pertemuan 7</a>
+      <a href="penalaran-umum.html" class="btn btn--primary">Lihat Daftar Pertemuan →</a>
+      <span class="materi-nav-hint">Materi pertemuan 1–8 selesai! Berikutnya: Mini Tryout 15 soal (sedang disiapkan).</span>
+    </nav>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="brand">
+          <span class="brand__logo">SN</span>
+          <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+        </span>
+        <p>Persiapan UTBK-SNBT dari nol, lengkap, dan gratis untuk semua siswa Indonesia.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Subtes</h4>
+        <a href="pu-pertemuan-1.html">Pertemuan 1 — Dasar Logika</a>
+        <a href="pu-pertemuan-2.html">Pertemuan 2 — Logika Pernyataan</a>
+        <a href="pu-pertemuan-3.html">Pertemuan 3 — Analisis Argumen</a>
+        <a href="pu-pertemuan-4.html">Pertemuan 4 — Kesimpulan Tegas</a>
+        <a href="pu-pertemuan-5.html">Pertemuan 5 — Pola Hubungan</a>
+        <a href="pu-pertemuan-6.html">Pertemuan 6 — Silogisme Berantai</a>
+        <a href="pu-pertemuan-7.html">Pertemuan 7 — Penalaran Kuantitatif</a>
+        <a href="pu-pertemuan-8.html">Pertemuan 8 — Pola Huruf &amp; Angka</a>
+      </div>
+      <div class="footer__col">
+        <h4>Halaman</h4>
+        <a href="../index.html">Beranda</a>
+        <a href="../materi.html">Semua Subtes</a>
+        <a href="penalaran-umum.html">Daftar Pertemuan</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2026 SNBT Learning Center · Dibuat dengan ❤️ untuk para pejuang PTN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

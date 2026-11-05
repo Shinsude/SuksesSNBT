@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pertemuan 6 — Syllogisme Tingkat Lanjut | SNBT Learning Center</title>
+  <meta name="description" content="Belajar silogisme berantai dan diagram Venn untuk UTBK-SNBT: merangkai premis dan menolak kesimpulan terbalik." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/materi.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="brand">
+        <span class="brand__logo">SN</span>
+        <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html#subtes">Subtes</a>
+        <a href="../index.html#fitur">Fitur</a>
+        <a href="../materi.html">Materi</a>
+        <a href="../index.html#cta">Mulai Belajar</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="materi-main">
+    <a href="penalaran-umum.html" class="head-link-back">← Daftar Pertemuan Penalaran Umum</a>
+    <div style="margin-top:16px;">
+      <span class="materi-badge">Penalaran Umum · Pertemuan 6</span>
+      <h1 class="materi-title">Syllogisme Tingkat Lanjut</h1>
+      <p class="materi-lead">Sekarang premisnya bukan dua lagi, tapi tiga atau lebih. Triknya: rangkai seperti rantai — dan jangan pernah membalik arah rantainya.</p>
+    </div>
+
+    <!-- Penjelasan -->
+    <section class="materi-section">
+      <h2><span class="emoji">📘</span> Penjelasan Materi</h2>
+
+      <p><strong>Silogisme berantai</strong> adalah beberapa premis yang saling nyambung lewat kata tengahnya. Caranya seperti menyambung rel kereta:</p>
+
+      <div class="box box--soal">
+        <span class="box__label">🧪 Ilustrasi</span>
+        <div class="flow">
+          <span class="flow__step">Semua A = B</span>
+          <span class="flow__arrow">→</span>
+          <span class="flow__step">Semua B = C</span>
+          <span class="flow__arrow">→</span>
+          <span class="flow__step flow__step--result">Kesimpulan: Semua A = C</span>
+        </div>
+        <p style="margin:10px 0 0;">Contoh: &ldquo;Semua kucing adalah mamalia&rdquo; + &ldquo;Semua mamalia menyusui&rdquo; → &ldquo;Semua kucing menyusui&rdquo;. Kata tengah (<em>mamalia</em>) nyambungin dua premis, lalu diambil ujungnya.</p>
+      </div>
+
+      <p><strong>Aturan penting saat rerangkai premisnya:</strong></p>
+
+      <div class="box">
+        <p style="margin-bottom:8px;">1. <strong>Ujung rantai yang sah:</strong> dari &ldquo;A = B&rdquo; dan &ldquo;B = C&rdquo; berlaku &ldquo;Semua A = C&rdquo; <em>dan</em> &ldquo;Sebagian C = A&rdquo; (karena A kan bagian dari C).</p>
+        <p style="margin-bottom:8px;">2. <strong>Dilarang membalik &ldquo;semua&rdquo;:</strong> dari &ldquo;semua A = C&rdquo; TIDAK bisa disimpulkan &ldquo;semua C = A&rdquo;. C bisa jadi jauh lebih besar.</p>
+        <p style="margin:0;">3. <strong>&ldquo;Beberapa&rdquo; tidak bisa jadi kata penghubung:</strong> kalau premisnya &ldquo;beberapa B = C&rdquo;, rantai ke A terputus — kita tak tahu bagian B yang mana yang nyambung.</p>
+      </div>
+
+      <p><strong>Diagram Venn</strong> membantu kamu membayangkan: gambar lingkaran besar (C), di dalamnya lingkaran sedang (B), di dalamnya lagi lingkaran kecil (A). Apa pun yang memakai A pasti otomatis berada di dalam C.</p>
+    </section>
+
+    <!-- Contoh Soal -->
+    <section class="materi-section">
+      <h2><span class="emoji">✍️</span> Contoh Soal &amp; Pembahasan</h2>
+
+      <div class="box box--soal">
+        <span class="box__label">📝 Soal</span>
+        <p>Pernyataan berikut benar:</p>
+        <p>(1) <em>Semua kimia adalah ilmu eksak.</em> (2) <em>Semua ilmu eksak memakai perhitungan.</em></p>
+        <p>Kesimpulan yang SAH adalah …</p>
+        <ul class="options">
+          <li class="is-correct"><span class="opt">A.</span> Semua ilmu kimia memakai perhitungan</li>
+          <li><span class="opt">B.</span> Semua yang memakai perhitungan adalah ilmu kimia</li>
+          <li><span class="opt">C.</span> Tidak ada ilmu eksak yang memakai perhitungan</li>
+          <li><span class="opt">D.</span> Semua ilmu yang memakai perhitungan adalah ilmu eksak</li>
+        </ul>
+      </div>
+
+      <div class="box box--pembahasan">
+        <span class="box__label">💡 Pembahasan</span>
+        <ol class="steps">
+          <li><strong>Rangkai dulu:</strong> kimia → ilmu eksak → memakai perhitungan. Maka seungguhnya sah: <em>semua kimia memakai perhitungan</em>. Itu pilihan A.</li>
+          <li><strong>Kenapa B salah?</strong> Membalik arah rantai. Fisika, ekonomi, komputer juga memakai perhitungan — kelompok &ldquo;pemakai perhitungan&rdquo; jauh lebih besar daripada kimia.</li>
+          <li><strong>Kenapa C salah?</strong> Bertentangan langsung dengan premis 2.</li>
+          <li><strong>Kenapa D salah?</strong> Sama dengan B, hanya ganti kata: membalik &ldquo;semua ilmu eksak memakai perhitungan&rdquo; jadi &ldquo;semua pemakai perhitungan adalah ilmu eksak&rdquo; — tidak diizinkan.</li>
+          <li><strong>Cek dengan Venn:</strong> buat lingkaran besar &ldquo;pemakai perhitungan&rdquo;, di dalamnya lingkaran &ldquo;ilmu eksak&rdquo;, di dalamnya lagi &ldquo;kimia&rdquo;. Terlihat jelas B dan D salah: kimia cuma satu zona kecil di dalam lingkaran besar.</li>
+          <li><strong>Pola ujian:</strong> opsi yang membalik premis hampir selalu muncul — biasanya dua-duanya — sebagai jebakan utama.</li>
+        </ol>
+        <span class="answer">Jawaban: A</span><br />
+        <span class="admin-principle">⚠️ Prinsip: rangkai ujungnya sah, membalik arah tidak sah.</span>
+      </div>
+    </section>
+
+    <!-- Latihan Mandiri -->
+    <section class="materi-section">
+      <h2><span class="emoji">🏋️</span> Latihan Mandiri</h2>
+
+      <div class="box box--latihan">
+        <span class="box__label">🎯 Soal Latihan</span>
+        <p>Pernyataan berikut benar:</p>
+        <p>(1) <em>Semua pemain bola mendaftar asuransi kecelakaan.</em> (2) <em>Beberapa siswa adalah pemain bola.</em></p>
+        <p>Kesimpulan yang SAH adalah …</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> Semua siswa mendaftar asuransi kecelakaan</li>
+          <li class="is-correct"><span class="opt">B.</span> Beberapa siswa mendaftar asuransi kecelakaan</li>
+          <li><span class="opt">C.</span> Semua yang mendaftar asuransi adalah pemain bola</li>
+          <li><span class="opt">D.</span> Tidak ada siswa yang mendaftar asuransi</li>
+        </ul>
+
+        <div class="box box--pembahasan" style="margin-top:14px;">
+          <span class="box__label">🔑 Pembahasan Singkat</span>
+          <ol class="steps">
+            <li>Rantai: siswa (sebagian) → pemain bola → <em>semua</em> → wajib asuransi. Bagian siswa yang pemain bola pasti ikut wajib asuransi. Karena premisnya cuma &ldquo;beberapa siswa&rdquo;, kesimpulannya pun &ldquo;beberapa siswa&rdquo; — itulah B.</li>
+            <li><strong>A salah:</strong> terlalu berani — cuma sebagian siswa yang pemain bola, sisanya tidak ditentukan.</li>
+            <li><strong>C salah:</strong> membalik premis 1.</li>
+            <li><strong>D salah:</strong> bertentangan dengan premis 1.</li>
+            <li>Ingat aturan rantai: <strong>&ldquo;beberapa&rdquo; sebagai pintu awal membuat kesimpulan ikut runcing &ldquo;beberapa&rdquo;, bukan &ldquo;semua&rdquo;.</strong></li>
+          </ol>
+          <span class="answer">Jawaban: B</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rangkuman -->
+    <section class="materi-section">
+      <h2><span class="emoji">📌</span> Rangkuman</h2>
+      <div class="box box--rangkuman">
+        <span class="box__label">🎯 Setelah pertemuan ini, kamu harus bisa:</span>
+        <ul class="check-list">
+          <li>Merangkai beberapa premis lewat kata tengahnya seperti rantai.</li>
+          <li>Menggambar diagram Venn berlapis: lingkaran besar → sedang → kecil.</li>
+          <li>Menolak kesimpulan yang <strong>membalik arah</strong> premis.</li>
+          <li>Paham semua &ldquo;beberapa&rdquo; sebagai titik awal membuat kesimpulannya tetap &ldquo;beberapa&rdquo;.</li>
+          <li>Menghindari jebakan opsi dengan kata &ldquo;semua&rdquo; yang terdengar berani tapi tidak sah.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigasi -->
+    <nav class="materi-nav">
+      <a href="pu-pertemuan-5.html" class="btn btn--ghost">← Pertemuan 5</a>
+      <a href="pu-pertemuan-7.html" class="btn btn--primary">Lanjut Pertemuan 7 →</a>
+      <span class="materi-nav-hint">Sudah terbiasa merangkai premis? Lanjut ke penalaran angka.</span>
+    </nav>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="brand">
+          <span class="brand__logo">SN</span>
+          <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+        </span>
+        <p>Persiapan UTBK-SNBT dari nol, lengkap, dan gratis untuk semua siswa Indonesia.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Subtes</h4>
+        <a href="pu-pertemuan-1.html">Pertemuan 1 — Dasar Logika</a>
+        <a href="pu-pertemuan-2.html">Pertemuan 2 — Logika Pernyataan</a>
+        <a href="pu-pertemuan-3.html">Pertemuan 3 — Analisis Argumen</a>
+        <a href="pu-pertemuan-4.html">Pertemuan 4 — Kesimpulan Tegas</a>
+        <a href="pu-pertemuan-5.html">Pertemuan 5 — Pola Hubungan</a>
+        <a href="pu-pertemuan-6.html">Pertemuan 6 — Silogisme Berantai</a>
+      </div>
+      <div class="footer__col">
+        <h4>Halaman</h4>
+        <a href="../index.html">Beranda</a>
+        <a href="../materi.html">Semua Subtes</a>
+        <a href="penalaran-umum.html">Daftar Pertemuan</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2026 SNBT Learning Center · Dibuat dengan ❤️ untuk para pejuang PTN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
