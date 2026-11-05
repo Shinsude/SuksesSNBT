@@ -1,0 +1,555 @@
+/* ===== Halaman Materi (konsisten tema gelap biru style.css) ===== */
+
+/* Layout artikel */
+.materi-main {
+  width: min(860px, 90%);
+  margin-inline: auto;
+  padding: 56px 0 40px;
+}
+
+.materi-breadcrumb {
+  font-size: 13.5px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.materi-breadcrumb a {
+  color: var(--primary-2);
+  font-weight: 600;
+}
+
+.materi-breadcrumb a:hover {
+  color: var(--accent);
+}
+
+.materi-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--accent);
+  border: 1px solid rgba(53, 224, 184, 0.35);
+  background: rgba(53, 224, 184, 0.08);
+  margin-bottom: 14px;
+}
+
+.materi-title {
+  font-size: clamp(1.8rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.materi-lead {
+  color: var(--muted);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+/* Section konten */
+.materi-section {
+  margin-top: 40px;
+  scroll-margin-top: 30px;
+}
+
+.materi-section h2 {
+  font-size: 22px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.materi-section h2 .emoji {
+  font-size: 20px;
+}
+
+.materi-section p {
+  color: #ccd3f2;
+  margin-bottom: 12px;
+}
+
+.materi-section strong {
+  color: var(--text);
+}
+
+/* Kotak umum */
+.box {
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(165deg, var(--surface), rgba(20, 27, 61, 0.5));
+  padding: 20px 22px;
+  margin: 14px 0;
+}
+
+.box__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+}
+
+.box--soal {
+  border-color: rgba(79, 107, 255, 0.35);
+  background: rgba(79, 107, 255, 0.07);
+}
+
+.box--soal .box__label {
+  color: var(--primary-2);
+}
+
+.box--pembahasan {
+  border-color: rgba(53, 224, 184, 0.3);
+  background: rgba(53, 224, 184, 0.05);
+}
+
+.box--pembahasan .box__label {
+  color: var(--accent);
+}
+
+.box--latihan {
+  border-color: rgba(255, 179, 92, 0.35);
+  background: rgba(255, 179, 92, 0.06);
+}
+
+.box--latihan .box__label {
+  color: #ffb35c;
+}
+
+.box--rangkuman {
+  border-color: rgba(123, 140, 255, 0.35);
+  background: rgba(79, 107, 255, 0.07);
+}
+
+.box--rangkuman .box__label {
+  color: var(--primary-2);
+}
+
+/* Pembahasan langkah bernomor */
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+}
+
+.steps > li {
+  counter-increment: step;
+  position: relative;
+  padding: 10px 0 10px 42px;
+  color: #ccd3f2;
+}
+
+.steps > li + li {
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.steps > li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.steps strong,
+.steps em {
+  color: var(--text);
+}
+
+.answer {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 14.5px;
+  color: #04140f;
+  background: linear-gradient(135deg, var(--accent), #7cf5dd);
+}
+
+.admin-principle {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #ffe1cd;
+  background: rgba(255, 179, 92, 0.1);
+  border: 1px dashed rgba(255, 179, 92, 0.45);
+}
+
+/* Tabel / daftar opsi soal */
+.options {
+  list-style: none;
+  margin: 10px 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.options li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ccd3f2;
+}
+
+.options .opt {
+  flex: 0 0 auto;
+  font-weight: 800;
+  color: var(--primary-2);
+}
+
+.options li.is-correct {
+  background: rgba(53, 224, 184, 0.12);
+  border: 1px solid rgba(53, 224, 184, 0.35);
+}
+
+.options li.is-correct .opt {
+  color: var(--accent);
+}
+
+/* Rangkuman */
+.check-list {
+  list-style: none;
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.check-list li {
+  position: relative;
+  padding: 10px 0 10px 32px;
+  color: #ccd3f2;
+}
+
+.check-list li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  border-radius: 50%;
+  background: rgba(53, 224, 184, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(53, 224, 184, 0.35);
+}
+
+/* Ilustrasi premis -> kesimpulan */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.flow__step {
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14.5px;
+  font-weight: 600;
+  background: rgba(79, 107, 255, 0.12);
+  border: 1px solid rgba(79, 107, 255, 0.35);
+  color: var(--text);
+}
+
+.flow__step--result {
+  background: rgba(53, 224, 184, 0.12);
+  border-color: rgba(53, 224, 184, 0.4);
+}
+
+.flow__arrow {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+/* Tabel kata kunci (Pertemuan 2) */
+.keyword-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  font-size: 14.5px;
+}
+
+.keyword-table th,
+.keyword-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.keyword-table th {
+  color: var(--primary-2);
+  font-weight: 800;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.keyword-table td:first-child {
+  font-weight: 800;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.keyword-table td:not(:first-child) {
+  color: #ccd3f2;
+}
+
+/* Navigasi bawah materi */
+.materi-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  margin: 48px 0 24px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.materi-nav .btn {
+  min-width: 200px;
+  justify-content: center;
+}
+
+.materi-nav .btn--ghost.is-disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.materi-nav-hint {
+  width: 100%;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ===== Kartu daftar (materi.html & penalaran-umum.html) ===== */
+
+.head-link-back {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.head-link-back:hover {
+  color: var(--accent);
+}
+
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  counter-reset: meeting;
+}
+
+.subtes-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: linear-gradient(165deg, var(--surface), rgba(20, 27, 61, 0.55));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+
+.subtes-card:hover:not(.is-locked) {
+  transform: translateY(-5px);
+  border-color: rgba(123, 140, 255, 0.45);
+  box-shadow: var(--shadow);
+}
+
+/* Kartu terkunci / belum tersedia */
+.subtes-card.is-locked {
+  cursor: not-allowed;
+  opacity: 0.72;
+  filter: saturate(0.65);
+}
+
+.subtes-card.is-locked:hover {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+.lock-tag {
+  margin-top: 8px;
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #ffb35c;
+  background: rgba(255, 179, 92, 0.1);
+  border: 1px solid rgba(255, 179, 92, 0.35);
+}
+
+.open-tag {
+  margin-top: 8px;
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--accent);
+  background: rgba(53, 224, 184, 0.1);
+  border: 1px solid rgba(53, 224, 184, 0.35);
+}
+
+.subtes-card__link {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--primary-2);
+}
+
+.subtes-card__link:hover {
+  color: var(--accent);
+}
+
+/* Daftar pertemuan bernomor */
+.pertemuan-card {
+  counter-increment: meeting;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  background: linear-gradient(165deg, var(--surface), rgba(20, 27, 61, 0.55));
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius);
+  padding: 20px 22px 20px 24px;
+}
+
+.pertemuan-card::before {
+  content: counter(meeting, decimal-leading-zero);
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 15px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: #fff;
+}
+
+.pertemuan-card.is-locked::before {
+  background: var(--surface-2);
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pertemuan-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pertemuan-card__meta {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.pertemuan-card__title {
+  font-size: 16.5px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.pertemuan-card__desc {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.pertemuan-card__actions {
+  margin-left: auto;
+  align-self: center;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pertemuan-card__arrow {
+  font-size: 18px;
+  color: var(--primary-2);
+  text-decoration: none;
+}
+
+.pertemuan-card.is-locked .lock-tag {
+  background: rgba(255, 179, 92, 0.1);
+}
+
+.bg-hero-materi {
+  background:
+    radial-gradient(600px 320px at 85% -10%, rgba(79, 107, 255, 0.22), transparent 60%),
+    radial-gradient(460px 300px at 5% 120%, rgba(53, 224, 184, 0.12), transparent 60%);
+  padding: 72px 0 64px;
+}
+
+@media (max-width: 900px) {
+  .card-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  .materi-main {
+    padding: 44px 0 24px;
+  }
+
+  .card-list {
+    grid-template-columns: 1fr;
+  }
+
+  .box {
+    padding: 16px;
+  }
+
+  .materi-nav .btn {
+    width: 100%;
+  }
+
+  .pertemuan-card {
+    flex-wrap: wrap;
+  }
+
+  .pertemuan-card__actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pertemuan 1 — Dasar-dasar Penalaran Logika | SNBT Learning Center</title>
+  <meta name="description" content="Belajar dasar penalaran logika untuk UTBK-SNBT: premis, kesimpulan, contoh soal, dan latihan mandiri." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/materi.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="brand">
+        <span class="brand__logo">SN</span>
+        <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html#subtes">Subtes</a>
+        <a href="../index.html#fitur">Fitur</a>
+        <a href="../materi.html">Materi</a>
+        <a href="../index.html#cta">Mulai Belajar</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="materi-main">
+    <a href="penalaran-umum.html" class="head-link-back">← Daftar Pertemuan Penalaran Umum</a>
+    <div style="margin-top:16px;">
+      <span class="materi-badge">Penalaran Umum · Pertemuan 1</span>
+      <h1 class="materi-title">Dasar-dasar Penalaran Logika</h1>
+      <p class="materi-lead">Mulai dari nol: kamu akan belajar cara berpikir logis yang jadi fondasi semua soal Penalaran Umum.</p>
+    </div>
+
+    <!-- Penjelasan -->
+    <section class="materi-section">
+      <h2><span class="emoji">📘</span> Penjelasan Materi</h2>
+
+      <p><strong>Apa itu logika?</strong> Sederhananya, logika adalah <strong>menarik kesimpulan dari informasi yang tersedia</strong> — bukan dari tebakan atau pengetahuan umummu. Di soal SNBT, informasi yang boleh kamu pakai <strong>hanya yang tertulis di soal</strong>.</p>
+
+      <p>Setiap penalaran logika punya dua bagian utama:</p>
+
+      <div class="box">
+        <p style="margin-bottom:8px;"><strong>Premis</strong> = informasi dasar yang <em>diberikan</em>. Ibarat bahan-bahan masakan.</p>
+        <p style="margin:0;"><strong>Kesimpulan</strong> = hasil penarikan dari premis. Ibarat makanan yang jadinya — wajib dibuat dari bahan yang ada, tidak boleh nambah bahan lain.</p>
+      </div>
+
+      <p>Contoh paling klasik:</p>
+
+      <div class="box box--soal">
+        <span class="box__label">🧪 Ilustrasi</span>
+        <div class="flow">
+          <span class="flow__step">Premis 1: Semua manusia membutuhkan makanan</span>
+          <span class="flow__arrow">+</span>
+          <span class="flow__step">Premis 2: Budi manusia</span>
+          <span class="flow__arrow">→</span>
+          <span class="flow__step flow__step--result">Kesimpulan: Budi membutuhkan makanan</span>
+        </div>
+        <p style="margin:0;">Kesimpulannya otomatis sah karena Budi masuk ke dalam kelompok "semua manusia" — jadi dia ikut punya sifat "membutuhkan makanan". <strong>Ingat:</strong> pola <em>"semua A adalah B, X adalah A, maka X adalah B"</em> ini akan kamu pakai terus.</p>
+      </div>
+
+      <p><strong>Aturan emas pemula:</strong> kalau ada informasi yang <em>tidak tertulis</em> di soal — meskipun itu fakta yang benar di dunia nyata — <strong>tidak boleh dipakai</strong> untuk menjawab. Soal logika menilai cara berpikirmu, bukan hafalanmu.</p>
+    </section>
+
+    <!-- Contoh Soal -->
+    <section class="materi-section">
+      <h2><span class="emoji">✍️</span> Contoh Soal &amp; Pembahasan</h2>
+
+      <div class="box box--soal">
+        <span class="box__label">📝 Soal</span>
+        <p>Pernyataan berikut benar: <em>"Semua mahasiswa Universitas A wajib mengikuti orientasi."</em> lalu disebutkan bahwa <em>Rina adalah mahasiswa Universitas A.</em> Kesimpulan yang tepat adalah …</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> Rina dosen Universitas A</li>
+          <li class="is-correct"><span class="opt">B.</span> Rina wajib mengikuti orientasi</li>
+          <li><span class="opt">C.</span> Semua yang wajib orientasi adalah mahasiswa Universitas A</li>
+          <li><span class="opt">D.</span> Rina menyukai orientasi</li>
+        </ul>
+      </div>
+
+      <div class="box box--pembahasan">
+        <span class="box__label">💡 Pembahasan</span>
+        <ol class="steps">
+          <li><strong>Tulis premisnya:</strong> (1) Semua mahasiswa Universitas A wajib orientasi. (2) Rina adalah mahasiswa Universitas A.</li>
+          <li><strong>Cocokkan pola:</strong> "Semua <em>A</em> (mahasiswa UN-A) adalah <em>B</em> (wajib orientasi)" + "Rina adalah <em>A</em>" → maka <em>Rina adalah B</em>.</li>
+          <li><strong>Sekarang cek pilihan:</strong> Rina masuk kelompok "semua mahasiswa Universitas A", jadi dia ikut kewajiban orientasi. Itu pilihan <strong>B</strong>.</li>
+          <li><strong>Kenapa A salah?</strong> "Rina dosen Universitas A" tidak ada sumbernya sama sekali di soal — informasi tambahan yang dilarang.</li>
+          <li><strong>Kenapa C salah?</strong> Membalik arah premis: soal bilang mahasiswa Universitas A → wajib orientasi, bukan semua yang wajib orientasi adalah mahasiswa Universitas A (bisa saja ada peserta orientasi dari kampus lain). Membalik arah tidak otomatis benar.</li>
+          <li><strong>Kesalahan D?</strong> Perasaan/suka-suka Rina tidak pernah disebut. "Wajib" ✍️ artinya aturan, bukan kesukaan — jangan tambah informasi yang tidak ada di soal.</li>
+        </ol>
+        <span class="answer">Jawaban: B</span><br />
+        <span class="admin-principle">⚠️ Prinsip penting: jangan menambahkan informasi yang tidak ada di soal — jawab hanya dari yang tertulis.</span>
+      </div>
+    </section>
+
+    <!-- Latihan Mandiri -->
+    <section class="materi-section">
+      <h2><span class="emoji">🏋️</span> Latihan Mandiri</h2>
+
+      <div class="box box--latihan">
+        <span class="box__label">🎯 Soal Latihan</span>
+        <p>Pernyataan berikut benar: <em>"Semua siswa yang rajin belajar lulus ujian."</em> Dan <em>Andi adalah siswa yang rajin belajar.</em> Kesimpulan yang tepat adalah …</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> Andi tidak lulus ujian</li>
+          <li class="is-correct"><span class="opt">B.</span> Andi lulus ujian</li>
+          <li><span class="opt">C.</span> Semua yang lulus ujian rajin belajar</li>
+          <li><span class="opt">D.</span> Siswa yang rajin belajar pasti pintar</li>
+        </ul>
+
+        <div class="box box--pembahasan" style="margin-top:14px;">
+          <span class="box__label">🔑 Pembahasan Singkat</span>
+          <ol class="steps">
+            <li>Pola sama dengan contoh: "semua <span style="white-space:nowrap;">A</span> adalah <span style="white-space:nowrap;">B</span>" + "Andi adalah <span style="white-space:nowrap;">A</span>" → "Andi adalah <span style="white-space:nowrap;">B</span>", yaitu Andi lulus ujian.</li>
+            <li><strong>A salah:</strong> bertentangan langsung dengan premis — Andi masuk kelompok yang <em>lulus</em>, bukan tidak lulus.</li>
+            <li><strong>C salah:</strong> membalik arah premis. Lulus ujian tidak memaksa seseorang menjadi rajin; bisa saja ada siswa yang lulus tanpa rajin dan soal tidak melarang itu. Jangan berpikir hanya "rajin belajar" yang bisa lulus — jangan menambah informasi yang tidak ada di soal.</li>
+            <li><strong>D salah:</strong> kata "pintar" muncul dari mana? Tidak ada ilustrasinya di premis — informasi tambahan. Ingat, "rajin" dan "pintar" tidak sama; satu murid bisa rajin tapi tetap biasa-biasa.</li>
+          </ol>
+          <span class="answer">Jawaban: B</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rangkuman -->
+    <section class="materi-section">
+      <h2><span class="emoji">📌</span> Rangkuman</h2>
+      <div class="box box--rangkuman">
+        <span class="box__label">🎯 Setelah pertemuan ini, kamu harus bisa:</span>
+        <ul class="check-list">
+          <li>Menjelaskan apa itu logika dan bedanya dengan tebakan/opini.</li>
+          <li>Membedakan <strong>premis</strong> (informasi yang diberikan) dan <strong>kesimpulan</strong> (hasil penarikan).</li>
+          <li>Menarik kesimpulan dari pola "Semua A adalah B, X adalah A → X adalah B".</li>
+          <li>Mewaspadai jebakan soal yang membalik arah premis (membolak-balik "semua A adalah B" jadi "semua B adalah A").</li>
+          <li>Berpegang pada prinsip: tidak menambahkan informasi yang tidak ada di soal — jawabannya hanya dari yang tertulis.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigasi -->
+    <nav class="materi-nav">
+      <a href="penalaran-umum.html" class="btn btn--ghost">← Daftar Pertemuan</a>
+      <a href="pu-pertemuan-2.html" class="btn btn--primary">Lanjut Pertemuan 2 →</a>
+      <span class="materi-nav-hint">Belum merasa siap? Ulangi bacaan di atas atau kerjakan latihan beberapa kali.</span>
+    </nav>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="brand">
+          <span class="brand__logo">SN</span>
+          <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+        </span>
+        <p>Persiapan UTBK-SNBT dari nol, lengkap, dan gratis untuk semua siswa Indonesia.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Subtes</h4>
+        <a href="pu-pertemuan-1.html">Pertemuan 1 — Dasar Logika</a>
+        <a href="pu-pertemuan-2.html">Pertemuan 2 — Logika Pernyataan</a>
+      </div>
+      <div class="footer__col">
+        <h4>Halaman</h4>
+        <a href="../index.html">Beranda</a>
+        <a href="../materi.html">Semua Subtes</a>
+        <a href="penalaran-umum.html">Daftar Pertemuan</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2026 SNBT Learning Center · Dibuat dengan ❤️ untuk para pejuang PTN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
