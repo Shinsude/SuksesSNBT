@@ -3,19 +3,63 @@ document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.getElementById("navToggle");
   const nav = document.getElementById("nav");
 
+  const setMenuState = (open) => {
+    nav.classList.toggle("nav--open", open);
+    navToggle.setAttribute("aria-expanded", String(open));
+    navToggle.setAttribute("aria-label", open ? "Tutup menu" : "Buka menu");
+  };
+
   if (navToggle && nav) {
+    nav.setAttribute("aria-label", "Navigasi utama");
+    navToggle.setAttribute("aria-controls", nav.id);
+
     navToggle.addEventListener("click", () => {
-      const open = nav.classList.toggle("nav--open");
-      navToggle.setAttribute("aria-expanded", String(open));
-      navToggle.setAttribute("aria-label", open ? "Tutup menu" : "Buka menu");
+      setMenuState(!nav.classList.contains("nav--open"));
     });
 
     nav.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
-        nav.classList.remove("nav--open");
-        navToggle.setAttribute("aria-expanded", "false");
+        setMenuState(false);
       });
     });
+
+    const closeMenuOnEscape = (event) => {
+      const key = String(event.key || event.code || "").toLowerCase();
+      if ((key === "escape" || key === "esc") && nav.classList.contains("nav--open")) {
+        event.preventDefault();
+        nav.classList.remove("nav--open");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Buka menu");
+        navToggle.focus();
+      }
+    };
+
+    navToggle.addEventListener("keydown", closeMenuOnEscape);
+    navToggle.addEventListener("keyup", closeMenuOnEscape);
+    window.addEventListener("keydown", closeMenuOnEscape, true);
+    window.addEventListener("keyup", closeMenuOnEscape, true);
+    navToggle.onkeydown = (event) => {
+      if (event.key === "Escape" && nav.classList.contains("nav--open")) {
+        event.preventDefault();
+        nav.classList.remove("nav--open");
+        navToggle.setAttribute("aria-expanded", "false");
+        navToggle.setAttribute("aria-label", "Buka menu");
+        navToggle.focus();
+      }
+    };
+  }
+
+  const mainContent = document.querySelector("main, .hero");
+  if (mainContent && !mainContent.id) {
+    mainContent.id = "main-content";
+  }
+
+  if (!document.querySelector(".skip-link") && mainContent) {
+    const skipLink = document.createElement("a");
+    skipLink.className = "skip-link";
+    skipLink.href = `#${mainContent.id}`;
+    skipLink.textContent = "Lewati ke konten utama";
+    document.body.prepend(skipLink);
   }
 
   const onScroll = () => {

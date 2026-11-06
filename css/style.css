@@ -41,6 +41,29 @@ a {
   text-decoration: none;
 }
 
+:where(a, button):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #07131c;
+  font-weight: 800;
+  transform: translateY(-160%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 .container {
   width: min(1120px, 90%);
   margin-inline: auto;
@@ -50,7 +73,7 @@ a {
 .header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 1000;
   background: rgba(11, 16, 32, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -578,9 +601,10 @@ a {
 
 @media (max-width: 620px) {
   .nav {
-    position: fixed;
-    inset: 68px 0 auto 0;
-    flex-direction: column;
+  position: fixed;
+  inset: 68px 0 auto 0;
+  z-index: 20;
+  flex-direction: column;
     gap: 0;
     background: var(--surface);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -590,7 +614,8 @@ a {
   }
 
   .nav.nav--open {
-    max-height: 260px;
+    max-height: min(260px, 60vh);
+    overflow-y: auto;
   }
 
   .nav a {

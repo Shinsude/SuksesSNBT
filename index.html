@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
   <!-- Header -->
   <header class="header" id="header">
     <div class="container header__inner">
@@ -18,13 +19,13 @@
         <span class="brand__logo">SN</span>
         <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
       </a>
-      <nav class="nav" id="nav">
+      <nav class="nav" id="nav" aria-label="Navigasi utama">
         <a href="#subtes">Subtes</a>
         <a href="#fitur">Fitur</a>
         <a href="materi.html">Materi</a>
         <a href="#cta">Mulai Belajar</a>
       </nav>
-      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
       </button>
     </div>
