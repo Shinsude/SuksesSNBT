@@ -288,6 +288,17 @@
   font-weight: 800;
 }
 
+/* Pembungkus tabel mencegah tabel lebar merusak layout pada layar kecil. */
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrap table {
+  min-width: 560px;
+}
+
 /* Tabel kata kunci (Pertemuan 2) */
 .keyword-table {
   width: 100%;
