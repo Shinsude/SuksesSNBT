@@ -1,3 +1,7 @@
+html {
+  scroll-padding-top: 92px;
+}
+
 :root {
   --practice-surface: #141b3d;
   --practice-surface-2: #1a2350;
@@ -107,6 +111,7 @@
 }
 
 .answer-option {
+  scroll-margin-top: 92px;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -177,6 +182,7 @@
 
 .practice-actions .btn,
 .result-card .btn {
+  scroll-margin-top: 92px;
   min-height: 48px;
 }
 

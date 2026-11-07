@@ -1,40 +1,8 @@
-const questions = [
-  {
-    topic: "Pola Bilangan",
-    question: "Perhatikan pola bilangan berikut: 2, 4, 6, 8, ... Bilangan berikutnya adalah ...",
-    options: ["9", "10", "11", "12"],
-    answer: 1,
-    explanation: "Setiap bilangan bertambah 2. Setelah 8, bilangan berikutnya adalah 10."
-  },
-  {
-    topic: "Analogi",
-    question: "Buku : Membaca = Musik : ...",
-    options: ["Menulis", "Menggambar", "Mendengarkan", "Menghitung"],
-    answer: 2,
-    explanation: "Buku digunakan untuk membaca, sedangkan musik dinikmati dengan mendengarkan."
-  },
-  {
-    topic: "Silogisme",
-    question: "Semua siswa rajin membaca. Rani adalah siswa. Kesimpulan yang tepat adalah ...",
-    options: ["Rani rajin membaca", "Rani tidak suka membaca", "Semua pembaca adalah siswa", "Rani selalu mendapat nilai 100"],
-    answer: 0,
-    explanation: "Karena Rani termasuk siswa dan semua siswa rajin membaca, Rani juga rajin membaca."
-  },
-  {
-    topic: "Perbandingan",
-    question: "Dina memiliki 6 pensil. Bima memiliki 2 pensil lebih banyak daripada Dina. Berapa pensil Bima?",
-    options: ["4", "6", "8", "12"],
-    answer: 2,
-    explanation: "Jumlah pensil Bima adalah 6 + 2 = 8 pensil."
-  },
-  {
-    topic: "Logika Pernyataan",
-    question: "Jika hari ini hujan, maka lapangan basah. Hari ini hujan. Kesimpulannya adalah ...",
-    options: ["Lapangan pasti kering", "Lapangan basah", "Besok pasti hujan", "Tidak ada kesimpulan"],
-    answer: 1,
-    explanation: "Pernyataan menyebutkan bahwa hujan menyebabkan lapangan basah. Karena hari ini hujan, lapangan basah."
-  }
-];
+const questions = window.latihanPUQuestions;
+
+if (!Array.isArray(questions) || questions.length === 0) {
+  throw new Error("Data latihan PU tidak tersedia.");
+}
 
 const state = {
   current: 0,
@@ -69,10 +37,10 @@ function renderQuestion() {
   progressValue.style.width = `${Math.max(progress, 20)}%`;
   questionTopic.textContent = item.topic;
   questionTitle.textContent = item.question;
-  answerList.innerHTML = item.options.map((option, index) => `
-    <label class="answer-option" for="answer-${index}">
-      <input id="answer-${index}" name="answer" type="radio" value="${index}" />
-      <span><strong>${String.fromCharCode(65 + index)}.</strong> ${option}</span>
+  answerList.innerHTML = item.options.map((option) => `
+    <label class="answer-option" for="answer-${option.id}">
+      <input id="answer-${option.id}" name="answer" type="radio" value="${option.id}" />
+      <span><strong>${option.id}.</strong> ${option.text}</span>
     </label>
   `).join("");
 
@@ -96,26 +64,31 @@ function checkCurrentAnswer() {
   const selected = answerList.querySelector("input:checked");
   if (!selected || state.checked) return;
 
-  const selectedIndex = Number(selected.value);
+  const selectedId = selected.value;
   const item = questions[state.current];
-  const isCorrect = selectedIndex === item.answer;
+  const isCorrect = selectedId === item.answer;
   state.checked = true;
   state.score += Number(isCorrect);
 
-  answerList.querySelectorAll("input").forEach((input, index) => {
+  answerList.querySelectorAll("input").forEach((input) => {
     input.disabled = true;
     const option = input.closest(".answer-option");
     option.classList.add("is-locked");
-    if (index === item.answer) option.classList.add("is-correct");
-    if (index === selectedIndex && !isCorrect) option.classList.add("is-wrong");
+    if (input.value === item.answer) option.classList.add("is-correct");
+    if (input.value === selectedId && !isCorrect) option.classList.add("is-wrong");
   });
 
-  feedback.innerHTML = `<strong>${isCorrect ? "Jawaban benar" : "Jawaban belum tepat"}</strong><span>${item.explanation}</span>`;
+  feedback.innerHTML = `
+    <strong>${isCorrect ? "Jawaban benar" : "Jawaban belum tepat"}</strong>
+    <span>${item.explanation.summary}</span>
+    <span><strong>Alasan jawaban benar:</strong> ${item.explanation.correct}</span>
+    <ul>${Object.entries(item.explanation.incorrect).map(([optionId, reason]) => `<li><strong>${optionId}.</strong> ${reason}</li>`).join("")}</ul>
+  `;
   feedback.hidden = false;
   checkAnswer.hidden = true;
   nextQuestion.hidden = false;
   nextQuestion.textContent = state.current === questions.length - 1 ? "Lihat Hasil" : "Soal Berikutnya";
-  nextQuestion.focus();
+  nextQuestion.focus({ preventScroll: true });
 }
 
 function showResult() {
