@@ -70,6 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
+  if (!document.querySelector('link[rel="manifest"]')) {
+    const manifestLink = document.createElement("link");
+    manifestLink.rel = "manifest";
+    manifestLink.href = "/manifest.webmanifest";
+    document.head.appendChild(manifestLink);
+  }
+
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js", { scope: "/" }).catch(() => {
+      // Offline support remains optional when the preview runs without a secure origin.
+    });
+  }
+
   const revealTargets = document.querySelectorAll(
     ".card-subtes, .feature, .section__head"
   );
