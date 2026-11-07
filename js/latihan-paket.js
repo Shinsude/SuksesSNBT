@@ -38,6 +38,8 @@
   const resultSummary = document.querySelector("#result-summary");
   const scoreValue = document.querySelector("#score-value");
   const correctCount = document.querySelector("#correct-count");
+  const wrongCount = document.querySelector("#wrong-count");
+  const blankCount = document.querySelector("#blank-count");
   const totalCount = document.querySelector("#total-count");
   const restartButton = document.querySelector("#restart-button");
 
@@ -90,6 +92,8 @@
     document.querySelector(".question-card").hidden = true;
     scoreValue.textContent = score;
     correctCount.textContent = state.score;
+    wrongCount.textContent = packageQuestions.length - state.score;
+    blankCount.textContent = "0";
     totalCount.textContent = packageQuestions.length;
     resultSummary.textContent = `Kamu menjawab ${state.score} dari ${packageQuestions.length} soal dengan benar.`;
     resultPanel.focus({ preventScroll: true });

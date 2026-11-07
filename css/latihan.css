@@ -212,6 +212,39 @@
   }
 }
 
+.practice-tryout-callout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(123, 140, 255, 0.35);
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #141b3d, #1a2350);
+}
+
+.practice-tryout-callout h2 {
+  margin: 0.35rem 0 0.5rem;
+  color: #eef1ff;
+}
+
+.practice-tryout-callout p:not(.eyebrow) {
+  max-width: 640px;
+  color: #9aa3c7;
+}
+
+@media (max-width: 640px) {
+  .practice-tryout-callout {
+    display: block;
+  }
+
+  .practice-tryout-callout .btn {
+    width: 100%;
+    margin-top: 1.25rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .practice-card,
   .practice-card--available:hover {
