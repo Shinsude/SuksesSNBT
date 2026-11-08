@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pertemuan 2 — Membaca Grafik | SNBT Learning Center</title>
+  <meta name="description" content="Membaca grafik garis dan batang: sumbu, skala, tren, dan perbandingan data untuk subtes Penalaran Matematika UTBK-SNBT." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/materi.css" />
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="brand">
+        <span class="brand__logo">SN</span>
+        <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="../index.html#subtes">Subtes</a>
+        <a href="../index.html#fitur">Fitur</a>
+        <a href="../materi.html">Materi</a>
+        <a href="../index.html#cta">Mulai Belajar</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main class="materi-main">
+    <a href="penalaran-matematika.html" class="head-link-back">← Daftar Pertemuan PenMat</a>
+    <div style="margin-top:16px;">
+      <span class="materi-badge">Penalaran Matematika · Pertemuan 2</span>
+      <h1 class="materi-title">Membaca Grafik</h1>
+      <p class="materi-lead">Grafik garis dan batang di SNBT sering memakai skala yang "menipu". Kunci jawabannya hampir selalu ada di <em>judul, sumbu, dan satuan</em>.</p>
+    </div>
+
+    <!-- Penjelasan -->
+    <section class="materi-section">
+      <h2><span class="emoji">📘</span> Penjelasan Materi</h2>
+
+      <div class="box">
+        <p style="margin-bottom:8px;"><strong>Sebelum melihat soal, kenali 4 unsur grafik:</strong></p>
+        <ol class="steps">
+          <li><strong>Judul</strong> — menentukan SIAPA/APA yang diukur (bukan selalu sama dengan yang ditanya!).</li>
+          <li><strong>Sumbu X dan Y</strong> — membaca perhatian: X = kategori/waktu, Y = banyaknya/nilai.</li>
+          <li><strong>Skala &amp; satuan</strong> — "ribuan", "juta", "persen", "per kuartal". Inilah sumber 90% kesalahan.</li>
+          <li><strong>Keterangan/warna</strong> — di grafik batang berkelompok, sering ada 2–3 seri data yang mudah tertukar.</li>
+        </ol>
+      </div>
+
+      <div class="box box--pembahasan">
+        <span class="box__label">⚠️ Jebakan klasik di SNBT</span>
+        <ul class="check-list">
+          <li><strong>Numpang nilai bukan selisih:</strong> tinggi batang = nilai, tetapi soal minta <em>kenaikan</em> = nilai akhir − nilai awal.</li>
+          <li><strong>Tren ≠ jumlah:</strong> grafik garis naik terus tidak berarti jumlahnya terbesar — cek nilainya satu per satu.</li>
+          <li><strong>Satuan ganda:</strong> satu grafik dalam ribuan, soal minta juta — kalikan dulu sebelum membandingkan.</li>
+          <li><strong>Persen vs angka:</strong> "naik 50%" dari nilai awal kecil bisa tetap lebih kecil daripada "naik 10%" dari nilai besar.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contoh Soal -->
+    <section class="materi-section">
+      <h2><span class="emoji">✍️</span> Contoh Soal &amp; Pembahasan</h2>
+
+      <div class="box box--soal">
+        <span class="box__label">📝 Soal</span>
+        <p>Grafik batang berikut menunjukkan jumlah peminjaman buku perpustakaan kota (dalam ribuan) selama empat bulan:</p>
+        <p style="background:#f4f6fb; border-radius:8px; padding:12px; font-family:monospace; line-height:1.8; margin-bottom:8px;">
+Jan: ████ 40&nbsp;&nbsp;|&nbsp;&nbsp;Feb: █████ 55&nbsp;&nbsp;|&nbsp;&nbsp;Mar: ████ 45&nbsp;&nbsp;|&nbsp;&nbsp;Apr: ████████ 75
+        </p>
+        <p>Bulan mana yang mengalami <strong>kenaikan peminjaman terbesar dibandingkan bulan sebelumnya</strong>?</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> Februari</li>
+          <li class="is-correct"><span class="opt">B.</span> April</li>
+          <li><span class="opt">C.</span> Maret</li>
+          <li><span class="opt">D.</span> Januari</li>
+        </ul>
+      </div>
+
+      <div class="box box--pembahasan">
+        <span class="box__label">💡 Pembahasan</span>
+        <ol class="steps">
+          <li><strong>Kenali jebakannya:</strong> soal minta <em>kenaikan</em>, bukan nilai tertinggi. Banyak siswa langsung menjawab "batang tertinggi" tanpa menghitung selisihnya.</li>
+          <li><strong>Hitung selisih antarbulan:</strong> Feb − Jan = 55 − 40 = +15; Mar − Feb = 45 − 55 = <strong>−10 (turun)</strong>; Apr − Mar = 75 − 45 = <strong>+30</strong>.</li>
+          <li><strong>Bandingkan semua kenaikan:</strong> Februari naik 15 ribu, April naik 30 ribu → kenaikan terbesar ada di April. Tepat pada <strong>B</strong>.</li>
+          <li><strong>Kenapa C salah?</strong> Maret justru turun (45 &lt; 55).</li>
+          <li><strong>Kenapa D salah?</strong> Januari adalah bulan pertama; tidak ada bulan sebelumnya untuk dibandingkan, jadi tidak penuh istilah "kenaikan".</li>
+          <li><strong>Kenapa A salah?</strong> naik 15 ribu saja — lebih kecil dari +30 di April, meski batang Februari tidak tertinggi.</li>
+        </ol>
+        <span class="answer">Jawaban: B</span><br />
+        <span class="admin-principle">⚠️ Prinsip: soal "terbesar/tertinggi" selalu tergantung rentangnya — kenaikan (selisih) ≠ nilai (tinggi batang). Hitung selisih dulu, baru pilih.</span>
+      </div>
+    </section>
+
+    <!-- Contoh Soal 2 -->
+    <section class="materi-section">
+      <h2><span class="emoji">🧠</span> Contoh Soal: Tren Grafik Garis</h2>
+
+      <div class="box box--soal">
+        <span class="box__label">📝 Soal</span>
+        <p style="background:#f4f6fb; border-radius:8px; padding:12px; font-family:monospace; line-height:1.8; margin-bottom:8px;">
+Pukul 08:00 → 2.000 liter&nbsp;&nbsp;|&nbsp;&nbsp;Pukul 10:00 → 1.600 liter&nbsp;&nbsp;|&nbsp;&nbsp;Pukul 12:00 → 1.200 liter&nbsp;&nbsp;|&nbsp;&nbsp;Pukul 14:00 → 800 liter
+        </p>
+        <p>Grafik garis di atas menunjukkan volume air di tangki. Pernyataan mana yang <strong>paling tepat</strong>?</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> Air bertambah 400 liter setiap 2 jam</li>
+          <li class="is-correct"><span class="opt">B.</span> Volume air berkurang dengan laju tetap 200 liter per jam</li>
+          <li><span class="opt">C.</span> Tangki kering pada pukul 16:00</li>
+          <li><span class="opt">D.</span> Laju berkurang air semakin cepat setiap jamnya</li>
+        </ul>
+      </div>
+
+      <div class="box box--pembahasan">
+        <span class="box__label">💡 Pembahasan</span>
+        <ol class="steps">
+          <li><strong>Hitung perubahan tiap 2 jam:</strong> 2.000 → 1.600 = −400; 1.600 → 1.200 = −400; 1.200 → 800 = −400. Grafik garis lurus menurun → laju <em>tetap</em>.</li>
+          <li><strong>Konversi laju:</strong> −400 liter per 2 jam = −200 liter per jam. Tepat pada <strong>B</strong>.</li>
+          <li><strong>Kenapa A salah?</strong> volume <em>berkurang</em>, bukan bertambah — arah dibaca terbalik.</li>
+          <li><strong>Kenapa C salah?</strong> melompat ke luar data: pada pukul 16:00 volume = 800 − (2 jam × 200) = 400 liter → tangki belum kering; tidak ada informasi kapan keringnya.</li>
+          <li><strong>Kenapa D salah?</strong> garis lurus berarti laju konstan; "semakin cepat" berarti pembanding lengkung ke bawah.</li>
+        </ol>
+        <span class="answer">Jawaban: B</span><br />
+        <span class="admin-principle">⚠️ Prinsip: garis lurus = laju tetap; selisih tiap segmen sama berarti pernyataan "semakin cepat/lambat" pasti salah.</span>
+      </div>
+    </section>
+
+    <!-- Latihan Mandiri -->
+    <section class="materi-section">
+      <h2><span class="emoji">🏋️</span> Latihan Mandiri</h2>
+
+      <div class="box box--latihan">
+        <span class="box__label">🎯 Soal Latihan</span>
+        <p>Grafik batang pengunjung perpustakaan (dalam ratus) selama empat hari:</p>
+        <p style="background:#f4f6fb; border-radius:8px; padding:12px; font-family:monospace; line-height:1.8; margin-bottom:8px;">
+Sen: ██ 20&nbsp;&nbsp;|&nbsp;&nbsp;Sel: ███ 30&nbsp;&nbsp;|&nbsp;&nbsp;Rab: ████ 40&nbsp;&nbsp;|&nbsp;&nbsp;Kam: █████ 50
+        </p>
+        <p>Kesimpulan paling tepat dari grafik tersebut adalah &hellip;</p>
+        <ul class="options">
+          <li><span class="opt">A.</span> Setiap hari pengunjung berlipat dua dari jumlah sebelumnya</li>
+          <li class="is-correct"><span class="opt">B.</span> Setiap hari pengunjung bertambah dengan jumlah yang sama, yaitu 1.000 orang</li>
+          <li><span class="opt">C.</span> Hari Rabu terjadi penurunan pengunjung</li>
+          <li><span class="opt">D.</span> Pengunjung hari Kamis dua kali pengunjung hari Selasa</li>
+        </ul>
+      </div>
+
+      <div class="box box--pembahasan" style="margin-top:14px;">
+        <span class="box__label">🔑 Pembahasan Singkat</span>
+        <ol class="steps">
+          <li><strong>Hitung kenaikan antarhari:</strong> Sel − Sen = 30 − 20 = 10; Rab − Sel = 40 − 30 = 10; Kam − Rab = 50 − 40 = 10. Kenaikan sama tiap hari: 10 ratus = <strong>1.000 orang</strong> → tepat pada <strong>B</strong>.</li>
+          <li><strong>Kenapa A salah?</strong> "berlipat dua" berarti 20 → 40 → 80; kenyataannya 20 → 30 → 40. Grafik garis lurus ke atas berarti kenaikan <em>ditambah</em>, bukan dilipatduakan.</li>
+          <li><strong>Kenapa C salah?</strong> Rabu justru naik (40 &gt; 30).</li>
+          <li><strong>Kenapa D salah?</strong> 50 ÷ 30 ≈ 1,67 kali, bukan tepat dua kali.</li>
+        </ol>
+        <span class="answer">Jawaban: B</span>
+      </div>
+    </section>
+
+    <!-- Rangkuman -->
+    <section class="materi-section">
+      <h2><span class="emoji">📌</span> Rangkuman</h2>
+      <div class="box box--rangkuman">
+        <span class="box__label">🎯 Setelah pertemuan ini, kamu harus bisa:</span>
+        <ul class="check-list">
+          <li>Membaca judul, sumbu, skala, satuan, dan keterangan grafik <em>sebelum</em> menjawab.</li>
+          <li>Membedakan kenaikan (selisih) dengan nilai (tinggi batang).</li>
+          <li>Mengonversi satuan (ribuan → juta; per 2 jam → per jam) sebelum membandingkan.</li>
+          <li>Mengenali pola grafik lurus = laju tetap, dan menolak kesimpulan melompat di luar data.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Navigasi -->
+    <nav class="materi-nav">
+      <a href="penalaran-matematika.html" class="btn btn--ghost">← Daftar Pertemuan</a>
+      <span class="btn btn--primary" style="opacity:.45; pointer-events:none; cursor:not-allowed;" aria-disabled="true">🔒 Pertemuan 3 — Belum tersedia</span>
+      <span class="materi-nav-hint">Pertemuan 3 (Tabel) sedang disiapkan. Sambil menunggu, ulangi latihan grafik di atas tanpa melihat pembahasan.</span>
+    </nav>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__brand">
+        <span class="brand">
+          <span class="brand__logo">SN</span>
+          <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+        </span>
+        <p>Persiapan UTBK-SNBT dari nol, lengkap, dan gratis untuk semua siswa Indonesia.</p>
+      </div>
+      <div class="footer__col">
+        <h4>Subtes</h4>
+        <a href="../materi.html">Penalaran Umum</a>
+        <a href="ppu-pertemuan-1.html">PPU — Pertemuan 1</a>
+        <a href="ppu-pertemuan-2.html">PPU — Pertemuan 2</a>
+        <a href="pbm-pertemuan-1.html">PBM — Pertemuan 1</a>
+        <a href="pbm-pertemuan-2.html">PBM — Pertemuan 2</a>
+        <a href="pk-pertemuan-1.html">PK — Pertemuan 1</a>
+        <a href="pk-pertemuan-2.html">PK — Pertemuan 2</a>
+        <a href="penmat-pertemuan-1.html">PenMat — Pertemuan 1</a>
+        <a href="penmat-pertemuan-2.html">PenMat — Pertemuan 2</a>
+      </div>
+      <div class="footer__col">
+        <h4>Halaman</h4>
+        <a href="../index.html">Beranda</a>
+        <a href="../materi.html">Semua Subtes</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© 2026 SNBT Learning Center · Dibuat dengan ❤️ untuk para pejuang PTN</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

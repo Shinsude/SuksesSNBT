@@ -154,4 +154,36 @@
     <lastmod>2026-11-09</lastmod>
     <priority>0.7</priority>
   </url>
+
+  <!-- Pertemuan 4 & pertemuan 2 subtes lain -->
+  <url>
+    <loc>https://suksessnbt.vercel.app/materi/lit-id-pertemuan-4.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://suksessnbt.vercel.app/materi/lit-eng-pertemuan-4.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://suksessnbt.vercel.app/materi/ppu-pertemuan-2.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://suksessnbt.vercel.app/materi/pk-pertemuan-2.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://suksessnbt.vercel.app/materi/pbm-pertemuan-2.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://suksessnbt.vercel.app/materi/penmat-pertemuan-2.html</loc>
+    <lastmod>2026-11-09</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>
