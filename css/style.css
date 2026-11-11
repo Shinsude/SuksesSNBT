@@ -112,6 +112,22 @@ a {
   color: var(--text);
 }
 
+.nav a[aria-current="page"] {
+  color: var(--text);
+  position: relative;
+}
+
+.nav a[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
 .nav-download {
   background: linear-gradient(135deg, var(--primary), var(--primary-600));
   color: #fff !important;
@@ -705,6 +721,60 @@ a {
   font-size: 13px;
 }
 
+/* Accessibility */
+.skip-link {
+  position: absolute;
+  top: -80px;
+  left: 16px;
+  z-index: 200;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 16px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .card-mock {
+    animation: none;
+  }
+
+  .bar__fill {
+    width: var(--w);
+    animation: none;
+  }
+}
+
 /* Reveal animation */
 .reveal {
   opacity: 0;
@@ -778,6 +848,11 @@ a {
 
   .hero__stats {
     gap: 20px;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .app-promo__phone {
