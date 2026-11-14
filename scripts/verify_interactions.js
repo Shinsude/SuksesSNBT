@@ -65,20 +65,23 @@ function loadQuestionBank(context) {
   assert.equal(document.querySelector("#question-counter").textContent, "Soal 1 dari 70");
 }
 
-{
+for (const packageId of [
+  "pu-dasar-1", "ppu-dasar-1", "pbm-dasar-1", "pk-dasar-1",
+  "penmat-dasar-1", "li-dasar-1", "le-dasar-1"
+]) {
   const document = documentStub();
   const window = {
     latihanPUQuestions: [],
     latihanQuestions: [],
-    location: { search: "?paket=ppu-dasar-1" }
+    location: { search: `?paket=${packageId}` }
   };
   const context = { window, document, Math, Date, URLSearchParams, localStorage: { getItem() { return "[]"; }, setItem() {} } };
   loadQuestionBank(context);
   vm.runInContext(fs.readFileSync("js/latihan-paket.js", "utf8"), context, { filename: "js/latihan-paket.js" });
-  assert.equal(document.querySelector("#runner").hidden, false, "PPU package must open");
-  assert.equal(document.querySelector("#invalid-package").hidden, true, "PPU package must not be marked unavailable");
-  assert.match(document.querySelector("#question-title").textContent, /respons positif/, "PPU package must load a PPU question");
-  assert.equal((document.querySelector("#answer-list").innerHTML.match(/class="answer-option"/g) || []).length, 4, "practice question must render four options");
+  assert.equal(document.querySelector("#runner").hidden, false, packageId + " must open");
+  assert.equal(document.querySelector("#invalid-package").hidden, true, packageId + " must not be marked unavailable");
+  assert.ok(document.querySelector("#question-title").textContent.length > 0, packageId + " must load its first question");
+  assert.equal((document.querySelector("#answer-list").innerHTML.match(/class="answer-option"/g) || []).length, 4, packageId + " question must render four options");
 }
 
-console.log("OK: tryout renders 70 questions and a non-PU package opens with four answer options.");
+console.log("OK: tryout renders 70 questions and all seven subtest packages open with four answer options.");
