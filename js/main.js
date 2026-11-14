@@ -16,6 +16,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const onScroll=()=>{if(header)header.classList.toggle("header--scrolled",window.scrollY>10);};
   window.addEventListener("scroll",onScroll,{passive:true});onScroll();
   if("serviceWorker"in navigator&&window.location.protocol==="https:"){navigator.serviceWorker.register("/service-worker.js",{scope:"/"}).catch(()=>{});}
+  const installButton=document.getElementById("install-app");
+  if(installButton){
+    let deferredInstallPrompt=null;
+    window.addEventListener("beforeinstallprompt",event=>{
+      event.preventDefault();
+      deferredInstallPrompt=event;
+      installButton.hidden=false;
+    });
+    installButton.addEventListener("click",async()=>{
+      if(!deferredInstallPrompt)return;
+      deferredInstallPrompt.prompt();
+      await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt=null;
+      installButton.hidden=true;
+    });
+    window.addEventListener("appinstalled",()=>{
+      deferredInstallPrompt=null;
+      installButton.hidden=true;
+    });
+  }
   const targets=document.querySelectorAll(".card-subtes,.feature,.section__head");
   if("IntersectionObserver"in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("is-visible");observer.unobserve(entry.target);}}),{threshold:.12});targets.forEach(el=>{el.classList.add("reveal");observer.observe(el);});}
   else targets.forEach(el=>el.classList.add("is-visible"));
