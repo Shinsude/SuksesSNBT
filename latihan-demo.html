@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Demo latihan interaktif Penalaran Umum SNBT dengan pembahasan dan perhitungan nilai otomatis." />
+  <title>Latihan Interaktif SNBT — Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/latihan-demo.css" />
+    <script src="js/main.js" defer></script>
+    <script src="data/latihan-pu.js" defer></script>
+    <script src="js/latihan-demo.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="brand" aria-label="SNBT Learning Center, kembali ke beranda">
+        <span class="brand__logo" aria-hidden="true">SN</span>
+        <span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Navigasi utama">
+        <a href="index.html">Beranda</a>
+        <a href="materi.html">Materi</a>
+        <a href="latihan.html">Latihan</a>
+      <a href="tryout.html">Tryout</a><a href="progres.html">Progres</a></nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content" class="practice-page">
+    <div class="container practice-shell">
+      <div class="practice-intro">
+        <a class="back-link" href="index.html">← Kembali ke Beranda</a>
+        <span class="badge badge--soft">Demo Sistem Latihan</span>
+        <h1>Latihan Interaktif SNBT</h1>
+        <p>Uji pemahaman Penalaran Umum tingkat pemula. Pilih satu jawaban, periksa hasilnya, lalu baca pembahasannya.</p>
+      </div>
+
+      <section class="practice-card" aria-labelledby="question-title">
+        <div class="progress-row">
+          <span id="question-counter">Soal 1 dari 5</span>
+          <span id="progress-label">0% selesai</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <div class="progress-value" id="progress-value"></div>
+        </div>
+
+        <div id="question-panel" aria-live="polite">
+          <p class="question-topic" id="question-topic">Pola Bilangan</p>
+          <h2 id="question-title"></h2>
+          <fieldset class="answer-list" id="answer-list">
+            <legend class="sr-only">Pilihan jawaban</legend>
+          </fieldset>
+          <div class="feedback" id="feedback" hidden></div>
+          <div class="practice-actions">
+            <button class="btn btn--primary" id="check-answer" type="button" disabled>Periksa Jawaban</button>
+            <button class="btn btn--primary" id="next-question" type="button" hidden>Soal Berikutnya</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="result-card" id="result-panel" aria-labelledby="result-title" hidden>
+        <span class="result-icon" aria-hidden="true">✓</span>
+        <p class="question-topic">Latihan selesai</p>
+        <h2 id="result-title">Hasil Latihan Kamu</h2>
+        <p class="result-score"><strong id="score-value">0</strong><span>/100</span></p>
+        <div class="result-summary" aria-label="Ringkasan hasil">
+          <div><strong id="correct-count">0</strong><span>Jawaban benar</span></div>
+          <div><strong id="wrong-count">0</strong><span>Jawaban salah</span></div>
+        </div>
+        <p class="result-message" id="result-message"></p>
+        <button class="btn btn--primary" id="restart-practice" type="button">Ulangi Latihan</button>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© 2027 SNBT Learning Center</span>
+      <span>Demo latihan — hasil hanya berlaku selama sesi ini.</span>
+    </div>
+  </footer>
+</body>
+</html>

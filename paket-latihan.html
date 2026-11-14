@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pilih paket latihan SNBT berdasarkan subtes dan tingkat kesulitan.">
+  <title>Paket Latihan — SNBT Learning Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/practice-shell.css">
+  <link rel="stylesheet" href="css/latihan.css">
+  <link rel="stylesheet" href="css/paket-latihan.css">
+  <script src="js/main.js" defer></script>
+  <script src="data/latihan-pu.js" defer></script>
+  <script src="data/paket-latihan.js" defer></script>
+  <script src="js/paket-latihan.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+  <header class="site-header" id="header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="SNBT Learning Center, beranda">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <span class="brand-text">SNBT<span>Learning Center</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="nav" aria-label="Navigasi utama">
+        <a href="index.html">Beranda</a>
+        <a href="materi.html">Materi</a>
+        <a href="latihan.html" class="active" aria-current="page">Latihan</a>
+        <a href="index.html#fitur">Fitur</a>
+        <a href="index.html#mulai" class="nav-cta">Mulai Belajar</a>
+      <a href="tryout.html">Tryout</a><a href="progres.html">Progres</a></nav>
+    </div>
+  </header>
+
+  <main class="practice-page" id="main-content" tabindex="-1">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="latihan.html">Latihan</a>
+        <span aria-hidden="true">/</span>
+        <span>Paket Latihan</span>
+      </nav>
+      <section class="page-intro" aria-labelledby="page-title">
+        <p class="eyebrow">Penalaran Umum</p>
+        <h1 id="page-title">Pilih Paket Latihan</h1>
+        <p>Mulai dari paket yang sesuai dengan kesiapanmu. Paket yang masih disiapkan akan diberi tanda dengan jelas.</p>
+      </section>
+      <section class="package-section" aria-labelledby="package-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Koleksi soal</p>
+            <h2 id="package-title">Paket PU</h2>
+          </div>
+          <span class="package-count" id="package-count" aria-live="polite"></span>
+        </div>
+        <div class="package-grid" id="package-list" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Belajar terarah untuk persiapan SNBT.</p>
+      <a href="latihan.html">Kembali ke Latihan</a>
+    </div>
+  </footer>
+</body>
+</html>

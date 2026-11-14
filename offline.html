@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10152f" />
+  <title>Offline — SNBT Learning Center</title>
+  <style>
+    :root { color-scheme: dark; font-family: "Plus Jakarta Sans", system-ui, sans-serif; background: #10152f; color: #f8fafc; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: radial-gradient(circle at 18% 12%, rgba(123, 140, 255, .22), transparent 34rem), #10152f; }
+    main { width: min(90vw, 38rem); padding: 2rem; text-align: center; }
+    .mark { display: grid; width: 4rem; height: 4rem; margin: 0 auto 1.5rem; place-items: center; border-radius: 1.25rem; background: #ff8a65; color: #10152f; font-weight: 800; letter-spacing: -.08em; }
+    h1 { margin: 0 0 .75rem; font-size: clamp(1.8rem, 6vw, 2.8rem); }
+    p { margin: 0 auto 1.5rem; color: #c7cce8; line-height: 1.7; }
+    button { border: 0; border-radius: 999px; padding: .85rem 1.2rem; background: #7b8cff; color: #10152f; font: inherit; font-weight: 800; cursor: pointer; }
+    button:focus-visible { outline: 3px solid #ff8a65; outline-offset: 4px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="mark" aria-hidden="true">SN</div>
+    <h1>Kamu sedang offline</h1>
+    <p>Halaman ini belum tersedia di perangkatmu. Sambungkan kembali ke internet, lalu coba buka ulang halaman SNBT Learning Center.</p>
+    <button type="button" onclick="window.location.reload()">Coba lagi</button>
+  </main>
+</body>
+</html>
