@@ -5,6 +5,7 @@
   const average = document.querySelector("#progress-average");
   const latest = document.querySelector("#progress-latest");
   const subtestGrid = document.querySelector("#subtest-progress-grid");
+  const trendList = document.querySelector("#progress-trend-list");
   const clear = document.querySelector("#clear-progress");
   if (!list || !total || !average || !latest) return;
 
@@ -71,12 +72,50 @@
       subtestGrid.append(card);
     });
   }
+  function renderTrend(history) {
+    if (!trendList) return;
+    trendList.replaceChildren();
+    const recent = [...history].filter(item => Number.isFinite(Number(item.score)))
+      .sort((a,b) => new Date(a.completedAt || 0) - new Date(b.completedAt || 0)).slice(-7);
+    if (!recent.length) {
+      const empty = document.createElement("p");
+      empty.className = "progress-empty";
+      empty.textContent = "Selesaikan latihan atau tryout untuk mulai melihat perkembangan nilai.";
+      trendList.append(empty);
+      return;
+    }
+    recent.forEach((item, index) => {
+      const score = Math.max(0, Math.min(100, Number(item.score)));
+      const row = document.createElement("div");
+      row.className = "progress-trend-row";
+      const label = document.createElement("div");
+      label.className = "progress-trend-row__label";
+      const name = document.createElement("span");
+      name.textContent = item.label || (item.type === "tryout" ? "Simulasi tryout" : "Latihan");
+      const date = document.createElement("small");
+      date.textContent = item.completedAt ? new Date(item.completedAt).toLocaleDateString("id-ID", {day:"numeric",month:"short"}) : "Tanggal tidak tersedia";
+      label.append(name,date);
+      const track = document.createElement("div");
+      track.className = "progress-trend-row__track";
+      track.setAttribute("role","img");
+      track.setAttribute("aria-label", "Nilai " + Math.round(score) + " dari 100");
+      const fill = document.createElement("div");
+      fill.className = "progress-trend-row__fill";
+      fill.style.width = score + "%";
+      track.append(fill);
+      const value = document.createElement("strong");
+      value.textContent = Math.round(score);
+      row.append(label,track,value);
+      trendList.append(row);
+    });
+  }
   function render() {
     const history = window.SNBTProgressSync ? window.SNBTProgressSync.readLocal() : read();
     total.textContent = String(history.length);
     average.textContent = history.length ? String(Math.round(history.reduce((sum,item)=>sum+Number(item.score),0)/history.length)) : "—";
     latest.textContent = history.length ? new Date(history[0].completedAt).toLocaleDateString("id-ID") : "—";
     renderSubtests(history);
+    renderTrend(history);
     list.replaceChildren();
     if (!history.length) {
       const empty = document.createElement("p"); empty.className = "progress-empty";
