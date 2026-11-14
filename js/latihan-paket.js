@@ -40,7 +40,6 @@
   const correctCount = document.querySelector("#correct-count");
   const wrongCount = document.querySelector("#wrong-count");
   const blankCount = document.querySelector("#blank-count");
-  const totalCount = document.querySelector("#total-count");
   const restartButton = document.querySelector("#restart-button");
 
   function renderQuestion() {
@@ -94,7 +93,6 @@
     correctCount.textContent = state.score;
     wrongCount.textContent = packageQuestions.length - state.score;
     blankCount.textContent = "0";
-    totalCount.textContent = packageQuestions.length;
     resultSummary.textContent = `Kamu menjawab ${state.score} dari ${packageQuestions.length} soal dengan benar.`;
     try {
       const completedAt = new Date().toISOString();
