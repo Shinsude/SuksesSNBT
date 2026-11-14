@@ -1,5 +1,5 @@
 (() => {
-  const questions = Array.isArray(window.latihanQuestions) ? window.latihanPUQuestions : [];
+  const questions = Array.isArray(window.latihanQuestions) ? window.latihanQuestions : [];
   const intro = document.querySelector("#tryout-intro");
   const shell = document.querySelector("#tryout-shell");
   const result = document.querySelector("#tryout-result");
