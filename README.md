@@ -35,7 +35,7 @@ Login Google telah berhasil dilakukan pada Preview oleh pemilik proyek. Registra
 Preview Vercel tetap dilindungi SSO. Jangan menonaktifkan perlindungan hanya untuk mempermudah pengujian. Jangan merge ke `main` atau mempromosikan deployment sebelum QA dan persetujuan rilis.
 
 ## PWA dan Android
-PWA sudah memiliki manifest, service worker, ikon, cache offline, dan tombol instalasi yang muncul saat browser mendukung prompt instalasi. Di Android, pengguna dapat memasang website dari menu Chrome. APK Trusted Web Activity (TWA) masih memerlukan keputusan application ID, signing keystore, Digital Asset Links, build, dan uji perangkat; belum ada APK bertanda tangan di repositori.
+PWA sudah memiliki manifest, service worker, ikon, cache offline, dan tombol instalasi yang muncul saat browser mendukung prompt instalasi. Di Android, pengguna dapat memasang website dari menu Chrome. Folder `android/` berisi panduan dan template konfigurasi Trusted Web Activity (TWA). APK TWA masih memerlukan konfirmasi application ID, signing keystore, Digital Asset Links, build, dan uji perangkat; belum ada APK bertanda tangan di repositori.
 
 ## Verifikasi
 Workflow GitHub Actions menjalankan pemeriksaan tautan internal, manifest, aset precache, dan sintaks JavaScript pada push/PR. QA browser dan backend menyeluruh dilakukan setelah pekerjaan pengembangan selesai.
