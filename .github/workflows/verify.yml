@@ -1,0 +1,21 @@
+name: Verify SuksesSNBT
+on:
+  push:
+    branches:
+      - integrasi-snbt-learning-center-2026-11
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Check internal links, manifest and PWA assets
+        run: python3 scripts/verify_site.py
+      - name: Check JavaScript syntax
+        run: |
+          find js -type f -name '*.js' -print0 | xargs -0 -n1 node --check
