@@ -12,6 +12,9 @@ Selesaikan implementasi seluruh fitur terlebih dahulu di branch `integrasi-snbt-
 - Paket dasar aktif untuk ketujuh subtes.
 - Simulasi komprehensif lintas subtes berisi 70 soal dan timer 105 menit.
 - Dashboard progres menampilkan rata-rata nilai per subtes; metadata subtes disimpan bersama riwayat cloud.
+- Dashboard progres menampilkan tren hingga tujuh sesi terakhir secara kronologis, selain rata-rata nilai per subtes.
+- Materi PPU pertemuan pertama telah ditulis ulang untuk memperbaiki contoh dan pembahasan yang tidak akurat.
+- CI memeriksa konsistensi konfigurasi TWA Android (application ID, domain produksi, URL manifest, start URL, dan ikon) tanpa membutuhkan signing key.
 - Perbaikan sumber bank soal pada tryout dan paket latihan agar seluruh 70 soal lintas tujuh subtes dapat digunakan.
 - CI menjalankan smoke test runtime: tryout menampilkan 70 nomor navigasi dan seluruh tujuh paket subtes dapat dibuka dengan empat opsi jawaban.
 - Service worker menggunakan cache versi baru setelah perbaikan alur belajar; workflow CI memakai actions/checkout v7 yang kompatibel dengan Node 24.
