@@ -37,7 +37,7 @@
         });
       }
     });
-    const names = {PU:"Penalaran Umum",PPU:"Pengetahuan dan Pemahaman Umum",PBM:"Pemahaman Bacaan dan Menulis",PK:"Pengetahuan Kuantitatif",PENMAT:"Penalaran Matematika",PenMat:"Penalaran Matematika",LI:"Literasi Bahasa Indonesia",LE:"Literasi Bahasa Inggris"};
+    const names = {pu:"Penalaran Umum",ppu:"Pengetahuan dan Pemahaman Umum",pbm:"Pemahaman Bacaan dan Menulis",pk:"Pengetahuan Kuantitatif",pm:"Penalaran Matematika",li:"Literasi Bahasa Indonesia",le:"Literasi Bahasa Inggris",PU:"Penalaran Umum",PPU:"Pengetahuan dan Pemahaman Umum",PBM:"Pemahaman Bacaan dan Menulis",PK:"Pengetahuan Kuantitatif",PENMAT:"Penalaran Matematika",PenMat:"Penalaran Matematika",LI:"Literasi Bahasa Indonesia",LE:"Literasi Bahasa Inggris"};
     subtestGrid.replaceChildren();
     if (!groups.size) {
       const empty = document.createElement("p");
