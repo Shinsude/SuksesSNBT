@@ -23,13 +23,21 @@ python3 -m http.server 8080
 Buka `http://localhost:8080`. Service worker dan fitur instalasi PWA memerlukan HTTPS pada deployment; localhost juga dianggap secure context oleh browser.
 
 ## Penyimpanan progres
-Riwayat tamu disimpan pada `localStorage` dengan kunci `snbt-progress-history`. Setelah login, progres disinkronkan ke tabel `progress_entries` pada Supabase. Row Level Security membatasi akses ke data milik akun sendiri.
+Riwayat tamu disimpan pada `localStorage` dengan kunci `snbt-progress-history`. Setelah login, progres disinkronkan ke tabel `progress_entries` pada Supabase. Row Level Security membatasi akses ke data milik akun sendiri. Saat pengguna keluar, data akun lokal dibersihkan dari browser bersama untuk mencegah pengguna berikutnya melihat riwayat akun sebelumnya.
 
-## Supabase setup
-1. Jalankan SQL pada `supabase/migrations/202611140001_snbt_user_progress.sql` di Supabase SQL Editor.
-2. Atur Site URL dan Redirect URLs Supabase Auth ke domain SuksesSNBT dan URL preview yang dipakai untuk pengujian.
-3. Deploy branch integrasi agar build menghasilkan `js/supabase-config.js` dari `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-4. Jangan pernah mengekspos `SUPABASE_SECRET_KEY` atau `SUPABASE_SERVICE_ROLE_KEY` ke browser.
+## Supabase
+- Project: `supabase-aero-candle` (`yogtbxautvovqazmthwn`).
+- Migrasi `snbt_user_progress` sudah diterapkan dan diverifikasi pada database.
+- Tabel `profiles` dan `progress_entries` tersedia; RLS aktif pada keduanya.
+- Trigger `on_snbt_auth_user_created` membuat profil saat akun Auth baru dibuat.
+- Build Vercel menghasilkan `js/supabase-config.js` dari `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+- Hanya URL dan publishable key yang masuk ke browser. Jangan pernah mengekspos `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, atau kredensial database ke browser atau Git.
+
+### Pengaturan Auth yang masih harus diuji
+Sebelum uji registrasi email, pastikan Supabase Authentication URL Configuration memakai URL website yang benar:
+- Site URL: domain website produksi yang disetujui.
+- Redirect URLs: domain preview Vercel untuk branch integrasi dan domain produksi.
+- Jangan nonaktifkan konfirmasi email hanya demi melewati pengujian.
 
 ## Verifikasi
 Jalankan pemeriksaan tautan, manifest, dan aset precache:
@@ -39,14 +47,15 @@ python3 scripts/verify_site.py
 find js -type f -name '*.js' -print0 | xargs -0 -n1 node --check
 ```
 
-Workflow GitHub Actions disiapkan untuk menjalankan pemeriksaan yang sama pada push ke branch integrasi dan pull request ke `main`.
+Workflow GitHub Actions menjalankan pemeriksaan tersebut pada push ke branch integrasi dan pull request ke `main`.
 
 ## Deployment
 - `main` adalah sumber website produksi.
 - `integrasi-snbt-learning-center-2026-11` adalah branch pengembangan.
-- Jangan merge ke `main` sebelum pengujian browser, backend, dan persetujuan rilis selesai.
+- Gunakan Preview untuk pengujian akun dan sinkronisasi.
+- Jangan merge ke `main` atau mempromosikan Preview sebelum pengujian browser, backend, dan persetujuan rilis selesai.
 
 ## Batasan yang belum diselesaikan
-- Belum ada akun pengguna atau database cloud; progres saat ini hanya lokal.
-- Belum ada APK/TWA yang ditandatangani. Instalasi PWA melalui Chrome adalah opsi Android yang tersedia setelah deployment dirilis.
+- Alur registrasi email, verifikasi email, login, reset password, dan sinkronisasi lintas perangkat masih memerlukan pengujian browser nyata.
+- Belum ada APK/TWA yang ditandatangani. Instalasi PWA melalui Chrome adalah opsi Android setelah deployment dirilis.
 - Konten latihan aktif yang disediakan saat ini adalah lima soal Penalaran Umum. Jangan mengiklankan jumlah soal lebih besar sebelum bank soal benar-benar ditambahkan dan diperiksa.
