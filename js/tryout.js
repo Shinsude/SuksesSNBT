@@ -5,7 +5,7 @@
   const result = document.querySelector("#tryout-result");
   if (!intro || !shell || !result || !questions.length) return;
 
-  const durationSeconds = 70 * 60;
+  const durationSeconds = 105 * 60;
   const state = { current: 0, answers: Array(questions.length).fill(null), remaining: durationSeconds, timerId: null, finished: false };
   const answerList = document.querySelector("#answer-list");
   const questionTitle = document.querySelector("#question-title");
