@@ -14,7 +14,7 @@ function element(selector) {
     textContent: "",
     hidden: false,
     disabled: false,
-    classList: { add() {} },
+    classList: { add() {} },\n    style: {},
     addEventListener(name, callback) { handlers[name] = callback; },
     focus() {},
     querySelector() { return element(selector + " child"); },
