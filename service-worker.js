@@ -1,4 +1,4 @@
-const CACHE_VERSION="snbt-learning-center-v6";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
+const CACHE_VERSION="snbt-learning-center-v7";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
   "/",
   "/index.html",
   "/css/materi.css",
