@@ -65,10 +65,12 @@
       if (!answer) blank += 1;
       else if (answer === question.answer) correct += 1;
       else wrong += 1;
-      const label = answer ? `Jawabanmu: ${answer}. Kunci: ${question.answer}.` : `Belum dijawab. Kunci: ${question.answer}.`;
+      const chosen = question.options.find((option) => option.id === answer);
+      const correctOption = question.options.find((option) => option.id === question.answer);
+      const label = answer ? `Jawabanmu: ${answer} (${chosen ? chosen.text : ""}). Kunci: ${question.answer} (${correctOption ? correctOption.text : ""}).` : `Belum dijawab. Kunci: ${question.answer} (${correctOption ? correctOption.text : ""}).`;
       const status = !answer ? "Kosong" : answer === question.answer ? "Benar" : "Salah";
       const className = !answer ? "" : answer === question.answer ? " review-item--correct" : " review-item--wrong";
-      return `<article class="review-item${className}"><strong>Soal ${index + 1} · ${status}</strong><p>${label} ${question.explanation.summary}</p><p><strong>Penjelasan:</strong> ${question.explanation.correct}</p></article>`;
+      return `<article class="review-item${className}"><strong>Soal ${index + 1} · ${question.subtest} · ${status}</strong><p>${label} ${question.explanation.summary}</p><p><strong>Penjelasan:</strong> ${question.explanation.correct}</p></article>`;
     }).join("");
     const score = Math.round((correct / questions.length) * 100);
     document.querySelector("#score-value").textContent = score;
