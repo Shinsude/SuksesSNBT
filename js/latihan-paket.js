@@ -2,7 +2,7 @@
   const params = new URLSearchParams(window.location.search);
   const packageId = params.get("paket");
   const packages = Array.isArray(window.latihanPackages) ? window.latihanPackages : [];
-  const questions = Array.isArray(window.latihanQuestions) ? window.latihanPUQuestions : [];
+  const questions = Array.isArray(window.latihanQuestions) ? window.latihanQuestions : [];
   const selectedPackage = packages.find((item) => item.id === packageId);
   const runner = document.querySelector("#runner");
   const invalid = document.querySelector("#invalid-package");
