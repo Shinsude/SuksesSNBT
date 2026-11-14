@@ -2,7 +2,7 @@
   const params = new URLSearchParams(window.location.search);
   const packageId = params.get("paket");
   const packages = Array.isArray(window.latihanPackages) ? window.latihanPackages : [];
-  const questions = Array.isArray(window.latihanPUQuestions) ? window.latihanPUQuestions : [];
+  const questions = Array.isArray(window.latihanQuestions) ? window.latihanPUQuestions : [];
   const selectedPackage = packages.find((item) => item.id === packageId);
   const runner = document.querySelector("#runner");
   const invalid = document.querySelector("#invalid-package");
@@ -21,7 +21,8 @@
 
   runner.hidden = false;
   breadcrumb.textContent = selectedPackage.name;
-  document.title = `${selectedPackage.name} — SNBT Learning Center`;
+  document.title = `${selectedPackage.name} — Sukses SNBT`;
+  document.querySelector("#package-subtest").textContent = selectedPackage.subject || selectedPackage.subtest;
 
   const state = { current: 0, score: 0, answered: false };
   const questionTitle = document.querySelector("#question-title");
