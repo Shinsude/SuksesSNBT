@@ -12,6 +12,9 @@ Selesaikan implementasi seluruh fitur terlebih dahulu di branch `integrasi-snbt-
 - Paket dasar aktif untuk ketujuh subtes.
 - Simulasi komprehensif lintas subtes berisi 70 soal dan timer 105 menit.
 - Dashboard progres menampilkan rata-rata nilai per subtes; metadata subtes disimpan bersama riwayat cloud.
+- Perbaikan sumber bank soal pada tryout dan paket latihan agar seluruh 70 soal lintas tujuh subtes dapat digunakan.
+- CI menjalankan smoke test runtime: tryout menampilkan 70 nomor navigasi dan seluruh tujuh paket subtes dapat dibuka dengan empat opsi jawaban.
+- Service worker menggunakan cache versi baru setelah perbaikan alur belajar; workflow CI memakai actions/checkout v7 yang kompatibel dengan Node 24.
 - Persiapan Android TWA tersedia di `android/` berupa panduan, template manifest, dan aturan agar signing key tidak masuk Git.
 
 ## Pekerjaan pengembangan yang masih perlu dituntaskan
@@ -20,7 +23,7 @@ Selesaikan implementasi seluruh fitur terlebih dahulu di branch `integrasi-snbt-
 3. Tingkatkan progres: ringkasan per subtes, tren nilai, dan sinkronisasi yang konsisten.
 4. Rapikan tampilan dan aksesibilitas seluruh halaman untuk layar HP dan desktop.
 5. Lengkapi SEO, metadata, dokumentasi, serta pengalaman instalasi PWA.
-6. Siapkan TWA/APK Android setelah application ID dan signing disepakati. Signing key tidak boleh disimpan di Git.
+6. Siapkan proyek TWA/APK Android dengan application ID terkonfirmasi `id.suksessnbt.app`; buat dan amankan signing key di luar Git, lalu siapkan Digital Asset Links. Signing key tidak boleh disimpan di Git.
 7. Perbarui dokumentasi dan CI agar seluruh aset serta konten baru terjaga.
 
 ## QA akhir — dilakukan setelah seluruh pengembangan
