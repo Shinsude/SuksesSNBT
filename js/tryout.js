@@ -80,7 +80,7 @@
     document.querySelector("#saved-note").textContent = "Ringkasan hasil disimpan sementara di perangkat ini. Data dapat hilang jika data situs atau browser dihapus.";
     try {
       const completedAt = new Date().toISOString();
-      const entry = { type: "tryout", label: "Simulasi Komprehensif 7 Subtes", score, correct, wrong, blank, total: questions.length, completedAt };
+      const entry = { type: "tryout", subtest: "ALL", label: "Simulasi Komprehensif 7 Subtes", score, correct, wrong, blank, total: questions.length, completedAt };
       const history = JSON.parse(localStorage.getItem("snbt-progress-history") || "[]");
       history.unshift(entry);
       localStorage.setItem("snbt-progress-history", JSON.stringify(history.slice(0, 50)));
