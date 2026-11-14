@@ -38,7 +38,15 @@ Preview Vercel tetap dilindungi SSO. Jangan menonaktifkan perlindungan hanya unt
 PWA sudah memiliki manifest, service worker, ikon, cache offline, dan tombol instalasi yang muncul saat browser mendukung prompt instalasi. Di Android, pengguna dapat memasang website dari menu Chrome. Folder `android/` berisi panduan dan template konfigurasi Trusted Web Activity (TWA). APK TWA masih memerlukan konfirmasi application ID, signing keystore, Digital Asset Links, build, dan uji perangkat; belum ada APK bertanda tangan di repositori.
 
 ## Verifikasi
-Workflow GitHub Actions menjalankan pemeriksaan tautan internal, manifest, aset precache, dan sintaks JavaScript pada push/PR. QA browser dan backend menyeluruh dilakukan setelah pekerjaan pengembangan selesai.
+Jalankan pemeriksaan lokal dari root repositori:
+
+```bash
+python3 scripts/verify_site.py
+find js data -type f -name '*.js' -print0 | xargs -0 -n1 node --check
+node scripts/verify_content.js
+```
+
+Workflow GitHub Actions menjalankan pemeriksaan tautan internal, manifest, aset precache, sintaks JavaScript, dan konsistensi bank soal pada push/PR. QA browser dan backend menyeluruh dilakukan setelah pekerjaan pengembangan selesai.
 
 ## Branch dan rilis
 - `main` adalah sumber website produksi.
