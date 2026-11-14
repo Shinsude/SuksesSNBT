@@ -5,8 +5,8 @@
   function readLocal(){try{const value=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(value)?value.filter(item=>item&&Number.isFinite(Number(item.score))):[];}catch(_){return[];}}
   function writeLocal(items){try{localStorage.setItem(KEY,JSON.stringify(items.slice(0,50)));}catch(_){}}
   function ensureIds(items){let changed=false;items.forEach(item=>{if(!item.clientId){item.clientId=makeId();changed=true;}});if(changed)writeLocal(items);return items;}
-  function toRow(item,userId){return{user_id:userId,client_id:item.clientId,activity_type:item.type==="tryout"?"tryout":"latihan",label:String(item.label||"Aktivitas SNBT").slice(0,160),score:Math.max(0,Math.min(100,Math.round(Number(item.score)||0))),correct_count:Math.max(0,Number(item.correct)||0),wrong_count:Math.max(0,Number(item.wrong)||0),blank_count:Math.max(0,Number(item.blank)||0),total_count:Math.max(0,Number(item.total)||0),completed_at:item.completedAt||new Date().toISOString(),details:{}};}
-  function fromRow(row){return{clientId:row.client_id,type:row.activity_type,label:row.label,score:row.score,correct:row.correct_count,wrong:row.wrong_count,blank:row.blank_count,total:row.total_count,completedAt:row.completed_at};}
+  function toRow(item,userId){return{user_id:userId,client_id:item.clientId,activity_type:item.type==="tryout"?"tryout":"latihan",label:String(item.label||"Aktivitas SNBT").slice(0,160),score:Math.max(0,Math.min(100,Math.round(Number(item.score)||0))),correct_count:Math.max(0,Number(item.correct)||0),wrong_count:Math.max(0,Number(item.wrong)||0),blank_count:Math.max(0,Number(item.blank)||0),total_count:Math.max(0,Number(item.total)||0),completed_at:item.completedAt||new Date().toISOString(),details:{subtest:item.subtest||item.details?.subtest||null}};}
+  function fromRow(row){return{clientId:row.client_id,type:row.activity_type,label:row.label,score:row.score,correct:row.correct_count,wrong:row.wrong_count,blank:row.blank_count,total:row.total_count,completedAt:row.completed_at,subtest:row.details&&row.details.subtest||null};}
   async function sync(){
     const client=db();if(!client)return{synced:false,reason:"client-unavailable"};
     const sessionResult=await client.auth.getSession(),user=sessionResult.data&&sessionResult.data.session&&sessionResult.data.session.user;
@@ -15,7 +15,7 @@
     // Do not upload another account's local history when a different person signs in on this browser.
     const local=previousOwner&&previousOwner!==user.id?[]:ensureIds(readLocal());
     if(local.length){const saved=await client.from("progress_entries").upsert(local.map(item=>toRow(item,user.id)),{onConflict:"user_id,client_id"});if(saved.error){window.dispatchEvent(new CustomEvent("snbt-sync-status",{detail:{state:"error",message:saved.error.message}}));return{synced:false,reason:saved.error.message};}}
-    const result=await client.from("progress_entries").select("client_id,activity_type,label,score,correct_count,wrong_count,blank_count,total_count,completed_at").order("completed_at",{ascending:false}).limit(50);
+    const result=await client.from("progress_entries").select("client_id,activity_type,label,score,correct_count,wrong_count,blank_count,total_count,completed_at,details").order("completed_at",{ascending:false}).limit(50);
     if(result.error){window.dispatchEvent(new CustomEvent("snbt-sync-status",{detail:{state:"error",message:result.error.message}}));return{synced:false,reason:result.error.message};}
     const merged=new Map();[...(result.data||[]).map(fromRow),...local].forEach(item=>{const key=item.clientId||[item.completedAt,item.type,item.label,item.score].join("|");if(!merged.has(key))merged.set(key,item);});
     const entries=[...merged.values()].sort((x,y)=>new Date(y.completedAt)-new Date(x.completedAt)).slice(0,50);
