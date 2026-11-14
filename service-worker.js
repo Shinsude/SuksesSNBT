@@ -1,4 +1,4 @@
-const CACHE_VERSION="snbt-learning-center-v3";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
+const CACHE_VERSION="snbt-learning-center-v4";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
   "/",
   "/index.html",
   "/css/materi.css",
@@ -71,6 +71,7 @@ const CACHE_VERSION="snbt-learning-center-v3";const PRECACHE=`${CACHE_VERSION}-p
   "/css/paket-latihan.css",
   "/css/tryout.css",
   "/data/latihan-pu.js",
+  "/data/latihan-snbt.js",
   "/data/paket-latihan.js",
   "/js/latihan-demo.js",
   "/js/latihan-paket.js",
