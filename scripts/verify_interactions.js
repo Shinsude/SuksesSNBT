@@ -55,7 +55,7 @@ function loadQuestionBank(context) {
     clearInterval() {},
     location: { reload() {} }
   };
-  const context = { window, document, Math, Date, URLSearchParams, localStorage: { getItem() { return "[]"; }, setItem() {} } };
+  const context = { window, document, Math, Date, URLSearchParams, setInterval() { return 1; }, clearInterval() {}, localStorage: { getItem() { return "[]"; }, setItem() {} } };
   loadQuestionBank(context);
   assert.equal(window.latihanQuestions.length, 70, "tryout source bank must contain 70 questions");
   vm.runInContext(fs.readFileSync("js/tryout.js", "utf8"), context, { filename: "js/tryout.js" });
