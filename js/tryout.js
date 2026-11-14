@@ -99,7 +99,7 @@
     if (subtestGrid) subtestGrid.innerHTML = [...subtestTotals.entries()].map(([code,item]) =>
       '<article class="subtest-result-item"><strong>'+subtestNames[code]+'</strong><span>'+item.correct+' dari '+item.total+' benar · '+Math.round(item.correct/item.total*100)+'/100</span></article>'
     ).join("");
-    document.querySelector("#saved-note").textContent = "Ringkasan hasil disimpan sementara di perangkat ini. Data dapat hilang jika data situs atau browser dihapus.";
+    document.querySelector("#saved-note").textContent = "Hasil tersimpan di perangkat. Jika kamu masuk, progres akan disinkronkan ke akun.";
     try {
       const completedAt = new Date().toISOString();
       const entry = { type: "tryout", subtest: "ALL", label: "Simulasi Komprehensif 7 Subtes", score, correct, wrong, blank, total: questions.length, completedAt, subtestScores: Object.fromEntries([...subtestTotals.entries()].map(([code,item]) => [code, Math.round(item.correct / item.total * 100)])) };
@@ -109,7 +109,7 @@
       if (window.SNBTProgressSync) window.SNBTProgressSync.save(entry);
       localStorage.setItem("snbt-tryout-last-result", JSON.stringify(entry));
     } catch (error) {
-      document.querySelector("#saved-note").textContent = "Hasil tetap tampil selama halaman ini terbuka; penyimpanan perangkat tidak tersedia.";
+      document.querySelector("#saved-note").textContent = "Hasil tetap tampil selama halaman ini terbuka, tetapi penyimpanan perangkat tidak tersedia.";
     }
   }
 
