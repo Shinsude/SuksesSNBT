@@ -32,7 +32,7 @@ python3 scripts/verify_site.py
 find js -type f -name '*.js' -print0 | xargs -0 -n1 node --check
 ```
 
-GitHub Actions menjalankan pemeriksaan yang sama pada branch integrasi dan pull request ke `main`.
+Workflow GitHub Actions disiapkan untuk menjalankan pemeriksaan yang sama pada push ke branch integrasi dan pull request ke `main`.
 
 ## Deployment
 - `main` adalah sumber website produksi.
