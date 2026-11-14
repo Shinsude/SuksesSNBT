@@ -46,7 +46,7 @@ find js data -type f -name '*.js' -print0 | xargs -0 -n1 node --check
 node scripts/verify_content.js
 ```
 
-Workflow GitHub Actions menjalankan pemeriksaan tautan internal, manifest, aset precache, sintaks JavaScript, dan konsistensi bank soal pada push/PR. QA browser dan backend menyeluruh dilakukan setelah pekerjaan pengembangan selesai.
+Workflow GitHub Actions menjalankan pemeriksaan tautan internal, manifest, aset precache, sintaks JavaScript, konsistensi bank soal, serta smoke test interaksi tryout dan paket lintas subtes pada push/PR. QA browser dan backend menyeluruh dilakukan setelah pekerjaan pengembangan selesai.
 
 ## Branch dan rilis
 - `main` adalah sumber website produksi.
