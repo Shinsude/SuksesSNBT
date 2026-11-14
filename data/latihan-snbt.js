@@ -6,8 +6,7 @@
     answer,
     explanation: {
       summary, correct,
-      incorrect: Object.fromEntries(options.map((text,i)=>[String.fromCharCode(65+i),
-        String.fromCharCode(65+i)===answer ? correct : "Pilihan ini tidak sesuai dengan informasi atau konsep yang ditanyakan."] ))
+      incorrect: Object.fromEntries(options.map((text,i)=>[String.fromCharCode(65+i), "Pilihan ini tidak sesuai dengan informasi atau konsep yang ditanyakan."]).filter(([optionId]) => optionId !== answer))
     }
   });
   const extra = [
@@ -49,7 +48,7 @@
     make("le-005","Literasi Inggris","Purpose","sedang","A passage explains how to separate paper, plastic, and glass before collection. The writer’s main purpose is to …",["Entertain readers with a story","Explain a recycling procedure","Advertise a shopping center","Describe a holiday"],"B","The passage gives steps for sorting recyclable materials.","B is correct because it explains a practical recycling procedure.")
   ];
   const extraMore = [
-    make("pu-006","PU","Pola huruf","sedang","Urutan huruf B, E, H, K, ... dilanjutkan dengan huruf …",["M","N","O","P"],"A","Setiap huruf maju tiga posisi dalam alfabet.","A benar karena setelah K, tiga posisi berikutnya adalah L, M, sehingga jawabannya M."),
+    make("pu-006","PU","Pola huruf","sedang","Urutan huruf B, E, H, K, ... dilanjutkan dengan huruf …",["M","N","O","P"],"B","Setiap huruf maju tiga posisi dalam alfabet.","B benar karena setelah K, tiga posisi berikutnya adalah L, M, N, sehingga jawabannya N."),
     make("pu-007","PU","Penalaran sebab-akibat","sedang","Jika mesin menyala, lampu indikator hijau aktif. Lampu indikator hijau tidak aktif. Kesimpulan yang valid adalah …",["Mesin pasti menyala","Mesin tidak menyala","Baterai pasti penuh","Lampu indikator rusak"],"B","Dengan implikasi tersebut, tidak aktifnya indikator meniadakan kondisi mesin menyala.","B benar berdasarkan modus tollens, dengan asumsi aturan pada premis berlaku."),
     make("pu-008","PU","Analisis pola","mudah","Tentukan angka berikutnya: 3, 6, 12, 24, …",["30","36","42","48"],"D","Setiap suku dikalikan dua.","D benar karena 24 × 2 = 48."),
     make("pu-009","PU","Perbandingan kuantitatif","sedang","Rina menyelesaikan 4 soal dalam 8 menit dengan kecepatan tetap. Waktu untuk menyelesaikan 10 soal adalah …",["16 menit","18 menit","20 menit","24 menit"],"C","Waktu per soal adalah 8/4 = 2 menit.","C benar karena 10 × 2 = 20 menit."),
