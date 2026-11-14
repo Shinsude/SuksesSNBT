@@ -103,10 +103,11 @@ function showResult() {
   wrongCount.textContent = wrong;
   try {
     const completedAt = new Date().toISOString();
-    const entry = { type: "latihan", label: "Latihan Interaktif PU", score: Math.round(score), correct: state.score, wrong, blank: 0, total: questions.length, completedAt };
+    const entry = { type: "latihan", subtest: "PU", label: "Latihan Interaktif PU", score: Math.round(score), correct: state.score, wrong, blank: 0, total: questions.length, completedAt };
     const history = JSON.parse(localStorage.getItem("snbt-progress-history") || "[]");
     history.unshift(entry);
     localStorage.setItem("snbt-progress-history", JSON.stringify(history.slice(0, 50)));
+    if (window.SNBTProgressSync) window.SNBTProgressSync.save(entry);
   } catch (_) {}
   resultMessage.textContent = score >= 80
     ? "Bagus! Pertahankan latihan rutinmu."
