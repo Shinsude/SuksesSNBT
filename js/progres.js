@@ -32,8 +32,10 @@
       const breakdown = item.subtestScores || item.details?.subtestScores;
       if (breakdown && typeof breakdown === "object") {
         Object.entries(breakdown).forEach(([subtest, score]) => {
+          const numericScore = Number(score);
+          if (!Number.isFinite(numericScore)) return;
           if (!groups.has(subtest)) groups.set(subtest, []);
-          groups.get(subtest).push(Number(score));
+          groups.get(subtest).push(numericScore);
         });
       }
     });
