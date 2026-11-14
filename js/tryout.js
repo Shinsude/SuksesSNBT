@@ -34,7 +34,7 @@
   function renderQuestion() {
     const question = questions[state.current];
     questionTitle.textContent = question.question;
-    questionTopic.textContent = question.topic;
+    questionTopic.textContent = `${question.subtest} · ${question.topic}`;
     questionDifficulty.textContent = question.difficulty;
     questionCounter.textContent = `Soal ${state.current + 1} dari ${questions.length}`;
     answerList.innerHTML = question.options.map((option) => `<label class="answer-option" for="tryout-answer-${option.id}"><input id="tryout-answer-${option.id}" name="tryout-answer" type="radio" value="${option.id}"${state.answers[state.current] === option.id ? " checked" : ""}><span><strong>${option.id}.</strong> ${option.text}</span></label>`).join("");
