@@ -12,6 +12,17 @@ for (const file of ["data/latihan-pu.js", "data/latihan-snbt.js", "data/paket-la
 }
 
 const { latihanQuestions, latihanPackages } = context.window;
+
+// Guard the two interactive runners against accidentally reading only the PU seed bank.
+for (const file of ["js/tryout.js", "js/latihan-paket.js"]) {
+  const source = fs.readFileSync(file, "utf8");
+  assert.match(
+    source,
+    /const questions = Array\.isArray\(window\.latihanQuestions\) \? window\.latihanQuestions : \[\];/,
+    file + " must consume the complete seven-subtest question bank"
+  );
+}
+
 assert.ok(Array.isArray(latihanQuestions), "question bank must be an array");
 assert.equal(latihanQuestions.length, 70, "expected 70 original practice questions");
 assert.equal(new Set(latihanQuestions.map(q => q.id)).size, 70, "question IDs must be unique");
