@@ -30,11 +30,36 @@
       groups.get(code).push(Number(item.score));
     });
     const names = {PU:"Penalaran Umum",PPU:"Pengetahuan dan Pemahaman Umum",PBM:"Pemahaman Bacaan dan Menulis",PK:"Pengetahuan Kuantitatif",PENMAT:"Penalaran Matematika",PenMat:"Penalaran Matematika",LI:"Literasi Bahasa Indonesia",LE:"Literasi Bahasa Inggris"};
-    if (!groups.size) { subtestGrid.innerHTML = '<p class="progress-empty">Selesaikan paket latihan untuk melihat rata-rata setiap subtes.</p>'; return; }
-    subtestGrid.innerHTML = [...groups.entries()].map(([code,scores]) => {
-      const mean = Math.round(scores.reduce((sum,value)=>sum+value,0)/scores.length);
-      return '<article class="progress-subtest-card"><div class="progress-subtest-card__head"><span>'+ (names[code] || code) +'</span><strong>'+mean+'/100</strong></div><div class="progress-subtest-card__bar"><div class="progress-subtest-card__fill" style="width:'+mean+'%"></div></div><small>'+scores.length+' sesi latihan</small></article>';
-    }).join("");
+    subtestGrid.replaceChildren();
+    if (!groups.size) {
+      const empty = document.createElement("p");
+      empty.className = "progress-empty";
+      empty.textContent = "Selesaikan paket latihan untuk melihat rata-rata setiap subtes.";
+      subtestGrid.append(empty);
+      return;
+    }
+    groups.forEach((scores, code) => {
+      const mean = Math.max(0, Math.min(100, Math.round(scores.reduce((sum,value)=>sum+value,0)/scores.length)));
+      const card = document.createElement("article");
+      card.className = "progress-subtest-card";
+      const head = document.createElement("div");
+      head.className = "progress-subtest-card__head";
+      const name = document.createElement("span");
+      name.textContent = names[code] || String(code).slice(0,24);
+      const score = document.createElement("strong");
+      score.textContent = mean + "/100";
+      head.append(name, score);
+      const bar = document.createElement("div");
+      bar.className = "progress-subtest-card__bar";
+      const fill = document.createElement("div");
+      fill.className = "progress-subtest-card__fill";
+      fill.style.width = mean + "%";
+      bar.append(fill);
+      const note = document.createElement("small");
+      note.textContent = scores.length + " sesi latihan";
+      card.append(head, bar, note);
+      subtestGrid.append(card);
+    });
   }
   function render() {
     const history = window.SNBTProgressSync ? window.SNBTProgressSync.readLocal() : read();
