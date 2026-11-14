@@ -2,16 +2,14 @@
 
 Platform belajar mandiri UTBK-SNBT berbasis HTML, CSS, dan JavaScript statis, dengan Progressive Web App (PWA).
 
-## Halaman
-- `index.html` — beranda dan navigasi 7 subtes.
-- `materi.html` dan `materi/` — katalog serta materi pembelajaran.
-- `latihan.html` — katalog latihan; saat ini paket aktif tersedia untuk Penalaran Umum.
-- `paket-latihan.html` — daftar paket latihan.
-- `latihan-paket.html?paket=pu-dasar-1` — pengerjaan paket.
-- `latihan-demo.html` — demo latihan interaktif.
-- `tryout.html` — simulasi tryout PU lima menit (simulasi platform, bukan ujian resmi).
-- `progres.html` — riwayat hasil latihan lokal dan sinkronisasi akun.
-- `akun.html` — registrasi, login, logout, dan pemulihan kata sandi Supabase.
+## Fitur dan halaman
+- Beranda: ringkasan platform dan navigasi.
+- Materi: katalog tujuh subtes dan rangkaian pertemuan pembelajaran.
+- Latihan: 70 soal latihan orisinal, masing-masing 10 soal untuk PU, PPU, PBM, PK, Penalaran Matematika, Literasi Bahasa Indonesia, dan Literasi Bahasa Inggris.
+- Paket latihan: satu paket dasar untuk setiap subtes, dilengkapi umpan balik dan pembahasan.
+- Tryout: simulasi komprehensif 70 soal dengan timer 105 menit. Ini latihan buatan platform, bukan ujian resmi atau prediksi nilai resmi SNBT.
+- Progres: riwayat hasil lokal dan sinkronisasi ke akun.
+- Akun: registrasi email/password, login Google, logout, dan pemulihan kata sandi Supabase.
 
 ## Jalankan lokal
 Jalankan server statis dari root repositori:
@@ -20,53 +18,30 @@ Jalankan server statis dari root repositori:
 python3 -m http.server 8080
 ```
 
-Buka `http://localhost:8080`. Service worker dan fitur instalasi PWA memerlukan HTTPS pada deployment; localhost juga dianggap secure context oleh browser.
+Buka `http://localhost:8080`. Service worker dan instalasi PWA memerlukan HTTPS pada deployment; localhost juga dianggap secure context oleh browser.
 
 ## Penyimpanan progres
 Riwayat tamu disimpan pada `localStorage` dengan kunci `snbt-progress-history`. Setelah login, progres disinkronkan ke tabel `progress_entries` pada Supabase. Row Level Security membatasi akses ke data milik akun sendiri. Saat pengguna keluar, data akun lokal dibersihkan dari browser bersama untuk mencegah pengguna berikutnya melihat riwayat akun sebelumnya.
 
 ## Supabase
-- Project: `supabase-aero-candle` (`yogtbxautvovqazmthwn`).
-- Migrasi `snbt_user_progress` sudah diterapkan dan diverifikasi pada database.
-- Tabel `profiles` dan `progress_entries` tersedia; RLS aktif pada keduanya.
-- Trigger `on_snbt_auth_user_created` membuat profil saat akun Auth baru dibuat.
-- Build Vercel menghasilkan `js/supabase-config.js` dari `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-- Hanya URL dan publishable key yang masuk ke browser. Jangan pernah mengekspos `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, atau kredensial database ke browser atau Git.
+- Project ref: `yogtbxautvovqazmthwn`.
+- Migrasi `snbt_user_progress` telah diterapkan; tabel `profiles` dan `progress_entries` menggunakan RLS.
+- Build Vercel menyediakan `js/supabase-config.js` dari `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+- Hanya URL dan publishable key yang masuk ke browser. Jangan pernah mengekspos secret/service-role key atau kredensial database ke browser atau Git.
 
-### Pengaturan Auth yang masih harus diuji
-Kode Google OAuth memakai `location.origin` agar callback kembali ke deployment yang sedang dibuka (Preview atau produksi). Supabase Auth tetap harus mengizinkan alamat tersebut.
+## OAuth dan pengujian akun
+Login Google telah berhasil dilakukan pada Preview oleh pemilik proyek. Registrasi email, konfirmasi email, reset password, isolasi data antarakun, dan sinkronisasi lintas perangkat masih perlu diuji pada tahap QA akhir.
 
-Atur **Supabase Dashboard → Authentication → URL Configuration**:
-- Site URL: `https://suksessnbt.vercel.app` (domain produksi).
-- Additional Redirect URLs:
-  - `https://suksessnbt.vercel.app/**`
-  - `https://*-ai-ced3.vercel.app/**` (deployment Preview Vercel)
-  - `http://localhost:8080/**` (pengembangan lokal, bila diperlukan).
+Preview Vercel tetap dilindungi SSO. Jangan menonaktifkan perlindungan hanya untuk mempermudah pengujian. Jangan merge ke `main` atau mempromosikan deployment sebelum QA dan persetujuan rilis.
 
-Untuk mengaktifkan Google OAuth, buat OAuth Client bertipe **Web application** di Google Cloud:
-- Authorized JavaScript origins: `https://suksessnbt.vercel.app` dan URL Preview branch integrasi.
-- Authorized redirect URI: `https://yogtbxautvovqazmthwn.supabase.co/auth/v1/callback`.
-- Masukkan Google Client ID dan Client Secret pada **Supabase Dashboard → Authentication → Providers → Google**, lalu aktifkan providernya.
-
-Google Client ID/Secret adalah kredensial milik pemilik akun dan tidak tersedia di repositori atau koneksi Vercel. Karena itu, Google OAuth belum boleh dianggap aktif sebelum konfigurasi ini dilakukan dan alur login berhasil diuji. Jangan menonaktifkan konfirmasi email hanya demi melewati pengujian.
+## PWA dan Android
+PWA sudah memiliki manifest, service worker, ikon, cache offline, dan tombol instalasi yang muncul saat browser mendukung prompt instalasi. Di Android, pengguna dapat memasang website dari menu Chrome. APK Trusted Web Activity (TWA) masih memerlukan keputusan application ID, signing keystore, Digital Asset Links, build, dan uji perangkat; belum ada APK bertanda tangan di repositori.
 
 ## Verifikasi
-Jalankan pemeriksaan tautan, manifest, dan aset precache:
+Workflow GitHub Actions menjalankan pemeriksaan tautan internal, manifest, aset precache, dan sintaks JavaScript pada push/PR. QA browser dan backend menyeluruh dilakukan setelah pekerjaan pengembangan selesai.
 
-```bash
-python3 scripts/verify_site.py
-find js -type f -name '*.js' -print0 | xargs -0 -n1 node --check
-```
-
-Workflow GitHub Actions menjalankan pemeriksaan tersebut pada push ke branch integrasi dan pull request ke `main`.
-
-## Deployment
+## Branch dan rilis
 - `main` adalah sumber website produksi.
 - `integrasi-snbt-learning-center-2026-11` adalah branch pengembangan.
-- Gunakan Preview untuk pengujian akun dan sinkronisasi.
-- Jangan merge ke `main` atau mempromosikan Preview sebelum pengujian browser, backend, dan persetujuan rilis selesai.
-
-## Batasan yang belum diselesaikan
-- Alur registrasi email, verifikasi email, login, reset password, dan sinkronisasi lintas perangkat masih memerlukan pengujian browser nyata.
-- Belum ada APK/TWA yang ditandatangani. Instalasi PWA melalui Chrome adalah opsi Android setelah deployment dirilis.
-- Konten latihan aktif yang disediakan saat ini adalah lima soal Penalaran Umum. Jangan mengiklankan jumlah soal lebih besar sebelum bank soal benar-benar ditambahkan dan diperiksa.
+- Semua perubahan saat ini berada di branch integrasi.
+- Jangan merge ke `main`, mempromosikan deployment, atau mengubah produksi tanpa persetujuan pemilik proyek.
