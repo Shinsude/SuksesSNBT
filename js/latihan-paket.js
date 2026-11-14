@@ -97,7 +97,7 @@
     resultSummary.textContent = `Kamu menjawab ${state.score} dari ${packageQuestions.length} soal dengan benar.`;
     try {
       const completedAt = new Date().toISOString();
-      const entry = { type: "latihan", label: selectedPackage.name, score, correct: state.score, wrong: packageQuestions.length - state.score, blank: 0, total: packageQuestions.length, completedAt };
+      const entry = { type: "latihan", subtest: selectedPackage.subtest, label: selectedPackage.name, score, correct: state.score, wrong: packageQuestions.length - state.score, blank: 0, total: packageQuestions.length, completedAt };
       const history = JSON.parse(localStorage.getItem("snbt-progress-history") || "[]");
       history.unshift(entry);
       localStorage.setItem("snbt-progress-history", JSON.stringify(history.slice(0, 50)));
