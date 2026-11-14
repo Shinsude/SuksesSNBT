@@ -28,7 +28,11 @@ function documentStub() {
     title: "",
     elements,
     querySelector(selector) {
-      if (!elements.has(selector)) {\n        const created = element(selector);\n        if (selector === "#invalid-package" || selector === "#runner") created.hidden = true;\n        elements.set(selector, created);\n      }
+      if (!elements.has(selector)) {
+        const created = element(selector);
+        if (selector === "#invalid-package" || selector === "#runner") created.hidden = true;
+        elements.set(selector, created);
+      }
       return elements.get(selector);
     }
   };
