@@ -1,11 +1,11 @@
 (() => {
-  const questions = Array.isArray(window.latihanPUQuestions) ? window.latihanPUQuestions : [];
+  const questions = Array.isArray(window.latihanQuestions) ? window.latihanPUQuestions : [];
   const intro = document.querySelector("#tryout-intro");
   const shell = document.querySelector("#tryout-shell");
   const result = document.querySelector("#tryout-result");
   if (!intro || !shell || !result || !questions.length) return;
 
-  const durationSeconds = 5 * 60;
+  const durationSeconds = 70 * 60;
   const state = { current: 0, answers: Array(questions.length).fill(null), remaining: durationSeconds, timerId: null, finished: false };
   const answerList = document.querySelector("#answer-list");
   const questionTitle = document.querySelector("#question-title");
@@ -80,7 +80,7 @@
     document.querySelector("#saved-note").textContent = "Ringkasan hasil disimpan sementara di perangkat ini. Data dapat hilang jika data situs atau browser dihapus.";
     try {
       const completedAt = new Date().toISOString();
-      const entry = { type: "tryout", label: "Simulasi Tryout PU", score, correct, wrong, blank, total: questions.length, completedAt };
+      const entry = { type: "tryout", label: "Simulasi Komprehensif 7 Subtes", score, correct, wrong, blank, total: questions.length, completedAt };
       const history = JSON.parse(localStorage.getItem("snbt-progress-history") || "[]");
       history.unshift(entry);
       localStorage.setItem("snbt-progress-history", JSON.stringify(history.slice(0, 50)));
