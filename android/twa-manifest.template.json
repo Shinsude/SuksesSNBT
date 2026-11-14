@@ -1,0 +1,23 @@
+{
+  "packageId": "id.suksessnbt.app",
+  "host": "suksessnbt.vercel.app",
+  "name": "Sukses SNBT",
+  "launcherName": "Sukses SNBT",
+  "display": "standalone",
+  "orientation": "portrait",
+  "themeColor": "#2563eb",
+  "themeColorDark": "#0b1020",
+  "navigationColor": "#0b1020",
+  "navigationColorDark": "#0b1020",
+  "backgroundColor": "#0b1020",
+  "startUrl": "/",
+  "iconUrl": "https://suksessnbt.vercel.app/icon-512.png",
+  "maskableIconUrl": "https://suksessnbt.vercel.app/icon-maskable-512.png",
+  "webManifestUrl": "https://suksessnbt.vercel.app/manifest.webmanifest",
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "enableNotifications": false,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "fallbackType": "customtabs"
+}
