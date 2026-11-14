@@ -36,29 +36,32 @@ grant select, insert, update, delete on public.progress_entries to authenticated
 
 drop policy if exists "Users can read their own profile" on public.profiles;
 create policy "Users can read their own profile" on public.profiles
-  for select to authenticated using (auth.uid() = id);
+  for select to authenticated using ((select auth.uid()) = id);
 drop policy if exists "Users can create their own profile" on public.profiles;
 create policy "Users can create their own profile" on public.profiles
-  for insert to authenticated with check (auth.uid() = id);
+  for insert to authenticated with check ((select auth.uid()) = id);
 drop policy if exists "Users can update their own profile" on public.profiles;
 create policy "Users can update their own profile" on public.profiles
-  for update to authenticated using (auth.uid() = id) with check (auth.uid() = id);
+  for update to authenticated using ((select auth.uid()) = id) with check ((select auth.uid()) = id);
 
 drop policy if exists "Users can read their own progress" on public.progress_entries;
 create policy "Users can read their own progress" on public.progress_entries
-  for select to authenticated using (auth.uid() = user_id);
+  for select to authenticated using ((select auth.uid()) = user_id);
 drop policy if exists "Users can create their own progress" on public.progress_entries;
 create policy "Users can create their own progress" on public.progress_entries
-  for insert to authenticated with check (auth.uid() = user_id);
+  for insert to authenticated with check ((select auth.uid()) = user_id);
 drop policy if exists "Users can update their own progress" on public.progress_entries;
 create policy "Users can update their own progress" on public.progress_entries
-  for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+  for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
 drop policy if exists "Users can delete their own progress" on public.progress_entries;
 create policy "Users can delete their own progress" on public.progress_entries
-  for delete to authenticated using (auth.uid() = user_id);
+  for delete to authenticated using ((select auth.uid()) = user_id);
 
 create or replace function public.handle_new_snbt_user()
-returns trigger language plpgsql security definer set search_path = public
+returns trigger
+language plpgsql
+security definer
+set search_path = pg_catalog, public
 as $$
 begin
   insert into public.profiles (id, display_name)
@@ -68,8 +71,11 @@ begin
 end;
 $$;
 
+-- The trigger can invoke this function; API roles cannot call the definer function directly.
+revoke all on function public.handle_new_snbt_user() from public, anon, authenticated;
+
 drop trigger if exists on_snbt_auth_user_created on auth.users;
 create trigger on_snbt_auth_user_created
-  after insert on auth.users for each row execute procedure public.handle_new_snbt_user();
+  after insert on auth.users for each row execute function public.handle_new_snbt_user();
 
 commit;
