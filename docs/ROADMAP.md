@@ -1,26 +1,36 @@
-# Roadmap Integrasi Lanjutan
+# Roadmap Penyelesaian Sukses SNBT
 
-## Backend dan akun — database terpasang, pengujian aplikasi berjalan
+## Arah kerja
+Selesaikan implementasi seluruh fitur terlebih dahulu di branch `integrasi-snbt-learning-center-2026-11`. Setelah pengembangan selesai, lakukan satu putaran QA menyeluruh untuk seluruh fase. Produksi tetap tidak berubah sampai pemilik proyek menyetujui rilis.
 
-1. Supabase Free terpasang melalui Vercel Marketplace dan terhubung ke proyek `suksessnbt` pada Development, Preview, dan Production; region Vercel `sin1`.
-2. Proyek Supabase yang benar telah dicocokkan: `supabase-aero-candle`, project ref `yogtbxautvovqazmthwn`, organisasi Supabase `AI`.
-3. Vercel menyediakan `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` pada ketiga environment. Build statis hanya memasukkan URL dan publishable key ke browser; secret/service-role dan kredensial database tidak dimasukkan ke bundle klien.
-4. Migrasi `snbt_user_progress` sudah diterapkan langsung ke database. Tabel `profiles` dan `progress_entries` terverifikasi ada, RLS aktif, tujuh kebijakan kepemilikan tersedia, dan trigger profil otomatis terpasang.
-5. Halaman akun, autentikasi email/password, pemulihan kata sandi, dan sinkronisasi riwayat lokal ke cloud sudah diimplementasikan pada branch integrasi.
-6. Pengaturan Supabase Auth Site URL dan Redirect URLs perlu diperiksa untuk domain produksi dan URL Preview yang dipakai saat uji email.
-7. Lakukan uji browser: daftar akun → verifikasi email → login → selesaikan latihan/tryout → muat ulang → sinkronisasi → login pada browser/perangkat lain → logout. Uji bahwa akun kedua tidak dapat membaca atau mengubah progres akun pertama.
-8. Preview Vercel saat ini READY tetapi dilindungi SSO. Pertahankan perlindungan ini; jangan mengubahnya hanya untuk mempermudah pengujian. Gunakan akses pemilik proyek atau mekanisme preview protection yang sah.
-9. Jangan merge ke `main` atau mempromosikan deployment sebelum pengujian browser, backend, dan persetujuan rilis selesai.
+## Yang sudah dibangun
+- Website statis responsif dengan halaman beranda, materi, latihan, paket, tryout, progres, dan akun.
+- PWA dengan manifest, ikon, service worker, dan cache aset inti.
+- Supabase Auth, profil, riwayat progres, RLS, dan sinkronisasi lokal/cloud.
+- Login Google telah berhasil diuji oleh pemilik proyek pada Preview.
+- Bank soal latihan orisinal berjumlah 70 soal: 10 soal untuk masing-masing tujuh subtes.
+- Paket dasar aktif untuk ketujuh subtes.
+- Simulasi komprehensif lintas subtes berisi 70 soal dan timer 105 menit.
 
-**Catatan paket Free:** proyek dapat dijeda setelah periode tidak aktif; pantau status proyek dan kuota dari Supabase Dashboard.
+## Pekerjaan pengembangan yang masih perlu dituntaskan
+1. Perluas dan perdalam materi tiap subtes serta bank soal secara bertahap; 70 soal saat ini adalah bank awal, belum cukup untuk mengklaim persiapan SNBT menyeluruh.
+2. Tingkatkan fitur latihan: filter tingkat kesulitan/topik, variasi paket, pembahasan lebih rinci, dan pengalaman belajar yang konsisten.
+3. Tingkatkan progres: ringkasan per subtes, tren nilai, dan sinkronisasi yang konsisten.
+4. Rapikan tampilan dan aksesibilitas seluruh halaman untuk layar HP dan desktop.
+5. Lengkapi SEO, metadata, dokumentasi, serta pengalaman instalasi PWA.
+6. Siapkan TWA/APK Android setelah application ID dan signing disepakati. Signing key tidak boleh disimpan di Git.
+7. Perbarui dokumentasi dan CI agar seluruh aset serta konten baru terjaga.
 
-## APK Android
-1. Konfirmasi application ID/package name yang akan dipakai.
-2. Siapkan signing keystore dan simpan rahasianya di tempat aman (jangan commit ke Git).
-3. Pastikan domain produksi dan `/.well-known/assetlinks.json` terverifikasi.
-4. Build Trusted Web Activity (TWA) dari PWA yang sudah stabil.
-5. Uji APK pada perangkat Android sebelum distribusi.
+## QA akhir — dilakukan setelah seluruh pengembangan
+- Jalankan pemeriksaan tautan, manifest, precache, dan sintaks JavaScript.
+- Uji alur daftar email, verifikasi email, login email, Google OAuth, logout, dan reset password.
+- Uji latihan, paket, tryout, hasil, dan penyimpanan progres.
+- Uji sinkronisasi lintas browser/perangkat dan isolasi data antar akun.
+- Uji PWA offline, instalasi Android, responsivitas, aksesibilitas, dan performa.
+- Periksa Supabase security/performance/health advisors dan deployment Preview.
+- Perbaiki semua temuan sebelum meminta persetujuan rilis.
 
-## Rilis
-- Pertahankan branch `main` dan deployment produksi hingga backend, browser QA, dan APK lulus.
-- Buat pull request dari branch integrasi setelah seluruh prasyarat eksternal selesai.
+## Batas rilis
+- Pertahankan `main` dan domain produksi tanpa perubahan.
+- Jangan mengubah proteksi SSO Preview untuk melewati QA.
+- Jangan merge, mempromosikan deployment, atau merilis APK ke publik tanpa persetujuan eksplisit pemilik proyek.
