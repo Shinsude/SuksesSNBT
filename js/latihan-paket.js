@@ -100,6 +100,7 @@
       const history = JSON.parse(localStorage.getItem("snbt-progress-history") || "[]");
       history.unshift(entry);
       localStorage.setItem("snbt-progress-history", JSON.stringify(history.slice(0, 50)));
+      if (window.SNBTProgressSync) window.SNBTProgressSync.save(entry);
     } catch (_) {}
     resultPanel.focus({ preventScroll: true });
   }

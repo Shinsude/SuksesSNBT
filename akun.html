@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2563eb"><meta name="description" content="Masuk atau buat akun SuksesSNBT untuk menyimpan progres belajar.">
+  <link rel="manifest" href="/manifest.webmanifest"><title>Akun — SuksesSNBT</title>
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/account.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script><script src="js/supabase-client.js"></script><script src="js/progress-sync.js"></script>
+  <script src="js/auth.js" defer></script><script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+  <header class="site-header" id="header"><div class="container header-inner">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">S</span><span class="brand-text">SNBT<span>Learning Center</span></span></a>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Buka menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+    <nav class="nav" id="nav" aria-label="Navigasi utama"><a href="index.html">Beranda</a><a href="materi.html">Materi</a><a href="latihan.html">Latihan</a><a href="tryout.html">Tryout</a><a href="progres.html">Progres</a><a href="akun.html" aria-current="page">Akun</a></nav>
+  </div></header>
+  <main id="main-content" class="account-page"><div class="container account-container">
+    <p class="eyebrow">Akun SuksesSNBT</p><h1>Simpan progres belajarmu</h1>
+    <p class="account-lead">Buat akun gratis untuk menyimpan hasil latihan dan tryout secara online, lalu lanjutkan belajar dari perangkat lain.</p>
+    <div id="account-message" class="account-message" role="status" aria-live="polite"></div>
+    <section id="auth-forms" class="account-card" aria-label="Formulir akun">
+      <div class="account-tabs" role="tablist" aria-label="Pilih tindakan akun">
+        <button class="account-tab is-active" id="show-login" type="button" role="tab" aria-selected="true">Masuk</button>
+        <button class="account-tab" id="show-signup" type="button" role="tab" aria-selected="false">Daftar</button>
+      </div>
+      <form id="login-form" class="account-form">
+        <label for="login-email">Email</label><input id="login-email" name="email" type="email" autocomplete="email" required>
+        <label for="login-password">Kata sandi</label><input id="login-password" name="password" type="password" autocomplete="current-password" minlength="8" required>
+        <button class="btn btn--primary" type="submit">Masuk</button><button class="text-button" id="show-reset" type="button">Lupa kata sandi?</button>
+      </form>
+      <form id="signup-form" class="account-form" hidden>
+        <label for="signup-name">Nama</label><input id="signup-name" name="name" type="text" autocomplete="name" maxlength="80" required>
+        <label for="signup-email">Email</label><input id="signup-email" name="email" type="email" autocomplete="email" required>
+        <label for="signup-password">Kata sandi (minimal 8 karakter)</label><input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        <button class="btn btn--primary" type="submit">Buat akun</button>
+      </form>
+      <form id="reset-form" class="account-form" hidden>
+        <label for="reset-email">Email akun</label><input id="reset-email" name="email" type="email" autocomplete="email" required>
+        <button class="btn btn--primary" type="submit">Kirim tautan pemulihan</button><button class="text-button" id="back-to-login" type="button">Kembali ke masuk</button>
+      </form>
+      <form id="update-password-form" class="account-form" hidden>
+        <label for="new-password">Kata sandi baru (minimal 8 karakter)</label><input id="new-password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        <button class="btn btn--primary" type="submit">Simpan kata sandi baru</button>
+      </form>
+    </section>
+    <section id="signed-in-panel" class="account-card signed-in-panel" hidden>
+      <p class="eyebrow">Status akun</p><h2 id="account-name">Kamu sudah masuk</h2><p id="account-email"></p>
+      <p>Progres latihanmu akan disinkronkan dengan akun ini saat koneksi tersedia.</p>
+      <button id="sync-now" class="btn btn--ghost" type="button">Sinkronkan progres sekarang</button><button id="logout-button" class="btn btn--primary" type="button">Keluar</button>
+    </section>
+    <p class="account-footnote">Gunakan email yang bisa kamu akses. Jika konfirmasi email diaktifkan, buka tautan verifikasi yang dikirim sebelum masuk.</p>
+    <a class="back-link" href="index.html">← Kembali ke beranda</a>
+  </div></main>
+  <footer class="site-footer"><div class="container footer-inner"><p>Belajar terarah untuk persiapan SNBT.</p><a href="progres.html">Lihat progres</a></div></footer>
+</body>
+</html>

@@ -1,4 +1,4 @@
-const CACHE_VERSION="snbt-learning-center-v2";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
+const CACHE_VERSION="snbt-learning-center-v3";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
   "/",
   "/index.html",
   "/css/materi.css",
@@ -87,7 +87,13 @@ const CACHE_VERSION="snbt-learning-center-v2";const PRECACHE=`${CACHE_VERSION}-p
   "/progres.html",
   "/css/practice-shell.css",
   "/css/progres.css",
-  "/js/progres.js"
+  "/js/progres.js",
+  "/akun.html",
+  "/css/account.css",
+  "/js/auth.js",
+  "/js/supabase-client.js",
+  "/js/supabase-config.js",
+  "/js/progress-sync.js"
 ];
 self.addEventListener("install",event=>event.waitUntil(caches.open(PRECACHE).then(cache=>Promise.allSettled(CORE_ASSETS.map(asset=>cache.add(asset)))).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith("snbt-learning-center-")&&key!==PRECACHE&&key!==RUNTIME).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));

@@ -1,16 +1,15 @@
 # Roadmap Integrasi Lanjutan
 
-## Backend dan akun — menunggu provisioning Supabase
+## Backend dan akun — integrasi terpasang, implementasi berjalan
 Supabase dipilih sebagai backend karena satu integrasi menyediakan PostgreSQL, Auth, Storage, dan Realtime untuk aplikasi statis ini. Provisioning harus dilakukan melalui Vercel Marketplace oleh pemilik akun; jangan membuat kode backend atau mengganti provider sebelum resource nyata tersedia.
 
-1. Pemilik akun memasang [Supabase di Vercel Marketplace](https://vercel.com/marketplace/supabase) dan memilih paket Free ($0); jangan memilih paket berbayar atau add-on berbayar.
-2. Hubungkan resource Supabase ke proyek Vercel `suksessnbt`; pastikan environment variables tersinkron ke Preview.
-3. Verifikasi hanya nama environment variable di Vercel; jangan menyalin secret ke GitHub atau percakapan.
-4. Setelah provisioning terkonfirmasi, implementasikan client Supabase untuk aplikasi HTML/JS statis menggunakan publishable key. Secret/service-role key hanya boleh digunakan di server dan tidak pernah dikirim ke browser.
-5. Buat skema profil pengguna, hasil latihan, riwayat tryout, dan progres; aktifkan Row Level Security (RLS) serta policy yang membatasi setiap pengguna ke datanya sendiri.
-6. Implementasikan registrasi, login, logout, pemulihan akun, dan sinkronisasi progres; pertahankan mode lokal bila pengguna belum login.
-7. Uji alur daftar akun → verifikasi email → masuk → simpan hasil → muat ulang → sinkron lintas perangkat → keluar.
-8. Gunakan Preview untuk seluruh pengujian. Jangan menghubungkan resource ke Production atau mempromosikan deployment sebelum uji keamanan dan persetujuan rilis.
+1. Supabase Free sudah terpasang dan terhubung ke proyek `suksessnbt` pada Development, Preview, dan Production; region `sin1`.
+2. Vercel menyediakan `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` pada ketiga environment. Build statis menghasilkan file konfigurasi publik; secret/service-role tidak dikirim ke browser.
+3. Migrasi SQL tersedia di `supabase/migrations/202611140001_snbt_user_progress.sql`; pemilik proyek perlu menjalankannya di Supabase SQL Editor karena koneksi integrasi yang tersedia hanya mengizinkan pembacaan resource, bukan eksekusi SQL.
+4. Halaman akun, autentikasi email/password, pemulihan kata sandi, dan sinkronisasi riwayat lokal ke cloud diimplementasikan pada branch integrasi.
+5. Atur Supabase Auth Site URL dan Redirect URLs sebelum pengujian email.
+6. Uji daftar akun → verifikasi email → login → simpan hasil → muat ulang → sinkron lintas perangkat → logout, lalu uji isolasi RLS.
+7. Gunakan Preview untuk seluruh pengujian. Jangan mempromosikan deployment sebelum uji keamanan dan persetujuan rilis.
 
 **Catatan paket Free:** $0/bulan, termasuk database 500 MB dan 50.000 MAU; proyek yang tidak aktif selama sekitar satu minggu dapat dijeda. Periksa batas terbaru sebelum rilis publik.
 
