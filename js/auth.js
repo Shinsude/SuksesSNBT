@@ -7,6 +7,12 @@
     const showForm=name=>{loginForm.hidden=name!=="login";signupForm.hidden=name!=="signup";resetForm.hidden=name!=="reset";updateForm.hidden=name!=="update";document.querySelector("#show-login").classList.toggle("is-active",name==="login");document.querySelector("#show-signup").classList.toggle("is-active",name==="signup");document.querySelector("#show-login").setAttribute("aria-selected",String(name==="login"));document.querySelector("#show-signup").setAttribute("aria-selected",String(name==="signup"));};
     if(!db){showMessage("Layanan akun belum siap. Pastikan deployment dibuat setelah konfigurasi Supabase aktif.","error");return;}
     document.querySelector("#show-login").addEventListener("click",()=>showForm("login"));document.querySelector("#show-signup").addEventListener("click",()=>showForm("signup"));document.querySelector("#show-reset").addEventListener("click",()=>showForm("reset"));document.querySelector("#back-to-login").addEventListener("click",()=>showForm("login"));
+    document.querySelector("#google-signin").addEventListener("click",async event=>{
+      const button=event.currentTarget;button.disabled=true;showMessage("Menghubungkan ke Google…");
+      const redirectTo="https://suksessnbt-git-integrasi-snbt-learning-center-2026-11-ai-ced3.vercel.app/akun.html";
+      const {error}=await db.auth.signInWithOAuth({provider:"google",options:{redirectTo}});
+      if(error){button.disabled=false;showMessage("Login Google belum dapat digunakan: "+error.message,"error");}
+    });
     if(recoveryMode){showForm("update");showMessage("Masukkan kata sandi baru untuk akunmu.");}else if(params.get("verified")==="1")showMessage("Email berhasil dikonfirmasi. Sekarang kamu bisa masuk.","success");
     function refreshSession(session){const user=session&&session.user;if(recoveryMode){forms.hidden=false;signedIn.hidden=true;showForm("update");return;}forms.hidden=Boolean(user);signedIn.hidden=!user;if(!user)return;const name=user.user_metadata&&user.user_metadata.display_name||(user.email||"").split("@")[0]||"Pengguna";document.querySelector("#account-name").textContent="Halo, "+name;document.querySelector("#account-email").textContent=user.email||"";}
     db.auth.getSession().then(({data,error})=>{if(error)showMessage(error.message,"error");refreshSession(data&&data.session);});
