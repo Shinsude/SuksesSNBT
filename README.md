@@ -34,10 +34,21 @@ Riwayat tamu disimpan pada `localStorage` dengan kunci `snbt-progress-history`. 
 - Hanya URL dan publishable key yang masuk ke browser. Jangan pernah mengekspos `SUPABASE_SECRET_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, atau kredensial database ke browser atau Git.
 
 ### Pengaturan Auth yang masih harus diuji
-Sebelum uji registrasi email, pastikan Supabase Authentication URL Configuration memakai URL website yang benar:
-- Site URL: domain website produksi yang disetujui.
-- Redirect URLs: domain preview Vercel untuk branch integrasi dan domain produksi.
-- Jangan nonaktifkan konfirmasi email hanya demi melewati pengujian.
+Kode Google OAuth memakai `location.origin` agar callback kembali ke deployment yang sedang dibuka (Preview atau produksi). Supabase Auth tetap harus mengizinkan alamat tersebut.
+
+Atur **Supabase Dashboard → Authentication → URL Configuration**:
+- Site URL: `https://suksessnbt.vercel.app` (domain produksi).
+- Additional Redirect URLs:
+  - `https://suksessnbt.vercel.app/**`
+  - `https://*-ai-ced3.vercel.app/**` (deployment Preview Vercel)
+  - `http://localhost:8080/**` (pengembangan lokal, bila diperlukan).
+
+Untuk mengaktifkan Google OAuth, buat OAuth Client bertipe **Web application** di Google Cloud:
+- Authorized JavaScript origins: `https://suksessnbt.vercel.app` dan URL Preview branch integrasi.
+- Authorized redirect URI: `https://yogtbxautvovqazmthwn.supabase.co/auth/v1/callback`.
+- Masukkan Google Client ID dan Client Secret pada **Supabase Dashboard → Authentication → Providers → Google**, lalu aktifkan providernya.
+
+Google Client ID/Secret adalah kredensial milik pemilik akun dan tidak tersedia di repositori atau koneksi Vercel. Karena itu, Google OAuth belum boleh dianggap aktif sebelum konfigurasi ini dilakukan dan alur login berhasil diuji. Jangan menonaktifkan konfirmasi email hanya demi melewati pengujian.
 
 ## Verifikasi
 Jalankan pemeriksaan tautan, manifest, dan aset precache:
