@@ -11,6 +11,8 @@ Selesaikan implementasi seluruh fitur terlebih dahulu di branch `integrasi-snbt-
 - Bank soal latihan orisinal berjumlah 70 soal: 10 soal untuk masing-masing tujuh subtes.
 - Paket dasar aktif untuk ketujuh subtes.
 - Simulasi komprehensif lintas subtes berisi 70 soal dan timer 105 menit.
+- Dashboard progres menampilkan rata-rata nilai per subtes; metadata subtes disimpan bersama riwayat cloud.
+- Persiapan Android TWA tersedia di `android/` berupa panduan, template manifest, dan aturan agar signing key tidak masuk Git.
 
 ## Pekerjaan pengembangan yang masih perlu dituntaskan
 1. Perluas dan perdalam materi tiap subtes serta bank soal secara bertahap; 70 soal saat ini adalah bank awal, belum cukup untuk mengklaim persiapan SNBT menyeluruh.
