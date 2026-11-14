@@ -20,6 +20,13 @@
   const next = document.querySelector("#next-question");
   const finish = document.querySelector("#finish-tryout");
 
+  function shuffleQuestions() {
+    for (let index = questions.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [questions[index], questions[randomIndex]] = [questions[randomIndex], questions[index]];
+    }
+  }
+
   function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
     const remainder = (seconds % 60).toString().padStart(2, "0");
@@ -105,6 +112,9 @@
   }
 
   document.querySelector("#start-tryout").addEventListener("click", () => {
+    shuffleQuestions();
+    state.current = 0;
+    state.answers = Array(questions.length).fill(null);
     intro.hidden = true;
     shell.hidden = false;
     renderQuestion();
