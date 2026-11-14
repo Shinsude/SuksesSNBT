@@ -9,6 +9,12 @@
   if (!list || !count) return;
 
   count.textContent = `${filteredPackages.length} paket`;
+  if (filteredPackages[0]) {
+    const heading = document.querySelector(".page-intro .eyebrow");
+    const packageHeading = document.querySelector("#package-title");
+    if (heading) heading.textContent = filteredPackages[0].subject || filteredPackages[0].subtest;
+    if (packageHeading) packageHeading.textContent = `Paket ${filteredPackages[0].subtest}`;
+  }
 
   if (!filteredPackages.length) {
     list.innerHTML = '<p class="package-empty">Paket untuk subtes ini belum tersedia.</p>';
