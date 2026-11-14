@@ -9,7 +9,7 @@
     document.querySelector("#show-login").addEventListener("click",()=>showForm("login"));document.querySelector("#show-signup").addEventListener("click",()=>showForm("signup"));document.querySelector("#show-reset").addEventListener("click",()=>showForm("reset"));document.querySelector("#back-to-login").addEventListener("click",()=>showForm("login"));
     document.querySelector("#google-signin").addEventListener("click",async event=>{
       const button=event.currentTarget;button.disabled=true;showMessage("Menghubungkan ke Google…");
-      const redirectTo="https://suksessnbt-git-integrasi-snbt-learning-center-2026-11-ai-ced3.vercel.app/akun.html";
+      const redirectTo=location.origin+"/akun.html";
       const {error}=await db.auth.signInWithOAuth({provider:"google",options:{redirectTo}});
       if(error){button.disabled=false;showMessage("Login Google belum dapat digunakan: "+error.message,"error");}
     });
