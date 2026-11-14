@@ -25,9 +25,17 @@
     const groups = new Map();
     history.forEach(item => {
       const code = subtestOf(item);
-      if (!code) return;
-      if (!groups.has(code)) groups.set(code, []);
-      groups.get(code).push(Number(item.score));
+      if (code) {
+        if (!groups.has(code)) groups.set(code, []);
+        groups.get(code).push(Number(item.score));
+      }
+      const breakdown = item.subtestScores || item.details?.subtestScores;
+      if (breakdown && typeof breakdown === "object") {
+        Object.entries(breakdown).forEach(([subtest, score]) => {
+          if (!groups.has(subtest)) groups.set(subtest, []);
+          groups.get(subtest).push(Number(score));
+        });
+      }
     });
     const names = {PU:"Penalaran Umum",PPU:"Pengetahuan dan Pemahaman Umum",PBM:"Pemahaman Bacaan dan Menulis",PK:"Pengetahuan Kuantitatif",PENMAT:"Penalaran Matematika",PenMat:"Penalaran Matematika",LI:"Literasi Bahasa Indonesia",LE:"Literasi Bahasa Inggris"};
     subtestGrid.replaceChildren();
