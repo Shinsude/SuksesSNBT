@@ -30,7 +30,7 @@ Riwayat tamu disimpan pada `localStorage` dengan kunci `snbt-progress-history`. 
 - Hanya URL dan publishable key yang masuk ke browser. Jangan pernah mengekspos secret/service-role key atau kredensial database ke browser atau Git.
 
 ## OAuth dan pengujian akun
-Login Google telah berhasil dilakukan pada Preview oleh pemilik proyek. Registrasi email, konfirmasi email, reset password, isolasi data antarakun, dan sinkronisasi lintas perangkat masih perlu diuji pada tahap QA akhir.
+Kode login Google sudah tersedia pada Preview, tetapi integrasi OAuth belum dapat dinyatakan berhasil sebelum Google OAuth Client ID dan Client Secret dikonfigurasi pada Google Cloud dan Supabase, lalu alur login benar-benar diuji. Registrasi email, konfirmasi email, reset password, isolasi data antarakun, dan sinkronisasi lintas perangkat juga masih perlu diuji pada tahap QA akhir.
 
 Preview Vercel tetap dilindungi SSO. Jangan menonaktifkan perlindungan hanya untuk mempermudah pengujian. Jangan merge ke `main` atau mempromosikan deployment sebelum QA dan persetujuan rilis.
 
