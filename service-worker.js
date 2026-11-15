@@ -1,8 +1,9 @@
-const CACHE_VERSION="snbt-learning-center-v7";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
+const CACHE_VERSION="snbt-learning-center-v8";const PRECACHE=`${CACHE_VERSION}-precache`;const RUNTIME=`${CACHE_VERSION}-runtime`;const CORE_ASSETS=[
   "/",
   "/index.html",
   "/css/materi.css",
   "/css/style.css",
+  "/css/ux-refinements.css",
   "/icon-192.png",
   "/icon-512.png",
   "/icon-maskable-192.png",
