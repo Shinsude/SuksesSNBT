@@ -45,3 +45,5 @@ button,.btn{min-height:44px}
 
 /* Satu keluarga huruf untuk mengurangi kesan berpindah-pindah antarhalaman. */
 *,*::before,*::after{font-family:inherit!important}
+
+@media(max-width:620px){.header .nav.nav--open{max-height:min(80vh,560px);overflow-y:auto}}
