@@ -13,6 +13,12 @@ Selesaikan implementasi seluruh fitur terlebih dahulu di branch `integrasi-snbt-
 - Simulasi komprehensif lintas subtes berisi 70 soal dan timer 105 menit.
 - Dashboard progres menampilkan rata-rata nilai per subtes; metadata subtes disimpan bersama riwayat cloud.
 - Dashboard progres menampilkan tren hingga tujuh sesi terakhir secara kronologis, selain rata-rata nilai per subtes.
+- Penyatuan UI/UX: warna navy-biru-mint, tipografi Plus Jakarta Sans, kontras, fokus keyboard, ukuran target sentuh, dan gaya kartu pada halaman utama belajar.
+- Navigasi utama diseragamkan pada katalog materi, latihan, paket, tryout, progres, dan akun; penanda halaman aktif Tryout diperbaiki.
+- Tampilan nilai contoh di beranda diberi label ilustrasi agar tidak disangka data pengguna.
+- Halaman progres untuk pengguna baru kini memberi ajakan langsung ke latihan ketika belum ada riwayat.
+- Deskripsi PPU pada beranda dan katalog materi diselaraskan dengan topik pertemuan pertama.
+- Service worker diperbarui ke cache v8 untuk memuat stylesheet penyatuan UI/UX.
 - Materi PPU pertemuan pertama telah ditulis ulang untuk memperbaiki contoh dan pembahasan yang tidak akurat.
 - CI memeriksa konsistensi konfigurasi TWA Android (application ID, domain produksi, URL manifest, start URL, dan ikon) tanpa membutuhkan signing key.
 - Perbaikan sumber bank soal pada tryout dan paket latihan agar seluruh 70 soal lintas tujuh subtes dapat digunakan.
@@ -24,7 +30,7 @@ Selesaikan implementasi seluruh fitur terlebih dahulu di branch `integrasi-snbt-
 1. Perluas dan perdalam materi tiap subtes serta bank soal secara bertahap; 70 soal saat ini adalah bank awal, belum cukup untuk mengklaim persiapan SNBT menyeluruh.
 2. Tingkatkan fitur latihan: filter tingkat kesulitan/topik, variasi paket, pembahasan lebih rinci, dan pengalaman belajar yang konsisten.
 3. Tingkatkan progres: ringkasan per subtes, tren nilai, dan sinkronisasi yang konsisten.
-4. Rapikan tampilan dan aksesibilitas seluruh halaman untuk layar HP dan desktop.
+4. Lakukan QA visual langsung pada layar HP dan desktop; periksa kontras, menu mobile, fokus keyboard, serta keterbacaan setelah penyatuan UI/UX. Audit kode sudah dilakukan, tetapi pengujian visual langsung belum diklaim selesai.
 5. Lengkapi SEO, metadata, dokumentasi, serta pengalaman instalasi PWA.
 6. Siapkan proyek TWA/APK Android dengan application ID terkonfirmasi `id.suksessnbt.app`; buat dan amankan signing key di luar Git, lalu siapkan Digital Asset Links. Signing key tidak boleh disimpan di Git.
 7. Perbarui dokumentasi dan CI agar seluruh aset serta konten baru terjaga.
