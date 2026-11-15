@@ -1,0 +1,43 @@
+/* Sukses SNBT — penyatuan visual dan peningkatan kenyamanan */
+:root{--ux-bg:#0b1020;--ux-bg-soft:#101832;--ux-panel:#141f3d;--ux-panel-2:#19284a;--ux-text:#eef3ff;--ux-muted:#aab6d2;--ux-line:rgba(210,225,255,.13);--ux-blue:#7188ff;--ux-mint:#45d9b5;--ux-warm:#ffbd78}
+html{scroll-padding-top:5.5rem}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;line-height:1.65}
+h1,h2,h3,h4{letter-spacing:-.025em}
+p{line-height:1.7}
+a,button{-webkit-tap-highlight-color:transparent}
+button,.btn{min-height:44px}
+:focus-visible{outline:3px solid var(--ux-mint)!important;outline-offset:3px}
+::selection{background:rgba(113,136,255,.35);color:#fff}
+.practice-list-page,.progress-page,.account-page{color:var(--ux-text)!important;background:var(--ux-bg)!important}
+.practice-list-hero{background:radial-gradient(circle at 82% 18%,rgba(113,136,255,.19),transparent 28rem),linear-gradient(135deg,#101a36 0%,#0b1020 78%)!important;border-bottom:1px solid var(--ux-line)!important}
+.practice-list-hero h1,.section-heading h2,.progress-page h1,.progress-history h2,.progress-subtests h2,.progress-trend h2,.account-container h1{color:var(--ux-text)!important}
+.practice-list-hero .page-lead,.section-note,.progress-lead{color:var(--ux-muted)!important}
+.practice-card,.progress-stat,.progress-entry,.progress-empty,.progress-subtest-card,.progress-trend-row{color:var(--ux-text)!important;background:var(--ux-panel)!important;border:1px solid var(--ux-line)!important;box-shadow:0 12px 30px rgba(0,0,0,.12)!important}
+.practice-card{border-radius:18px!important;transition:transform .18s ease,border-color .18s ease,background .18s ease}
+.practice-card--available{border-color:rgba(69,217,181,.32)!important}
+.practice-card--available:hover{transform:translateY(-3px);border-color:var(--ux-mint)!important;background:var(--ux-panel-2)!important}
+.practice-card h3,.progress-entry strong,.progress-stat strong,.progress-subtest-card__head,.progress-trend-row__label span,.progress-trend-row>strong{color:var(--ux-text)!important}
+.practice-card p,.progress-entry p,.progress-stat span,.progress-subtest-card small,.progress-trend-row__label small{color:var(--ux-muted)!important}
+.practice-code{color:#a9b7ff!important;background:rgba(113,136,255,.14)!important}
+.status--available{color:var(--ux-mint)!important}
+.progress-note{color:#dce5ff!important;background:rgba(113,136,255,.12)!important;border-left-color:var(--ux-blue)!important}
+.progress-subtest-card__bar,.progress-trend-row__track{background:rgba(255,255,255,.1)!important}
+.progress-subtest-card__fill,.progress-trend-row__fill{background:linear-gradient(90deg,var(--ux-blue),var(--ux-mint))!important}
+.progress-empty{color:var(--ux-muted)!important;border-style:dashed!important}
+.account-page{background:radial-gradient(circle at 50% 0,rgba(113,136,255,.16),transparent 34rem),var(--ux-bg)!important}
+.account-card{background:var(--ux-panel)!important;border:1px solid var(--ux-line)!important;box-shadow:0 20px 50px rgba(0,0,0,.2)!important}
+.account-container h1,.signed-in-panel h2{color:var(--ux-text)!important}
+.account-lead,.account-footnote{color:var(--ux-muted)!important}
+.account-tabs{border-color:var(--ux-line)!important}
+.account-tab{color:var(--ux-muted)!important}
+.account-tab.is-active{color:var(--ux-text)!important;border-color:var(--ux-mint)!important}
+.account-form label{color:var(--ux-text)!important}
+.account-form input{background:#0d1730!important;color:var(--ux-text)!important;border-color:var(--ux-line)!important}
+.account-form input::placeholder{color:#8998b8}
+.text-button,.back-link{color:#a9b7ff!important}
+.account-message:not(:empty){background:rgba(113,136,255,.14)!important;color:#dce5ff!important}
+.account-message[data-state=error]{background:rgba(255,93,115,.13)!important;color:#ffd9df!important}
+.account-message[data-state=success]{background:rgba(69,217,181,.13)!important;color:#baf7e7!important}
+.practice-tryout-callout{border-color:rgba(113,136,255,.35)!important}
+@media(max-width:760px){.site-header .nav{max-height:0}.site-header .nav.nav--open{max-height:min(80vh,520px)}.progress-entry{gap:.5rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}.practice-card--available:hover{transform:none}}
