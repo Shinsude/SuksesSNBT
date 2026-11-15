@@ -9,6 +9,18 @@
   const clear = document.querySelector("#clear-progress");
   if (!list || !total || !average || !latest) return;
 
+  function emptyState(message, linkText = "Mulai latihan", href = "latihan.html") {
+    const box = document.createElement("div");
+    box.className = "progress-empty";
+    const copy = document.createElement("p");
+    copy.textContent = message;
+    const link = document.createElement("a");
+    link.className = "btn btn--primary";
+    link.href = href;
+    link.textContent = linkText;
+    box.append(copy, link);
+    return box;
+  }
   function read() {
     try {
       const value = JSON.parse(localStorage.getItem(key) || "[]");
@@ -43,10 +55,7 @@
     const names = {pu:"Penalaran Umum",ppu:"Pengetahuan dan Pemahaman Umum",pbm:"Pemahaman Bacaan dan Menulis",pk:"Pengetahuan Kuantitatif",pm:"Penalaran Matematika",li:"Literasi Bahasa Indonesia",le:"Literasi Bahasa Inggris",PU:"Penalaran Umum",PPU:"Pengetahuan dan Pemahaman Umum",PBM:"Pemahaman Bacaan dan Menulis",PK:"Pengetahuan Kuantitatif",PENMAT:"Penalaran Matematika",PenMat:"Penalaran Matematika",LI:"Literasi Bahasa Indonesia",LE:"Literasi Bahasa Inggris"};
     subtestGrid.replaceChildren();
     if (!groups.size) {
-      const empty = document.createElement("p");
-      empty.className = "progress-empty";
-      empty.textContent = "Selesaikan paket latihan untuk melihat rata-rata setiap subtes.";
-      subtestGrid.append(empty);
+      subtestGrid.append(emptyState("Belum ada nilai per subtes. Kerjakan satu paket untuk mulai mengisi ringkasan ini."));
       return;
     }
     groups.forEach((scores, code) => {
@@ -78,10 +87,7 @@
     const recent = [...history].filter(item => Number.isFinite(Number(item.score)))
       .sort((a,b) => new Date(a.completedAt || 0) - new Date(b.completedAt || 0)).slice(-7);
     if (!recent.length) {
-      const empty = document.createElement("p");
-      empty.className = "progress-empty";
-      empty.textContent = "Selesaikan latihan atau tryout untuk mulai melihat perkembangan nilai.";
-      trendList.append(empty);
+      trendList.append(emptyState("Grafik akan muncul setelah kamu menyelesaikan latihan atau tryout."));
       return;
     }
     recent.forEach((item, index) => {
@@ -118,9 +124,7 @@
     renderTrend(history);
     list.replaceChildren();
     if (!history.length) {
-      const empty = document.createElement("p"); empty.className = "progress-empty";
-      empty.textContent = "Belum ada hasil tersimpan. Selesaikan latihan atau tryout untuk melihat progres di sini.";
-      list.append(empty); return;
+      list.append(emptyState("Belum ada aktivitas tersimpan. Mulai dari satu paket latihan; hasilmu akan tercatat di halaman ini.", "Pilih paket latihan", "latihan.html")); return;
     }
     history.forEach(item => {
       const entry = document.createElement("article"); entry.className = "progress-entry";
