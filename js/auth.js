@@ -1,34 +1,220 @@
 (() => {
   document.addEventListener("DOMContentLoaded", () => {
-    const db=window.snbtSupabase,message=document.querySelector("#account-message"),forms=document.querySelector("#auth-forms"),signedIn=document.querySelector("#signed-in-panel");
-    const loginForm=document.querySelector("#login-form"),signupForm=document.querySelector("#signup-form"),resetForm=document.querySelector("#reset-form"),updateForm=document.querySelector("#update-password-form");
-    const params=new URLSearchParams(location.search);let recoveryMode=params.get("mode")==="update-password"||location.hash.includes("type=recovery");
-    const showMessage=(text,state="info")=>{message.textContent=text;message.dataset.state=state;};
-    const showForm=name=>{loginForm.hidden=name!=="login";signupForm.hidden=name!=="signup";resetForm.hidden=name!=="reset";updateForm.hidden=name!=="update";document.querySelector("#show-login").classList.toggle("is-active",name==="login");document.querySelector("#show-signup").classList.toggle("is-active",name==="signup");document.querySelector("#show-login").setAttribute("aria-selected",String(name==="login"));document.querySelector("#show-signup").setAttribute("aria-selected",String(name==="signup"));};
-    if(!db){showMessage("Layanan akun belum siap. Pastikan deployment dibuat setelah konfigurasi Supabase aktif.","error");return;}
-    document.querySelector("#show-login").addEventListener("click",()=>showForm("login"));document.querySelector("#show-signup").addEventListener("click",()=>showForm("signup"));document.querySelector("#show-reset").addEventListener("click",()=>showForm("reset"));document.querySelector("#back-to-login").addEventListener("click",()=>showForm("login"));
-    const oauthError=params.get("error_description")||params.get("error");
-    if(oauthError)showMessage("Login Google gagal: "+oauthError,"error");
-    document.querySelector("#google-signin").addEventListener("click",async event=>{
-      const button=event.currentTarget;button.disabled=true;showMessage("Menghubungkan ke Google…");
-      const redirectTo=location.origin+"/akun.html";
-      try{
-        const {error}=await db.auth.signInWithOAuth({provider:"google",options:{redirectTo}});
-        if(error){button.disabled=false;showMessage("Login Google belum dapat digunakan: "+error.message,"error");}
-      }catch(error){
-        button.disabled=false;
-        showMessage("Koneksi login Google terganggu. Periksa internet lalu coba lagi.","error");
+    const db = window.snbtSupabase;
+    const message = document.querySelector("#account-message");
+    const forms = document.querySelector("#auth-forms");
+    const signedIn = document.querySelector("#signed-in-panel");
+    const loginForm = document.querySelector("#login-form");
+    const signupForm = document.querySelector("#signup-form");
+    const resetForm = document.querySelector("#reset-form");
+    const updateForm = document.querySelector("#update-password-form");
+    const googleButton = document.querySelector("#google-signin");
+    const logoutButton = document.querySelector("#logout-button");
+    const syncButton = document.querySelector("#sync-now");
+    const params = new URLSearchParams(location.search);
+    let recoveryMode = params.get("mode") === "update-password" || location.hash.includes("type=recovery");
+
+    const showMessage = (text, state = "info") => {
+      if (!message) return;
+      message.textContent = text;
+      message.dataset.state = state;
+    };
+    const setBusy = (button, busy, label) => {
+      if (!button) return;
+      button.disabled = busy;
+      if (label) button.textContent = busy ? label : button.dataset.originalLabel || button.textContent;
+    };
+    const showForm = (name) => {
+      loginForm.hidden = name !== "login";
+      signupForm.hidden = name !== "signup";
+      resetForm.hidden = name !== "reset";
+      updateForm.hidden = name !== "update";
+      document.querySelector("#show-login").classList.toggle("is-active", name === "login");
+      document.querySelector("#show-signup").classList.toggle("is-active", name === "signup");
+      document.querySelector("#show-login").setAttribute("aria-selected", String(name === "login"));
+      document.querySelector("#show-signup").setAttribute("aria-selected", String(name === "signup"));
+    };
+
+    if (!db) {
+      showMessage("Layanan akun belum siap. Silakan muat ulang halaman beberapa saat lagi.", "error");
+      return;
+    }
+
+    document.querySelector("#show-login").addEventListener("click", () => showForm("login"));
+    document.querySelector("#show-signup").addEventListener("click", () => showForm("signup"));
+    document.querySelector("#show-reset").addEventListener("click", () => showForm("reset"));
+    document.querySelector("#back-to-login").addEventListener("click", () => showForm("login"));
+
+    const oauthError = params.get("error_description") || params.get("error");
+    if (oauthError) showMessage("Login Google gagal: " + oauthError, "error");
+
+    googleButton.addEventListener("click", async () => {
+      googleButton.disabled = true;
+      showMessage("Menghubungkan ke Google…");
+      try {
+        const { error } = await db.auth.signInWithOAuth({
+          provider: "google",
+          options: { redirectTo: location.origin + "/akun.html" }
+        });
+        if (error) {
+          googleButton.disabled = false;
+          showMessage("Login Google belum dapat digunakan: " + error.message, "error");
+        }
+      } catch (_) {
+        googleButton.disabled = false;
+        showMessage("Koneksi login Google terganggu. Periksa internet lalu coba lagi.", "error");
       }
     });
-    if(recoveryMode){showForm("update");showMessage("Masukkan kata sandi baru untuk akunmu.");}else if(params.get("verified")==="1")showMessage("Email berhasil dikonfirmasi. Sekarang kamu bisa masuk.","success");
-    function refreshSession(session){const user=session&&session.user;if(recoveryMode){forms.hidden=false;signedIn.hidden=true;showForm("update");return;}forms.hidden=Boolean(user);signedIn.hidden=!user;if(!user)return;const name=user.user_metadata&&user.user_metadata.display_name||(user.email||"").split("@")[0]||"Pengguna";document.querySelector("#account-name").textContent="Halo, "+name;document.querySelector("#account-email").textContent=user.email||"";}
-    db.auth.getSession().then(({data,error})=>{if(error)showMessage(error.message,"error");refreshSession(data&&data.session);});
-    db.auth.onAuthStateChange((event,session)=>{if(event==="PASSWORD_RECOVERY"){recoveryMode=true;showForm("update");showMessage("Masukkan kata sandi baru untuk akunmu.");}queueMicrotask(()=>refreshSession(session));});
-    loginForm.addEventListener("submit",async event=>{event.preventDefault();const button=loginForm.querySelector("button[type=submit]");button.disabled=true;const {error}=await db.auth.signInWithPassword({email:loginForm.elements.email.value.trim(),password:loginForm.elements.password.value});button.disabled=false;if(error)showMessage(error.message,"error");else showMessage("Berhasil masuk. Progres sedang disinkronkan.","success");});
-    signupForm.addEventListener("submit",async event=>{event.preventDefault();const button=signupForm.querySelector("button[type=submit]");button.disabled=true;const name=signupForm.elements.name.value.trim();const {data,error}=await db.auth.signUp({email:signupForm.elements.email.value.trim(),password:signupForm.elements.password.value,options:{data:{display_name:name},emailRedirectTo:location.origin+"/akun.html?verified=1"}});button.disabled=false;if(error)showMessage(error.message,"error");else if(!data.session)showMessage("Akun dibuat. Periksa email untuk mengonfirmasi alamat email sebelum masuk.","success");else showMessage("Akun berhasil dibuat dan kamu sudah masuk.","success");});
-    resetForm.addEventListener("submit",async event=>{event.preventDefault();const {error}=await db.auth.resetPasswordForEmail(resetForm.elements.email.value.trim(),{redirectTo:location.origin+"/akun.html?mode=update-password"});if(error)showMessage(error.message,"error");else showMessage("Jika email terdaftar, tautan pemulihan akan dikirim. Periksa kotak masuk dan folder spam.","success");});
-    updateForm.addEventListener("submit",async event=>{event.preventDefault();const {error}=await db.auth.updateUser({password:updateForm.elements.password.value});if(error)showMessage(error.message,"error");else{updateForm.reset();recoveryMode=false;await db.auth.signOut();showForm("login");showMessage("Kata sandi berhasil diperbarui. Silakan masuk kembali.","success");}});
-    document.querySelector("#logout-button").addEventListener("click",async()=>{const {error}=await db.auth.signOut();if(error)showMessage(error.message,"error");else{showForm("login");showMessage("Kamu sudah keluar.","success");}});
-    document.querySelector("#sync-now").addEventListener("click",async()=>{const result=await window.SNBTProgressSync?.sync();if(result&&result.synced)showMessage("Progres berhasil disinkronkan ("+result.count+" aktivitas).","success");else showMessage("Sinkronisasi belum berhasil. Pastikan tabel database sudah dibuat.","error");});
+
+    if (recoveryMode) {
+      showForm("update");
+      showMessage("Masukkan kata sandi baru untuk akunmu.");
+    } else if (params.get("verified") === "1") {
+      showMessage("Email berhasil dikonfirmasi. Sekarang kamu bisa masuk.", "success");
+    }
+
+    function refreshSession(session) {
+      const user = session && session.user;
+      if (recoveryMode) {
+        forms.hidden = false;
+        signedIn.hidden = true;
+        showForm("update");
+        return;
+      }
+      forms.hidden = Boolean(user);
+      signedIn.hidden = !user;
+      if (!user) return;
+      const name = user.user_metadata?.display_name || (user.email || "").split("@")[0] || "Pengguna";
+      document.querySelector("#account-name").textContent = "Halo, " + name;
+      document.querySelector("#account-email").textContent = user.email || "";
+    }
+
+    db.auth.getSession()
+      .then(({ data, error }) => {
+        if (error) showMessage("Sesi akun belum dapat diperiksa. Muat ulang halaman.", "error");
+        refreshSession(data && data.session);
+      })
+      .catch(() => showMessage("Koneksi akun terganggu. Periksa internet lalu muat ulang halaman.", "error"));
+
+    db.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") {
+        recoveryMode = true;
+        showForm("update");
+        showMessage("Masukkan kata sandi baru untuk akunmu.");
+      }
+      queueMicrotask(() => refreshSession(session));
+    });
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = loginForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      try {
+        const { error } = await db.auth.signInWithPassword({
+          email: loginForm.elements.email.value.trim(),
+          password: loginForm.elements.password.value
+        });
+        if (error) showMessage(error.message, "error");
+        else showMessage("Berhasil masuk. Progres sedang disinkronkan.", "success");
+      } catch (_) {
+        showMessage("Tidak dapat menghubungi layanan akun. Periksa internet lalu coba lagi.", "error");
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    signupForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = signupForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      try {
+        const name = signupForm.elements.name.value.trim();
+        const { data, error } = await db.auth.signUp({
+          email: signupForm.elements.email.value.trim(),
+          password: signupForm.elements.password.value,
+          options: {
+            data: { display_name: name },
+            emailRedirectTo: location.origin + "/akun.html?verified=1"
+          }
+        });
+        if (error) showMessage(error.message, "error");
+        else if (!data.session) showMessage("Akun dibuat. Periksa email untuk mengonfirmasi alamat email sebelum masuk.", "success");
+        else showMessage("Akun berhasil dibuat dan kamu sudah masuk.", "success");
+      } catch (_) {
+        showMessage("Pendaftaran belum dapat diproses karena koneksi terganggu. Coba lagi.", "error");
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    resetForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = resetForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      try {
+        const { error } = await db.auth.resetPasswordForEmail(
+          resetForm.elements.email.value.trim(),
+          { redirectTo: location.origin + "/akun.html?mode=update-password" }
+        );
+        if (error) showMessage(error.message, "error");
+        else showMessage("Jika email terdaftar, tautan pemulihan akan dikirim. Periksa kotak masuk dan folder spam.", "success");
+      } catch (_) {
+        showMessage("Permintaan pemulihan belum terkirim. Periksa internet lalu coba lagi.", "error");
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    updateForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = updateForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      try {
+        const { error } = await db.auth.updateUser({ password: updateForm.elements.password.value });
+        if (error) {
+          showMessage(error.message, "error");
+          return;
+        }
+        updateForm.reset();
+        recoveryMode = false;
+        await db.auth.signOut();
+        showForm("login");
+        showMessage("Kata sandi berhasil diperbarui. Silakan masuk kembali.", "success");
+      } catch (_) {
+        showMessage("Kata sandi belum dapat diperbarui. Periksa koneksi lalu coba lagi.", "error");
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    logoutButton.addEventListener("click", async () => {
+      logoutButton.disabled = true;
+      try {
+        const { error } = await db.auth.signOut();
+        if (error) showMessage(error.message, "error");
+        else {
+          showForm("login");
+          showMessage("Kamu sudah keluar.", "success");
+        }
+      } catch (_) {
+        showMessage("Belum dapat keluar karena koneksi terganggu. Coba lagi.", "error");
+      } finally {
+        logoutButton.disabled = false;
+      }
+    });
+
+    syncButton.addEventListener("click", async () => {
+      syncButton.disabled = true;
+      showMessage("Menyinkronkan progres…");
+      try {
+        const result = await window.SNBTProgressSync?.sync();
+        if (result?.synced) showMessage("Progres berhasil disinkronkan (" + result.count + " aktivitas).", "success");
+        else showMessage("Sinkronisasi belum berhasil. Pastikan kamu masuk dan koneksi internet tersedia.", "error");
+      } catch (_) {
+        showMessage("Sinkronisasi terganggu. Riwayat lokal tetap tersedia; coba lagi saat koneksi stabil.", "error");
+      } finally {
+        syncButton.disabled = false;
+      }
+    });
   });
 })();
