@@ -41,3 +41,4 @@ button,.btn{min-height:44px}
 .practice-tryout-callout{border-color:rgba(113,136,255,.35)!important}
 @media(max-width:760px){.site-header .nav{max-height:0}.site-header .nav.nav--open{max-height:min(80vh,520px)}.progress-entry{gap:.5rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}.practice-card--available:hover{transform:none}}
+.progress-empty p{margin:0 0 .85rem;color:var(--ux-muted)}.progress-empty .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;padding:.7rem 1.1rem}.progress-actions .btn{align-items:center;justify-content:center}
