@@ -39,9 +39,12 @@ function documentStub() {
   };
 }
 
-function loadQuestionBank(context) {
+function loadQuestionBank(context, includeAdvanced = false) {
   vm.createContext(context);
-  for (const file of ["data/latihan-pu.js", "data/latihan-snbt.js", "data/paket-latihan.js"]) {
+  const files = ["data/latihan-pu.js", "data/latihan-snbt.js"];
+  if (includeAdvanced) files.push("data/latihan-lanjutan.js");
+  files.push("data/paket-latihan.js");
+  for (const file of files) {
     vm.runInContext(fs.readFileSync(file, "utf8"), context, { filename: file });
   }
 }
@@ -67,7 +70,9 @@ function loadQuestionBank(context) {
 
 for (const packageId of [
   "pu-dasar-1", "ppu-dasar-1", "pbm-dasar-1", "pk-dasar-1",
-  "penmat-dasar-1", "li-dasar-1", "le-dasar-1"
+  "penmat-dasar-1", "li-dasar-1", "le-dasar-1",
+  "pu-pendalaman-1", "ppu-pendalaman-1", "pbm-pendalaman-1", "pk-pendalaman-1",
+  "penmat-pendalaman-1", "li-pendalaman-1", "le-pendalaman-1"
 ]) {
   const document = documentStub();
   const window = {
@@ -76,7 +81,7 @@ for (const packageId of [
     location: { search: `?paket=${packageId}` }
   };
   const context = { window, document, Math, Date, URLSearchParams, localStorage: { getItem() { return "[]"; }, setItem() {} } };
-  loadQuestionBank(context);
+  loadQuestionBank(context, packageId.includes("pendalaman"));
   vm.runInContext(fs.readFileSync("js/latihan-paket.js", "utf8"), context, { filename: "js/latihan-paket.js" });
   assert.equal(document.querySelector("#runner").hidden, false, packageId + " must open");
   assert.equal(document.querySelector("#invalid-package").hidden, true, packageId + " must not be marked unavailable");
@@ -84,4 +89,4 @@ for (const packageId of [
   assert.equal((document.querySelector("#answer-list").innerHTML.match(/class="answer-option"/g) || []).length, 4, packageId + " question must render four options");
 }
 
-console.log("OK: tryout renders 70 questions and all seven subtest packages open with four answer options.");
+console.log("OK: tryout renders 70 questions and all fourteen basic and advanced subtest packages open with four answer options.");
