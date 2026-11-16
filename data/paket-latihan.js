@@ -18,7 +18,7 @@
     ["le-pendalaman-1","LE","Literasi Bahasa Inggris","English Literacy Practice","Practice main ideas, inference, vocabulary, reference, and author purpose.",["le-011","le-012","le-013","le-014","le-015"]]
   ];
   const packages = definitions.map(([id,subtest,subject,name,description,questionIds]) => ({
-    id, subtest, subject, name, description, difficulty:"Dasar–Sedang", questionIds, status:"available"
+    id, subtest, subject, name, description, difficulty: id.includes("pendalaman") ? "Menengah–Sulit" : "Dasar–Sedang", questionIds, status:"available"
   }));
   window.latihanPackages = packages.map((practicePackage) => ({
     ...practicePackage,
