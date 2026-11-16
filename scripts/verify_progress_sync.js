@@ -81,9 +81,10 @@ localStorage.setItem("snbt-progress-owner", "A");
   currentUser = { id: "B" };
   result = await window.SNBTProgressSync.sync();
   assert.equal(result.synced, true);
-  assert.equal(uploads.at(-1).userId, "B");
-  assert.ok(!uploads.at(-1).rows.some((row) => row.label === "Riwayat Akun A"),
-    "account A progress must never upload to account B");
+  assert.equal(uploads.filter((item) => item.userId === "B").length, 0,
+    "empty account B cache should not trigger an upload");
+  assert.ok(!window.SNBTProgressSync.readLocal().some((item) => item.label === "Riwayat Akun A"),
+    "account A cache must be hidden as soon as account B signs in");
   assert.ok(localStorage.getItem("snbt-progress-history:A"),
     "account A progress must be archived separately");
 
@@ -92,6 +93,7 @@ localStorage.setItem("snbt-progress-owner", "A");
     wrong: 1, blank: 0, total: 10, completedAt: "2026-11-16T09:00:00.000Z"
   };
   await window.SNBTProgressSync.save(recordB);
+  assert.equal(uploads.at(-1).userId, "B");
   assert.equal(localStorage.getItem("snbt-progress-owner"), "B");
   assert.ok(window.SNBTProgressSync.readLocal().some((item) => item.label === "Riwayat Akun B"));
 
