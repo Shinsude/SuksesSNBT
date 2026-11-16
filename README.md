@@ -9,7 +9,7 @@ Platform belajar mandiri UTBK-SNBT berbasis HTML, CSS, dan JavaScript statis, de
 - Paket latihan: dua paket per subtes: paket dasar dan paket pendalaman menengah–sulit, dilengkapi umpan balik dan pembahasan.
 - Tryout: simulasi komprehensif 70 soal dengan timer 105 menit. Ini latihan buatan platform, bukan ujian resmi atau prediksi nilai resmi SNBT.
 - Progres: riwayat hasil lokal dan sinkronisasi ke akun.
-- Akun: registrasi email/password, login Google, logout, dan pemulihan kata sandi Supabase.
+- Akun: login Google, registrasi email/password, logout, dan pemulihan kata sandi Supabase. Login Google telah berhasil diuji; alur email/password masih perlu pengujian QA menyeluruh.
 
 ## Jalankan lokal
 Jalankan server statis dari root repositori:
@@ -30,7 +30,7 @@ Riwayat tamu disimpan pada `localStorage` dengan kunci `snbt-progress-history`. 
 - Hanya URL dan publishable key yang masuk ke browser. Jangan pernah mengekspos secret/service-role key atau kredensial database ke browser atau Git.
 
 ## OAuth dan pengujian akun
-Kode login Google sudah tersedia pada Preview, tetapi integrasi OAuth belum dapat dinyatakan berhasil sebelum Google OAuth Client ID dan Client Secret dikonfigurasi pada Google Cloud dan Supabase, lalu alur login benar-benar diuji. Registrasi email, konfirmasi email, reset password, isolasi data antarakun, dan sinkronisasi lintas perangkat juga masih perlu diuji pada tahap QA akhir.
+Login Google telah berhasil diuji pada proyek. Registrasi email/password, konfirmasi email, reset password, isolasi data antarakun, dan sinkronisasi lintas perangkat masih harus diuji pada tahap QA akhir.
 
 Preview Vercel tetap dilindungi SSO. Jangan menonaktifkan perlindungan hanya untuk mempermudah pengujian. Jangan merge ke `main` atau mempromosikan deployment sebelum QA dan persetujuan rilis.
 
