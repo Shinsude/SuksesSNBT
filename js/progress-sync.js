@@ -98,6 +98,19 @@
       .slice(0, 50);
   }
 
+  function prepareLocalForUser(userId) {
+    const previousOwner = localStorage.getItem(OWNER_KEY);
+    if (!previousOwner || previousOwner === userId) return;
+    // Archive the previous account's cache instead of deleting or exposing it to this account.
+    const previousCache = readLocal();
+    if (previousCache.length) {
+      const archiveKey = ARCHIVE_PREFIX + previousOwner;
+      writeStored(archiveKey, mergeEntries(readStored(archiveKey), previousCache));
+    }
+    writeLocal(readStored(ARCHIVE_PREFIX + userId));
+    localStorage.setItem(OWNER_KEY, userId);
+  }
+
   async function sync() {
     const client = db();
     if (!client) return { synced: false, reason: "client-unavailable" };
@@ -106,23 +119,8 @@
     const user = sessionResult.data && sessionResult.data.session && sessionResult.data.session.user;
     if (sessionResult.error || !user) return { synced: false, reason: "signed-out" };
 
-    const previousOwner = localStorage.getItem(OWNER_KEY);
-    let local;
-
-    if (previousOwner && previousOwner !== user.id) {
-      // Archive the previous account's cache instead of deleting or uploading it to this account.
-      const previousCache = readLocal();
-      if (previousCache.length) {
-        const archiveKey = ARCHIVE_PREFIX + previousOwner;
-        const archived = readStored(archiveKey);
-        writeStored(archiveKey, mergeEntries(archived, previousCache));
-      }
-      // Restore only this account's own archived cache, if it exists.
-      local = ensureIds(readStored(ARCHIVE_PREFIX + user.id));
-    } else {
-      // First sign-in may intentionally adopt anonymous local progress.
-      local = ensureIds(readLocal());
-    }
+    prepareLocalForUser(user.id);
+    const local = ensureIds(readLocal());
 
     if (local.length) {
       const saved = await client.from("progress_entries")
@@ -167,15 +165,7 @@
     if (client) {
       const sessionResult = await client.auth.getSession();
       const user = sessionResult.data && sessionResult.data.session && sessionResult.data.session.user;
-      const previousOwner = localStorage.getItem(OWNER_KEY);
-      if (user && previousOwner && previousOwner !== user.id) {
-        const archiveKey = ARCHIVE_PREFIX + previousOwner;
-        const archivedPrevious = readStored(archiveKey);
-        const currentCache = readLocal();
-        if (currentCache.length) writeStored(archiveKey, mergeEntries(archivedPrevious, currentCache));
-        writeLocal(readStored(ARCHIVE_PREFIX + user.id));
-        localStorage.setItem(OWNER_KEY, user.id);
-      }
+      if (user) prepareLocalForUser(user.id);
     }
     const items = ensureIds(readLocal());
     const existing = items.find((item) =>
@@ -195,7 +185,10 @@
 
   if (db()) {
     db().auth.onAuthStateChange((event, session) => {
-      if (session && session.user) queueMicrotask(() => sync());
+      if (session && session.user) {
+        prepareLocalForUser(session.user.id);
+        queueMicrotask(() => sync());
+      }
       // Keep the local cache and owner marker on sign-out. Pending offline entries
       // must survive logout; a later sign-in archives/restores data by user ID.
       if (event === "SIGNED_OUT") {
