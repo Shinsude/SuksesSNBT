@@ -2,11 +2,13 @@
 
 Tanggal pemeriksaan: 16 November 2026  
 Branch: `integrasi-snbt-learning-center-2026-11`  
-Commit audit dasar: `1cad14aff660e7dc46fd59572d9c7e8bd62276f1`
+Commit audit terbaru: `39a6a389ee49cca56ba9b8343eba489eed8c05df`
 
 ## Ringkasan status
 
-Audit teknis database, hak akses, advisor Supabase, alur autentikasi dan sinkronisasi pada tingkat kode, CI, serta konfigurasi deployment telah diperiksa. Ini belum merupakan persetujuan rilis. Pengujian browser end-to-end dan validasi dengan dua akun nyata masih diperlukan.
+Pemeriksaan otomatis atas struktur situs, tautan internal, PWA, konfigurasi Android TWA, sintaks JavaScript, bank soal, interaksi tryout/paket, dan skenario dasar sinkronisasi progres telah lulus pada CI terbaru. Deployment preview terbaru berstatus `READY`.
+
+Fase 5 belum dapat dinyatakan lulus penuh atau menjadi persetujuan rilis karena pengujian autentikasi email, isolasi dua akun nyata, browser end-to-end, perangkat Android, dan verifikasi header HTTP aktual masih memerlukan pengujian runtime/manual.
 
 ## Keamanan Supabase
 
@@ -20,11 +22,9 @@ Audit teknis database, hak akses, advisor Supabase, alur autentikasi dan sinkron
 
 ### Temuan dan keputusan
 
-**WARN — Leaked Password Protection Disabled.** Supabase Auth melaporkan perlindungan kata sandi bocor belum aktif. Pengguna memutuskan menunda pengaturan ini dan tidak meng-upgrade paket Supabase Free. Catat sebagai keterbatasan yang perlu dievaluasi kembali sebelum peluncuran publik.
+**WARN — Leaked Password Protection Disabled.** Supabase Auth melaporkan perlindungan kata sandi bocor belum aktif. Pengguna memutuskan menunda pengaturan ini dan tidak meng-upgrade paket Supabase Free. Evaluasi kembali sebelum peluncuran publik.
 
 **CAPTCHA / Bot Protection — ditunda atas arahan pengguna.** Tidak ada konfigurasi CAPTCHA atau integrasi Turnstile yang dilakukan.
-
-Referensi: https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection
 
 ## Autentikasi dan sinkronisasi — pemeriksaan kode
 
@@ -32,40 +32,53 @@ Referensi: https://supabase.com/docs/guides/auth/password-security#password-stre
 - Session persistence dan auto-refresh diaktifkan pada Supabase client.
 - Kode menyediakan Google OAuth, email/password sign-in dan sign-up, reset password, update password, dan sign-out. Google login telah berhasil diuji oleh pengguna; alur email belum diverifikasi end-to-end.
 - Sinkronisasi progres menggunakan `user_id` dan `client_id`; pembacaan data dilakukan setelah session aktif.
-- Kode berusaha mencegah riwayat lokal milik akun sebelumnya diunggah ke akun lain pada browser yang sama.
-- Perilaku multi-akun, perangkat bersama, offline, dan konflik sinkronisasi tetap harus diuji secara nyata sebelum dinyatakan lulus.
+- **Perbaikan Fase 5:** riwayat lokal tidak lagi dihapus saat logout. Riwayat disimpan dengan penanda pemilik dan diarsipkan per user ID saat akun berganti.
+- Saat akun berganti, cache akun sebelumnya segera dipisahkan sebelum data akun baru ditampilkan atau disinkronkan. Ini mencegah riwayat akun A terunggah ke akun B.
+- Kegagalan sinkronisasi tidak menghapus riwayat lokal; data dapat dicoba sinkronkan kembali saat koneksi pulih.
+- Pengujian otomatis baru mencakup logout, isolasi cache A/B, pemulihan cache masing-masing akun, dan retensi data ketika unggahan offline gagal. Ini belum menggantikan uji dua akun nyata dan dua perangkat.
+
+## Konten latihan dan tryout
+
+- Bank latihan berisi 105 soal unik, 15 soal untuk masing-masing dari 7 subtes.
+- Tersedia 14 paket latihan: 7 paket dasar dan 7 paket pendalaman.
+- Tryout tetap terpisah: 70 soal dan timer 105 menit. Smoke test memastikan 70 tombol navigasi ditampilkan.
+- CI memeriksa empat opsi unik, kunci jawaban yang tersedia, metadata, pembahasan, ID unik, serta kelengkapan seluruh paket.
+- Soal merupakan materi latihan orisinal platform, bukan soal resmi SNBT.
 
 ## Header keamanan
 
-Pada commit setelah audit dasar, konfigurasi Vercel diperbarui untuk menambahkan header global:
+Konfigurasi Vercel menambahkan header global:
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
 
-Header ini merupakan lapisan dasar. Content Security Policy belum ditambahkan karena perlu inventarisasi dan pengujian seluruh sumber CDN/OAuth agar tidak merusak login dan aset halaman.
+Content Security Policy belum ditambahkan karena perlu inventarisasi dan pengujian seluruh sumber CDN/OAuth agar tidak merusak login dan aset halaman. Header HTTP aktual belum diverifikasi melalui sesi browser/HTTP pada deployment yang terlindungi.
 
 ## Advisor, CI, dan deployment
 
 - Security advisor: satu peringatan Leaked Password Protection di atas.
 - Performance advisor: tidak ada temuan.
 - Health advisor: tidak ada temuan.
-- GitHub Actions pada commit `1cad14a`: sukses, run `43875642571`.
-- Preview Vercel untuk commit `1cad14a`: `READY`; preview dilindungi autentikasi Vercel.
-- Perubahan header keamanan dibuat pada commit `17de475576fe1bcc27d3cc98390f1c9053d01e28`; menunggu hasil CI dan preview deployment untuk commit ini.
-- Branch pengembangan saat ini belum memiliki branch protection / required status checks. Ini bukan temuan akses data, tetapi kontrol proses yang direkomendasikan sebelum kolaborasi atau rilis.
+- GitHub Actions terbaru: sukses, run `43898555965`.
+- Commit CI: `39a6a389ee49cca56ba9b8343eba489eed8c05df`.
+- Preview Vercel terbaru: `READY`, alias `https://suksessnbt-git-integrasi-snbt-learning-center-2026-11-ai-ced3.vercel.app`. Preview dilindungi autentikasi Vercel.
+- Perubahan belum digabung ke `main` dan belum dipromosikan ke produksi.
+- Branch pengembangan belum memiliki branch protection / required status checks. Ini kontrol proses yang direkomendasikan sebelum kolaborasi atau rilis.
 
-## Pengujian yang masih wajib
+## Pengujian yang masih wajib sebelum rilis
 
-1. Uji login Google, logout, pendaftaran email, konfirmasi email, login email, reset dan ubah password.
-2. Uji isolasi dua akun: akun A tidak boleh membaca atau mengubah progres akun B.
-3. Uji simpan, sinkronkan, muat ulang, offline/online, dan pergantian perangkat.
-4. Uji seluruh paket latihan dan tryout: nilai benar/salah/kosong, timer, hasil, pembahasan, dan penyimpanan.
-5. Uji responsif dan aksesibilitas pada desktop serta Android.
-6. Verifikasi header keamanan benar-benar terkirim pada preview deployment.
+1. Uji pendaftaran email, konfirmasi email, login email, reset dan ubah password.
+2. Uji isolasi dua akun nyata: akun A tidak boleh membaca atau mengubah progres akun B.
+3. Uji simpan, sinkronkan, muat ulang, offline/online, pergantian akun, dan pergantian perangkat pada browser nyata.
+4. Uji alur penuh seluruh paket latihan dan tryout di browser: jawaban, timer, hasil, pembahasan, dan penyimpanan.
+5. Uji responsif, navigasi keyboard, screen reader dasar, dan browser Android.
+6. Verifikasi empat header keamanan benar-benar terkirim pada preview/produksi setelah akses preview tersedia.
 7. Audit Content Security Policy, dependensi CDN, serta penanganan kegagalan Supabase.
 8. Tinjau branch protection dan required CI checks sebelum perubahan diizinkan masuk ke branch utama.
 
-## Batasan audit
+## Batasan audit dan keputusan rilis
 
-Pemeriksaan kode, SQL, advisor, dan CI bukan pengganti penetration test atau browser end-to-end test. Tidak ada perubahan pada branch `main`, konfigurasi autentikasi Supabase, kebijakan RLS, atau deployment produksi dalam pekerjaan ini.
+Pemeriksaan kode, SQL, advisor, dan CI bukan pengganti penetration test atau browser end-to-end test. Karena beberapa pengujian runtime masih membutuhkan akun/perangkat pengguna, **Fase 5 berstatus “otomatis lulus, validasi manual tersisa” dan belum disetujui untuk rilis produksi atau APK**.
+
+Tidak ada perubahan pada branch `main`, konfigurasi autentikasi Supabase, kebijakan RLS, atau deployment produksi dalam pekerjaan ini.
