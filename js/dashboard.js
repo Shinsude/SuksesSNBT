@@ -49,7 +49,7 @@ async function initDashboard() {
 
   const rows = entries || [];
   $("#activityCount").textContent = rows.length;
-  const scored = rows.filter((row) => Number.isFinite(Number(row.score)));
+  const scored = rows.filter((row) => row.score !== null && row.score !== undefined && Number.isFinite(Number(row.score)));
   const average = scored.length
     ? Math.round(scored.reduce((sum, row) => sum + Number(row.score), 0) / scored.length)
     : 0;
