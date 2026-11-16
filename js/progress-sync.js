@@ -163,6 +163,20 @@
   }
 
   async function save(entry) {
+    const client = db();
+    if (client) {
+      const sessionResult = await client.auth.getSession();
+      const user = sessionResult.data && sessionResult.data.session && sessionResult.data.session.user;
+      const previousOwner = localStorage.getItem(OWNER_KEY);
+      if (user && previousOwner && previousOwner !== user.id) {
+        const archiveKey = ARCHIVE_PREFIX + previousOwner;
+        const archivedPrevious = readStored(archiveKey);
+        const currentCache = readLocal();
+        if (currentCache.length) writeStored(archiveKey, mergeEntries(archivedPrevious, currentCache));
+        writeLocal(readStored(ARCHIVE_PREFIX + user.id));
+        localStorage.setItem(OWNER_KEY, user.id);
+      }
+    }
     const items = ensureIds(readLocal());
     const existing = items.find((item) =>
       item.completedAt === entry.completedAt &&
