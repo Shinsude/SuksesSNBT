@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Latihan Penalaran Umum — SNBT Learning Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .practice{padding:42px 0 80px;min-height:75vh}.practice-wrap{max-width:850px;margin:auto}
+    .practice-top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:22px;flex-wrap:wrap}
+    .practice-top a{color:var(--accent);font-weight:700}.practice-panel{background:var(--surface);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:clamp(20px,4vw,34px)}
+    .practice-meta{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:13px;margin-bottom:12px}
+    .progress-track{height:8px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;margin-bottom:26px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--primary),var(--accent));transition:width .2s}
+    .question-text{font-size:clamp(18px,3vw,22px);line-height:1.55;margin:12px 0 24px;color:var(--text)}
+    .question-context{background:rgba(255,255,255,.035);border-left:3px solid var(--accent);padding:15px 17px;border-radius:8px;color:var(--muted);line-height:1.7;margin:14px 0}
+    .answers{display:grid;gap:11px}.answer-option{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border:1px solid rgba(255,255,255,.14);border-radius:12px;cursor:pointer;color:var(--text);transition:border .15s,background .15s}
+    .answer-option:hover{border-color:var(--primary-2);background:rgba(79,107,255,.08)}.answer-option input{margin-top:5px;accent-color:var(--accent)}
+    .practice-actions{display:flex;justify-content:space-between;gap:12px;margin-top:26px;flex-wrap:wrap}.practice-actions button{cursor:pointer;border:0}
+    .practice-actions button:disabled{opacity:.45;cursor:not-allowed}
+    .secondary{border:1px solid rgba(255,255,255,.2)!important;background:transparent;color:var(--text)}
+    .feedback{margin-top:22px;padding:17px;border-radius:12px;background:rgba(53,224,184,.08);border:1px solid rgba(53,224,184,.25);line-height:1.65}
+    .feedback.wrong{background:rgba(255,93,115,.08);border-color:rgba(255,93,115,.3)}
+    .result-score{font-size:54px;line-height:1.2;font-weight:800;color:var(--accent);margin:14px 0}
+    .result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.result-stat{background:rgba(255,255,255,.04);padding:16px;border-radius:12px}.result-stat strong{display:block;font-size:24px}.result-stat span{color:var(--muted);font-size:12px}
+    .review-item{padding:17px 0;border-bottom:1px solid rgba(255,255,255,.1)}.review-item:last-child{border:0}.review-item p{color:var(--muted);line-height:1.6;margin-top:7px}
+    .notice{color:var(--muted);font-size:13px;margin-top:16px;min-height:20px}
+    @media(max-width:560px){.result-grid{grid-template-columns:1fr 1fr}.practice-panel{padding:19px}}
+  </style>
+</head>
+<body>
+<header class="header"><div class="container header__inner">
+  <a href="index.html" class="brand"><span class="brand__logo">SN</span><span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span></a>
+  <a href="dashboard.html" class="nav-download">Dashboard</a>
+</div></header>
+<main class="practice"><div class="container practice-wrap">
+  <div class="practice-top"><a href="materi.html">← Kembali ke materi</a><span class="badge">Latihan · Penalaran Umum</span></div>
+  <section class="practice-panel" id="practicePanel" aria-live="polite">
+    <div class="practice-meta"><span id="questionCounter">Soal 1 dari 10</span><span id="timer">00:00</span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div id="questionArea">
+      <p class="badge badge--soft">Pemanasan</p>
+      <h1 class="question-text">Latihan Penalaran Umum</h1>
+      <p style="color:var(--muted);line-height:1.7">Kerjakan 10 soal pilihan ganda. Pilih satu jawaban terbaik. Setelah selesai, kamu akan mendapat nilai, pembahasan, dan hasilnya tersimpan ke dashboard.</p>
+      <button class="btn btn--primary" id="startButton" type="button" style="margin-top:24px">Mulai latihan →</button>
+    </div>
+    <p class="notice" id="saveStatus" role="status"></p>
+  </section>
+</div></main>
+<script type="module" src="js/latihan.js"></script>
+</body></html>
