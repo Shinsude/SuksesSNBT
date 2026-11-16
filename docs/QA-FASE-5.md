@@ -2,7 +2,7 @@
 
 Tanggal pemeriksaan: 16 November 2026  
 Branch: `integrasi-snbt-learning-center-2026-11`  
-Commit audit terbaru: `39a6a389ee49cca56ba9b8343eba489eed8c05df`
+Commit audit terbaru: `b62ce79b56b782b7ebadb10595479874579b1d1a`
 
 ## Ringkasan status
 
@@ -32,7 +32,7 @@ Fase 5 belum dapat dinyatakan lulus penuh atau menjadi persetujuan rilis karena 
 - Session persistence dan auto-refresh diaktifkan pada Supabase client.
 - Kode menyediakan Google OAuth, email/password sign-in dan sign-up, reset password, update password, dan sign-out. Google login telah berhasil diuji oleh pengguna; alur email belum diverifikasi end-to-end.
 - Sinkronisasi progres menggunakan `user_id` dan `client_id`; pembacaan data dilakukan setelah session aktif.
-- **Perbaikan Fase 5:** riwayat lokal tidak lagi dihapus saat logout. Riwayat disimpan dengan penanda pemilik dan diarsipkan per user ID saat akun berganti.
+- **Perbaikan Fase 5:** riwayat lokal akun yang keluar diarsipkan berdasarkan user ID, lalu cache aktif dibersihkan agar pengguna berikutnya tidak melihat data akun sebelumnya.
 - Saat akun berganti, cache akun sebelumnya segera dipisahkan sebelum data akun baru ditampilkan atau disinkronkan. Ini mencegah riwayat akun A terunggah ke akun B.
 - Kegagalan sinkronisasi tidak menghapus riwayat lokal; data dapat dicoba sinkronkan kembali saat koneksi pulih.
 - Pengujian otomatis baru mencakup logout, isolasi cache A/B, pemulihan cache masing-masing akun, dan retensi data ketika unggahan offline gagal. Ini belum menggantikan uji dua akun nyata dan dua perangkat.
@@ -60,9 +60,9 @@ Content Security Policy belum ditambahkan karena perlu inventarisasi dan penguji
 - Security advisor: satu peringatan Leaked Password Protection di atas.
 - Performance advisor: tidak ada temuan.
 - Health advisor: tidak ada temuan.
-- GitHub Actions terbaru: sukses, run `43898555965`.
-- Commit CI: `39a6a389ee49cca56ba9b8343eba489eed8c05df`.
-- Preview Vercel terbaru: `READY`, alias `https://suksessnbt-git-integrasi-snbt-learning-center-2026-11-ai-ced3.vercel.app`. Preview dilindungi autentikasi Vercel.
+- GitHub Actions terbaru: sukses, run `43899094394`.
+- Commit CI: `b62ce79b56b782b7ebadb10595479874579b1d1a`.
+- Preview Vercel untuk commit audit ini: `READY`. Alias branch pengembangan tetap `https://suksessnbt-git-integrasi-snbt-learning-center-2026-11-ai-ced3.vercel.app`. Preview dilindungi autentikasi Vercel.
 - Perubahan belum digabung ke `main` dan belum dipromosikan ke produksi.
 - Branch pengembangan belum memiliki branch protection / required status checks. Ini kontrol proses yang direkomendasikan sebelum kolaborasi atau rilis.
 
