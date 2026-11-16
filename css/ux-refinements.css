@@ -1,49 +1,106 @@
-/* Sukses SNBT — penyatuan visual dan peningkatan kenyamanan */
-:root{--ux-bg:#0b1020;--ux-bg-soft:#101832;--ux-panel:#141f3d;--ux-panel-2:#19284a;--ux-text:#eef3ff;--ux-muted:#aab6d2;--ux-line:rgba(210,225,255,.13);--ux-blue:#7188ff;--ux-mint:#45d9b5;--ux-warm:#ffbd78}
-html{scroll-padding-top:5.5rem}
-body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;line-height:1.65}
-h1,h2,h3,h4{letter-spacing:-.025em}
-p{line-height:1.7}
-a,button{-webkit-tap-highlight-color:transparent}
-button,.btn{min-height:44px}
-:focus-visible{outline:3px solid var(--ux-mint)!important;outline-offset:3px}
-::selection{background:rgba(113,136,255,.35);color:#fff}
-.practice-list-page,.progress-page,.account-page{color:var(--ux-text)!important;background:var(--ux-bg)!important}
-.practice-list-hero{background:radial-gradient(circle at 82% 18%,rgba(113,136,255,.19),transparent 28rem),linear-gradient(135deg,#101a36 0%,#0b1020 78%)!important;border-bottom:1px solid var(--ux-line)!important}
-.practice-list-hero h1,.section-heading h2,.progress-page h1,.progress-history h2,.progress-subtests h2,.progress-trend h2,.account-container h1{color:var(--ux-text)!important}
-.practice-list-hero .page-lead,.section-note,.progress-lead{color:var(--ux-muted)!important}
-.practice-card,.progress-stat,.progress-entry,.progress-empty,.progress-subtest-card,.progress-trend-row{color:var(--ux-text)!important;background:var(--ux-panel)!important;border:1px solid var(--ux-line)!important;box-shadow:0 12px 30px rgba(0,0,0,.12)!important}
-.practice-card{border-radius:18px!important;transition:transform .18s ease,border-color .18s ease,background .18s ease}
-.practice-card--available{border-color:rgba(69,217,181,.32)!important}
-.practice-card--available:hover{transform:translateY(-3px);border-color:var(--ux-mint)!important;background:var(--ux-panel-2)!important}
-.practice-card h3,.progress-entry strong,.progress-stat strong,.progress-subtest-card__head,.progress-trend-row__label span,.progress-trend-row>strong{color:var(--ux-text)!important}
-.practice-card p,.progress-entry p,.progress-stat span,.progress-subtest-card small,.progress-trend-row__label small{color:var(--ux-muted)!important}
-.practice-code{color:#a9b7ff!important;background:rgba(113,136,255,.14)!important}
-.status--available{color:var(--ux-mint)!important}
-.progress-note{color:#dce5ff!important;background:rgba(113,136,255,.12)!important;border-left-color:var(--ux-blue)!important}
-.progress-subtest-card__bar,.progress-trend-row__track{background:rgba(255,255,255,.1)!important}
-.progress-subtest-card__fill,.progress-trend-row__fill{background:linear-gradient(90deg,var(--ux-blue),var(--ux-mint))!important}
-.progress-empty{color:var(--ux-muted)!important;border-style:dashed!important}
-.account-page{background:radial-gradient(circle at 50% 0,rgba(113,136,255,.16),transparent 34rem),var(--ux-bg)!important}
-.account-card{background:var(--ux-panel)!important;border:1px solid var(--ux-line)!important;box-shadow:0 20px 50px rgba(0,0,0,.2)!important}
-.account-container h1,.signed-in-panel h2{color:var(--ux-text)!important}
-.account-lead,.account-footnote{color:var(--ux-muted)!important}
-.account-tabs{border-color:var(--ux-line)!important}
-.account-tab{color:var(--ux-muted)!important}
-.account-tab.is-active{color:var(--ux-text)!important;border-color:var(--ux-mint)!important}
-.account-form label{color:var(--ux-text)!important}
-.account-form input{background:#0d1730!important;color:var(--ux-text)!important;border-color:var(--ux-line)!important}
-.account-form input::placeholder{color:#8998b8}
-.text-button,.back-link{color:#a9b7ff!important}
-.account-message:not(:empty){background:rgba(113,136,255,.14)!important;color:#dce5ff!important}
-.account-message[data-state=error]{background:rgba(255,93,115,.13)!important;color:#ffd9df!important}
-.account-message[data-state=success]{background:rgba(69,217,181,.13)!important;color:#baf7e7!important}
-.practice-tryout-callout{border-color:rgba(113,136,255,.35)!important}
+/* Sukses SNBT — Soft Sky & Mint: cerah, lembut, dan konsisten */
+:root {
+  color-scheme: light;
+  --ux-bg: #f3f8fc;
+  --ux-bg-soft: #eaf3f9;
+  --ux-panel: #ffffff;
+  --ux-panel-2: #f5fafc;
+  --ux-text: #263b4d;
+  --ux-muted: #607789;
+  --ux-line: #dce8f0;
+  --ux-blue: #4b9bc9;
+  --ux-blue-dark: #347eae;
+  --ux-mint: #55ad91;
+  --ux-warm: #e8b879;
+}
+html { scroll-padding-top: 5.5rem; background:var(--ux-bg); }
+body { font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;line-height:1.65;background:var(--ux-bg);color:var(--ux-text); }
+h1,h2,h3,h4 { letter-spacing:-.025em;color:var(--ux-text); }
+p { line-height:1.7; }
+a,button { -webkit-tap-highlight-color:transparent; }
+button,.btn { min-height:44px; }
+:focus-visible { outline:3px solid var(--ux-mint)!important;outline-offset:3px; }
+::selection { background:#cce8dc;color:#263b4d; }
+.site-header,.header { background:rgba(247,251,254,.96)!important;border-bottom:1px solid var(--ux-line)!important;box-shadow:0 4px 18px rgba(48,87,112,.05); }
+.site-header .nav a,.header .nav a { color:#536f83!important; }
+.site-header .nav a:hover,.site-header .nav a[aria-current=page],.header .nav a:hover,.header .nav a[aria-current=page] { color:#286b96!important; }
+.site-header .nav a[aria-current=page] { border-color:var(--ux-mint)!important; }
+.site-header .nav-toggle span { background:#344f63; }
+.brand-mark,.brand__logo { background:linear-gradient(135deg,#5aa9d4,#65b99e)!important;color:#fff!important; }
+.brand-text span,.brand__accent { color:#438fbb!important; }
+.site-footer,.footer { background:#e5eff5!important;color:#607789!important;border-top:1px solid #d3e2eb!important; }
+.site-footer a,.footer__col a { color:#347eae!important; }
+.practice-list-page,.progress-page,.account-page,.practice-page { color:var(--ux-text)!important;background:var(--ux-bg)!important; }
+.practice-list-hero,.bg-hero-materi { background:radial-gradient(circle at 82% 18%,rgba(120,184,223,.2),transparent 28rem),linear-gradient(135deg,#eaf4fa 0%,#f7fbfd 78%)!important;border-bottom:1px solid var(--ux-line)!important; }
+.practice-list-hero h1,.section-heading h2,.progress-page h1,.progress-history h2,.progress-subtests h2,.progress-trend h2,.account-container h1,.materi-title { color:var(--ux-text)!important; }
+.practice-list-hero .page-lead,.section-note,.progress-lead,.account-lead,.materi-lead { color:var(--ux-muted)!important; }
+.practice-card,.progress-stat,.progress-entry,.progress-empty,.progress-subtest-card,.progress-trend-row,.account-card,.package-card,.practice-page .practice-card,.result-card,.question-card,.question-nav { color:var(--ux-text)!important;background:#fff!important;border:1px solid var(--ux-line)!important;box-shadow:0 10px 28px rgba(48,87,112,.07)!important; }
+.practice-card,.package-card { border-radius:18px!important; }
+.practice-card--available { border-color:#b9dfd0!important; }
+.practice-card--available:hover { transform:translateY(-3px);border-color:var(--ux-mint)!important;background:#fbfefd!important; }
+.practice-card h3,.progress-entry strong,.progress-stat strong,.progress-subtest-card__head,.progress-trend-row__label span,.progress-trend-row>strong,.package-card h3,.question-card h2,.question-nav h3 { color:var(--ux-text)!important; }
+.practice-card p,.progress-entry p,.progress-stat span,.progress-subtest-card small,.progress-trend-row__label small,.package-card p { color:var(--ux-muted)!important; }
+.practice-code { color:#347eae!important;background:#eaf4fa!important; }
+.status--available { color:#398b78!important; }
+.progress-note { color:#36566d!important;background:#eaf4fa!important;border-left-color:var(--ux-blue)!important; }
+.progress-subtest-card__bar,.progress-trend-row__track { background:#e5eef4!important; }
+.progress-subtest-card__fill,.progress-trend-row__fill { background:linear-gradient(90deg,#6bb0d7,#65b99e)!important; }
+.progress-empty { color:var(--ux-muted)!important;border-style:dashed!important; }
+.account-page { background:radial-gradient(circle at 50% 0,rgba(120,184,223,.18),transparent 34rem),var(--ux-bg)!important; }
+.account-card { border-radius:20px!important; }
+.account-container h1,.signed-in-panel h2 { color:var(--ux-text)!important; }
+.account-tabs { border-color:var(--ux-line)!important; }
+.account-tab { color:var(--ux-muted)!important; }
+.account-tab.is-active { color:#286b96!important;border-color:var(--ux-mint)!important; }
+.account-form label { color:var(--ux-text)!important; }
+.account-form input { background:#f7fbfd!important;color:var(--ux-text)!important;border-color:#cbdde8!important; }
+.account-form input::placeholder { color:#8096a6!important; }
+.text-button,.back-link { color:#347eae!important; }
+.account-message:not(:empty) { background:#eaf4fa!important;color:#36566d!important; }
+.account-message[data-state=error] { background:#fff0f1!important;color:#9f4351!important; }
+.account-message[data-state=success] { background:#eaf6f0!important;color:#34745f!important; }
+.practice-tryout-callout,.tryout-intro,.tryout-result { background:linear-gradient(145deg,#eaf4fa,#f5fafc)!important;border:1px solid #cbdfea!important;box-shadow:0 12px 30px rgba(48,87,112,.07)!important; }
+.practice-tryout-callout h2,.tryout-intro h2,.tryout-result h2 { color:var(--ux-text)!important; }
+.practice-tryout-callout p:not(.eyebrow),.tryout-intro p:not(.eyebrow),.tryout-result>p:not(.eyebrow) { color:var(--ux-muted)!important; }
+.practice-tryout-callout .btn { background:#347eae!important;color:#fff!important; }
+.practice-page { background:radial-gradient(520px 280px at 85% 0%,rgba(120,184,223,.16),transparent 65%),#f3f8fc!important; }
+.practice-intro p,.progress-row,.question-counter,.saved-note { color:var(--ux-muted)!important; }
+.practice-page .practice-card,.result-card { background:#fff!important;border:1px solid var(--ux-line)!important; }
+.answer-option,.question-nav__button,.review-item,.subtest-result-item { color:var(--ux-text)!important;background:#f8fbfd!important;border:1px solid #dce8f0!important; }
+.answer-option:hover,.answer-option:has(input:focus-visible) { background:#eaf4fa!important;border-color:#8dbdd9!important; }
+.answer-option.is-selected,.question-nav__button.is-answered { background:#eaf6f0!important;border-color:#9bd1ba!important; }
+.answer-option.is-correct,.review-item--correct { background:#eaf6f0!important;border-color:#9bd1ba!important; }
+.answer-option.is-wrong,.review-item--wrong { background:#fff0f1!important;border-color:#e5b5bc!important; }
+.feedback,.tryout-notice { background:#eaf4fa!important;color:#536f83!important;border-left-color:#4b9bc9!important; }
+.feedback strong { color:var(--ux-text)!important; }
+.progress-track,.package-card__meta span { background:#e8f0f5!important; }
+.timer { background:#fff!important;border-color:#dce8f0!important; }
+.timer span { color:var(--ux-muted)!important; }
+.timer strong { color:#347eae!important; }
+.timer--urgent strong { color:#b34c5c!important; }
+.btn--finish { background:#fff0f1!important;color:#9f4351!important;border-color:#e5b5bc!important; }
+.package-status--available { color:#34745f!important;background:#eaf6f0!important; }
+.package-status--preparation { color:#946a2b!important;background:#fff5df!important; }
+.materi-section p,.steps>li,.check-list li,.options li,.keyword-table td:not(:first-child) { color:#465f72!important; }
+.materi-section h2 { border-bottom-color:var(--ux-line)!important; }
+.box,.subtes-card,.pertemuan-card { background:#fff!important;border:1px solid var(--ux-line)!important;box-shadow:0 8px 24px rgba(48,87,112,.05); }
+.box--soal { background:#eff7fb!important;border-color:#c7dfef!important; }
+.box--pembahasan { background:#eef8f3!important;border-color:#c4e5d7!important; }
+.box--latihan { background:#fff8eb!important;border-color:#efdbb8!important; }
+.box--rangkuman { background:#f0f4fb!important;border-color:#d4deef!important; }
+.options li { background:#f5f9fc!important; }
+.options li.is-correct { background:#eaf6f0!important;border-color:#b9dfd0!important; }
+.steps>li+li,.keyword-table th,.keyword-table td,.materi-nav { border-color:var(--ux-line)!important; }
+.admin-principle { color:#805d2d!important;background:#fff8eb!important;border-color:#e8d4ad!important; }
+.flow__step { color:#36566d!important;background:#eaf4fa!important;border-color:#c7dfef!important; }
+.flow__step--result { background:#eaf6f0!important;border-color:#c4e5d7!important; }
+.keyword-table th,.keyword-table td:first-child { color:#347eae!important; }
+.answer { background:#d9f0e5!important;color:#286b58!important; }
+.materi-badge,.open-tag { color:#34745f!important;background:#eaf6f0!important;border-color:#c4e5d7!important; }
+.lock-tag { color:#946a2b!important;background:#fff5df!important;border-color:#efdbb8!important; }
 @media(max-width:760px){.site-header .nav{max-height:0}.site-header .nav.nav--open{max-height:min(80vh,520px)}.progress-entry{gap:.5rem}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}.practice-card--available:hover{transform:none}}
-.progress-empty p{margin:0 0 .85rem;color:var(--ux-muted)}.progress-empty .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;padding:.7rem 1.1rem}.progress-actions .btn{align-items:center;justify-content:center}
-
-/* Satu keluarga huruf untuk mengurangi kesan berpindah-pindah antarhalaman. */
+.progress-empty p{margin:0 0 .85rem;color:var(--ux-muted)}
+.progress-empty .btn,.progress-actions .btn {display:inline-flex;align-items:center;justify-content:center;text-decoration:none;padding:.7rem 1.1rem}
 *,*::before,*::after{font-family:inherit!important}
-
 @media(max-width:620px){.header .nav.nav--open{max-height:min(80vh,560px);overflow-y:auto}}
