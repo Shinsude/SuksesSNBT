@@ -7,7 +7,7 @@ const vm = require("node:vm");
 
 const context = { window: {} };
 vm.createContext(context);
-for (const file of ["data/latihan-pu.js", "data/latihan-snbt.js", "data/paket-latihan.js"]) {
+for (const file of ["data/latihan-pu.js", "data/latihan-snbt.js", "data/latihan-lanjutan.js", "data/paket-latihan.js"]) {
   vm.runInContext(fs.readFileSync(file, "utf8"), context, { filename: file });
 }
 
@@ -24,13 +24,13 @@ for (const file of ["js/tryout.js", "js/latihan-paket.js"]) {
 }
 
 assert.ok(Array.isArray(latihanQuestions), "question bank must be an array");
-assert.equal(latihanQuestions.length, 70, "expected 70 original practice questions");
-assert.equal(new Set(latihanQuestions.map(q => q.id)).size, 70, "question IDs must be unique");
+assert.equal(latihanQuestions.length, 105, "expected 105 original practice questions");
+assert.equal(new Set(latihanQuestions.map(q => q.id)).size, 105, "question IDs must be unique");
 
 const expectedPrefixes = ["pu", "ppu", "pbm", "pk", "pm", "li", "le"];
 for (const prefix of expectedPrefixes) {
   const group = latihanQuestions.filter(q => q.id.startsWith(prefix + "-"));
-  assert.equal(group.length, 10, prefix + " must contain 10 questions");
+  assert.equal(group.length, 15, prefix + " must contain 15 questions");
 }
 for (const question of latihanQuestions) {
   assert.ok(question.question && question.topic && question.subtest, question.id + " must have question metadata");
@@ -40,9 +40,9 @@ for (const question of latihanQuestions) {
   assert.ok(question.explanation && question.explanation.summary && question.explanation.correct, question.id + " must include an explanation");
   assert.ok(!Object.hasOwn(question.explanation.incorrect, question.answer), question.id + " must not mark the correct answer as incorrect");
 }
-assert.equal(latihanPackages.length, 7, "expected one package for each subtest");
+assert.equal(latihanPackages.length, 14, "expected two packages for each subtest");
 for (const practicePackage of latihanPackages) {
-  assert.equal(practicePackage.questionIds.length, 10, practicePackage.id + " must contain 10 questions");
+  assert.ok([5, 10].includes(practicePackage.questionIds.length), practicePackage.id + " must contain 5 or 10 questions");
   assert.equal(practicePackage.isAvailable, true, practicePackage.id + " must resolve every question");
 }
-console.log("OK: 70 questions, 7 subtests, 7 complete packages, answer keys and explanations.");
+console.log("OK: 105 questions, 7 subtests, 14 complete packages, answer keys and explanations.");
