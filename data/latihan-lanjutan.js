@@ -54,7 +54,5 @@
     make("le-015","Literasi Inggris","Author's purpose","sulit","A passage compares the energy use of two household appliances and concludes by recommending the more efficient model. The writer's main purpose is to …",["Compare options to inform a purchasing decision","Tell a fictional story","Describe the history of electricity","Argue that all appliances are identical"],"A","The comparison and recommendation are intended to help readers evaluate alternatives.","A is correct because the passage provides comparative information for a decision.")
   ];
 
-  // Remove a malformed draft item defensively; the published set contains only validated questions.
-  const validated = advanced.filter((q) => q.id !== "pk-015");
-  window.latihanQuestions = [...(window.latihanQuestions || []), ...validated];
+  window.latihanQuestions = [...(window.latihanQuestions || []), ...advanced];
 })();
