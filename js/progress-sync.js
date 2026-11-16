@@ -100,14 +100,18 @@
 
   function prepareLocalForUser(userId) {
     const previousOwner = localStorage.getItem(OWNER_KEY);
-    if (!previousOwner || previousOwner === userId) return;
-    // Archive the previous account's cache instead of deleting or exposing it to this account.
-    const previousCache = readLocal();
-    if (previousCache.length) {
-      const archiveKey = ARCHIVE_PREFIX + previousOwner;
-      writeStored(archiveKey, mergeEntries(readStored(archiveKey), previousCache));
+    if (previousOwner === userId) return;
+
+    const currentCache = readLocal();
+    if (previousOwner && currentCache.length) {
+      const previousArchiveKey = ARCHIVE_PREFIX + previousOwner;
+      writeStored(previousArchiveKey, mergeEntries(readStored(previousArchiveKey), currentCache));
     }
-    writeLocal(readStored(ARCHIVE_PREFIX + userId));
+
+    // Restore this user's own archive. Unowned local work can be adopted on first sign-in.
+    const ownArchive = readStored(ARCHIVE_PREFIX + userId);
+    const restored = previousOwner ? ownArchive : mergeEntries(ownArchive, currentCache);
+    writeLocal(restored);
     localStorage.setItem(OWNER_KEY, userId);
   }
 
@@ -189,9 +193,22 @@
         prepareLocalForUser(session.user.id);
         queueMicrotask(() => sync());
       }
-      // Keep the local cache and owner marker on sign-out. Pending offline entries
-      // must survive logout; a later sign-in archives/restores data by user ID.
+      // Archive the signed-in user's cache before clearing the active browser view.
+      // Pending offline entries remain recoverable, while the next signed-out user
+      // starts with an unowned local cache rather than inheriting the previous account.
       if (event === "SIGNED_OUT") {
+        const owner = localStorage.getItem(OWNER_KEY);
+        if (owner) {
+          const archiveKey = ARCHIVE_PREFIX + owner;
+          const currentCache = readLocal();
+          if (currentCache.length) {
+            writeStored(archiveKey, mergeEntries(readStored(archiveKey), currentCache));
+          }
+          try {
+            localStorage.removeItem(KEY);
+            localStorage.removeItem(OWNER_KEY);
+          } catch (_) {}
+        }
         window.dispatchEvent(new CustomEvent("snbt-progress-updated"));
       }
     });
