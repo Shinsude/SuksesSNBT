@@ -2,7 +2,7 @@
 
 Tanggal pemeriksaan: 16 November 2026  
 Branch: `integrasi-snbt-learning-center-2026-11`  
-Commit audit terbaru: `b9e142310c34edfdf2cc2c94f11ec5950ee73315`
+Commit audit terbaru: `27b7d145ea8deaaf08ae17c8db6b69c68b70b855`
 
 ## Ringkasan status
 
@@ -41,7 +41,7 @@ Fase 5 belum dapat dinyatakan lulus penuh atau menjadi persetujuan rilis karena 
 
 - Bank latihan berisi 105 soal unik, 15 soal untuk masing-masing dari 7 subtes.
 - Tersedia 14 paket latihan: 7 paket dasar dan 7 paket pendalaman.
-- Tryout tetap terpisah: 70 soal dan timer 105 menit. Smoke test memastikan 70 tombol navigasi ditampilkan.
+- Tryout tetap terpisah: 70 soal dan timer 105 menit. Smoke test memastikan 70 tombol navigasi tryout ditampilkan dan seluruh 14 paket dasar/pendalaman dapat membuka soal serta empat opsi jawaban.
 - CI memeriksa empat opsi unik, kunci jawaban yang tersedia, metadata, pembahasan, ID unik, serta kelengkapan seluruh paket.
 - Soal merupakan materi latihan orisinal platform, bukan soal resmi SNBT.
 
@@ -60,8 +60,8 @@ Content Security Policy belum ditambahkan karena perlu inventarisasi dan penguji
 - Security advisor: satu peringatan Leaked Password Protection di atas.
 - Performance advisor: tidak ada temuan.
 - Health advisor: tidak ada temuan.
-- GitHub Actions terbaru: sukses, run `43899198788`.
-- Commit CI: `b9e142310c34edfdf2cc2c94f11ec5950ee73315`.
+- GitHub Actions terbaru: sukses, run `43899480875`.
+- Commit CI: `27b7d145ea8deaaf08ae17c8db6b69c68b70b855`.
 - Preview Vercel untuk commit audit ini: `READY`. Alias branch pengembangan tetap `https://suksessnbt-git-integrasi-snbt-learning-center-2026-11-ai-ced3.vercel.app`. Preview dilindungi autentikasi Vercel.
 - Perubahan belum digabung ke `main` dan belum dipromosikan ke produksi.
 - Branch pengembangan belum memiliki branch protection / required status checks. Ini kontrol proses yang direkomendasikan sebelum kolaborasi atau rilis.
