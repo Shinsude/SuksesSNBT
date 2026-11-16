@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2563eb" />
+  <title>Masuk — SNBT Learning Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .auth-wrap{min-height:calc(100vh - 80px);display:grid;place-items:center;padding:48px 16px}
+    .auth-card{width:min(100%,460px);background:#fff;border:1px solid #e5eaf2;border-radius:24px;padding:36px;box-shadow:0 18px 55px rgba(15,23,42,.08);text-align:center}
+    .auth-logo{width:58px;height:58px;margin:0 auto 18px;border-radius:17px;display:grid;place-items:center;background:#2563eb;color:#fff;font-weight:800;font-size:22px}
+    .auth-card h1{font-size:27px;margin:0 0 10px;color:#14213d}
+    .auth-card p{color:#64748b;line-height:1.7;margin:0 0 24px}
+    .google-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;border:1px solid #dbe2ea;border-radius:12px;padding:14px;background:#fff;color:#1e293b;font:700 15px inherit;cursor:pointer}
+    .google-btn:disabled{opacity:.6;cursor:wait}
+    .google-mark{font-weight:800;font-size:19px;color:#4285f4}
+    #loginStatus{min-height:24px;margin:16px 0 0;font-size:13px}
+    #loginStatus[data-state="error"]{color:#b91c1c}
+    .auth-back{display:inline-block;margin-top:22px;color:#2563eb;font-weight:700;text-decoration:none}
+    @media(max-width:520px){.auth-card{padding:28px 20px}}
+  </style>
+</head>
+<body>
+  <header class="header"><div class="container header__inner">
+    <a href="index.html" class="brand"><span class="brand__logo">SN</span><span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span></a>
+    <a href="materi.html" class="nav-download">Materi</a>
+  </div></header>
+  <main class="auth-wrap">
+    <section class="auth-card" aria-labelledby="authTitle">
+      <div class="auth-logo" aria-hidden="true">SN</div>
+      <h1 id="authTitle">Selamat datang kembali!</h1>
+      <p>Masuk untuk menyimpan aktivitas belajar, melihat perkembangan, dan melanjutkan persiapan SNBT kamu.</p>
+      <button id="googleLogin" class="google-btn" type="button"><span class="google-mark" aria-hidden="true">G</span> Lanjutkan dengan Google</button>
+      <p id="loginStatus" role="status" aria-live="polite"></p>
+      <a class="auth-back" href="index.html">← Kembali ke beranda</a>
+    </section>
+  </main>
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>
