@@ -1,16 +1,16 @@
 :root {
-  --bg: #0b1020;
-  --bg-alt: #0f1530;
-  --surface: #141b3d;
-  --surface-2: #1a2350;
-  --text: #eef1ff;
-  --muted: #9aa3c7;
-  --primary: #4f6bff;
-  --primary-2: #7b8cff;
-  --accent: #35e0b8;
-  --danger: #ff5d73;
+  --bg: #f3f8fc;
+  --bg-alt: #eaf3f9;
+  --surface: #ffffff;
+  --surface-2: #e5f0f7;
+  --text: #263b4d;
+  --muted: #607789;
+  --primary: #4b9bc9;
+  --primary-2: #347eae;
+  --accent: #55ad91;
+  --danger: #c85c6b;
   --radius: 16px;
-  --shadow: 0 20px 50px rgba(3, 8, 30, 0.45);
+  --shadow: 0 14px 36px rgba(48, 87, 112, 0.10);
 }
 
 * {
@@ -869,3 +869,53 @@ a {
     justify-content: center;
   }
 }
+
+
+/* Tema Soft Sky & Mint — palet terang yang lembut untuk sesi belajar panjang */
+body { background: var(--bg); color: var(--text); }
+.header { background: rgba(247, 251, 254, .94); border-bottom: 1px solid #dce8f0; }
+.header--scrolled { box-shadow: 0 8px 24px rgba(48,87,112,.09); }
+.brand__logo { color: #fff; background: linear-gradient(135deg,#5aa9d4,#65b99e); }
+.brand__accent { color: #438fbb; }
+.nav a { color: #607789; }
+.nav a:hover,.nav a[aria-current="page"] { color: #286b96; }
+.nav a[aria-current="page"]::after { background: #55ad91; }
+.nav-toggle span { background: #344f63; }
+.hero { background: radial-gradient(700px 400px at 80% -10%,rgba(120,184,223,.23),transparent 60%),radial-gradient(500px 350px at 5% 110%,rgba(185,229,208,.38),transparent 60%),#f3f8fc; }
+.badge { color:#317e6b;border-color:#b9dfd0;background:#eaf6f0; }
+.badge--soft { color:#347eae;border-color:#c7dfef;background:#eaf4fa; }
+.highlight { background:linear-gradient(90deg,#4b9bc9,#55ad91);-webkit-background-clip:text;background-clip:text;color:transparent; }
+.btn--primary { background:linear-gradient(135deg,#4b9bc9,#347eae);color:#fff;box-shadow:0 8px 20px rgba(52,126,174,.20); }
+.btn--ghost { border:1px solid #c8dbe8;color:#36566d;background:#fff; }
+.btn--ghost:hover { background:#eaf3f9; }
+.stat strong { color:#398b78; }
+.card-mock { background:linear-gradient(160deg,#fff,#eaf3f9);border:1px solid #dce8f0;box-shadow:var(--shadow); }
+.card-mock__title,.card-mock__row span,.card-mock__foot { color:#607789; }
+.card-mock__row { color:#344f63; }
+.card-mock__foot { border-top-color:#dce8f0; }
+.bar { background:#dce8f0; }
+.bar__fill { background:linear-gradient(90deg,#6bb0d7,#65b99e); }
+.card-mock__row em { color:#398b78; }
+.section--alt { background:#eaf3f9;border-color:#dce8f0; }
+.card-subtes { background:#fff;border:1px solid #dce8f0;box-shadow:0 8px 24px rgba(48,87,112,.05); }
+.card-subtes:hover { border-color:#9dc9e2;box-shadow:var(--shadow); }
+.card-subtes__icon { background:#eaf4fa;border-color:#c7dfef; }
+.card-subtes__tag { color:#398b78; }
+.card-subtes p:last-of-type,.section__head p,.feature p { color:#607789; }
+.card-subtes__link { color:#347eae; }
+.feature { background:#fff;border:1px solid #dce8f0; }
+.feature__icon { background:#eaf6f0;border-color:#c4e5d7; }
+.app-promo { background:radial-gradient(800px 400px at 10% 50%,rgba(120,184,223,.22),transparent 60%),radial-gradient(600px 300px at 90% 50%,rgba(185,229,208,.3),transparent 60%),#eaf3f9;border-color:#dce8f0; }
+.app-promo__phone { background:linear-gradient(180deg,#dcecf5,#cfe3ef);border-color:#c4d8e5;box-shadow:0 25px 50px rgba(48,87,112,.18); }
+.app-promo__phone::before { background:#c4d8e5; }
+.app-promo__phone-inner { background:linear-gradient(180deg,#f8fbfd,#eaf3f9); }
+.app-promo__mock-line { background:#dce8f0; }
+.app-promo__mock-card { background:linear-gradient(90deg,#e4f1f8,#e4f4ec);border-color:#d2e5ed; }
+.cta { background:radial-gradient(600px 300px at 50% 0%,rgba(120,184,223,.22),transparent 65%),#f3f8fc; }
+.footer { background:#e5eff5;border-top:1px solid #d3e2eb; }
+.footer__col h4 { color:#344f63; }
+.footer__brand p,.footer__col a,.footer__bottom p { color:#607789; }
+.footer__bottom { border-top-color:#d3e2eb; }
+:focus-visible { outline-color:#398b78; }
+::selection { background:#cce8dc;color:#263b4d; }
+.skip-link { background:#347eae;color:#fff; }
