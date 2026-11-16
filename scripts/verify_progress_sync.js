@@ -75,8 +75,10 @@ localStorage.setItem("snbt-progress-owner", "A");
 
   currentUser = null;
   authListener("SIGNED_OUT", null);
-  assert.equal(JSON.parse(localStorage.getItem("snbt-progress-history")).length, 1,
-    "sign-out must preserve local progress");
+  assert.equal(localStorage.getItem("snbt-progress-history"), null,
+    "sign-out must clear the active cache so another user cannot see it");
+  assert.ok(JSON.parse(localStorage.getItem("snbt-progress-history:A")).some((item) => item.label === "Riwayat Akun A"),
+    "sign-out must preserve pending progress in the account-specific archive");
 
   currentUser = { id: "B" };
   result = await window.SNBTProgressSync.sync();
