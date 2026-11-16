@@ -5,8 +5,8 @@ Platform belajar mandiri UTBK-SNBT berbasis HTML, CSS, dan JavaScript statis, de
 ## Fitur dan halaman
 - Beranda: ringkasan platform dan navigasi.
 - Materi: katalog tujuh subtes dan rangkaian pertemuan pembelajaran.
-- Latihan: 70 soal latihan orisinal, masing-masing 10 soal untuk PU, PPU, PBM, PK, Penalaran Matematika, Literasi Bahasa Indonesia, dan Literasi Bahasa Inggris.
-- Paket latihan: satu paket dasar untuk setiap subtes, dilengkapi umpan balik dan pembahasan.
+- Latihan: 105 soal latihan orisinal, masing-masing 15 soal untuk PU, PPU, PBM, PK, Penalaran Matematika, Literasi Bahasa Indonesia, dan Literasi Bahasa Inggris.
+- Paket latihan: dua paket per subtes: paket dasar dan paket pendalaman menengah–sulit, dilengkapi umpan balik dan pembahasan.
 - Tryout: simulasi komprehensif 70 soal dengan timer 105 menit. Ini latihan buatan platform, bukan ujian resmi atau prediksi nilai resmi SNBT.
 - Progres: riwayat hasil lokal dan sinkronisasi ke akun.
 - Akun: registrasi email/password, login Google, logout, dan pemulihan kata sandi Supabase.
