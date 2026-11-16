@@ -20,7 +20,7 @@ button.addEventListener("click", async () => {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: window.location.origin + "/login.html"
+      redirectTo: window.location.origin
     }
   });
 
