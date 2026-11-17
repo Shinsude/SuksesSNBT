@@ -27,3 +27,5 @@ jobs:
         run: node scripts/verify_interactions.js
       - name: Verify progress ownership and offline retention
         run: node scripts/verify_progress_sync.js
+      - name: Verify authentication flows and redirect wiring
+        run: node scripts/verify_auth.js
