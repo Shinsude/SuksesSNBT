@@ -85,3 +85,15 @@ Content Security Policy (CSP) belum ditambahkan karena perlu inventarisasi dan p
 Pemeriksaan kode, SQL, advisor, CI, dan header HTTP pada preview bukan pengganti penetration test atau browser end-to-end test. Karena beberapa pengujian runtime masih membutuhkan akun/perangkat pengguna, **Fase 5 berstatus “otomatis lulus, validasi manual tersisa” dan belum disetujui untuk rilis produksi atau APK**.
 
 Tidak ada perubahan pada branch `main`, konfigurasi autentikasi Supabase, kebijakan RLS, atau deployment produksi dalam pekerjaan ini.
+
+
+## Addendum — 18 November 2026
+
+Penyelarasan tampilan PWA dan persiapan Android:
+- `manifest.webmanifest` sekarang menggunakan `background_color: #F3F8FC` dan `theme_color: #4B9BC9`, sesuai palet Soft Sky & Mint yang telah disetujui.
+- Meta `theme-color` pada halaman beranda diselaraskan ke `#4B9BC9`.
+- `android/twa-manifest.template.json` diselaraskan dengan warna tema PWA untuk launcher, navigation bar, dan background.
+- `scripts/verify_android_config.py` kini memeriksa agar warna tema dan background TWA tetap sama dengan web manifest.
+- Preview Vercel untuk commit pemeriksaan Android terbaru `f4350b1ae8104bc97345fa79fc2d5bf69bc9c531` berstatus `READY`: https://suksessnbt-dskw7su1q-ai-ced3.vercel.app/ .
+
+Perubahan ini memperbaiki konsistensi visual dan menambah pemeriksaan otomatis konfigurasi Android. Ini belum menghasilkan APK dan tidak menggantikan uji perangkat Android, Digital Asset Links, atau pengujian alur rilis.
