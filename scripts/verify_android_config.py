@@ -26,6 +26,10 @@ for icon in web.get("icons", []):
     path = icon.get("src", "").lstrip("/")
     if not path or not (ROOT / path).is_file():
         errors.append("PWA icon is missing: " + str(icon.get("src")))
+if twa.get("themeColor", "").lower() != web.get("theme_color", "").lower():
+    errors.append("Android TWA themeColor must match the PWA manifest theme_color")
+if twa.get("backgroundColor", "").lower() != web.get("background_color", "").lower():
+    errors.append("Android TWA backgroundColor must match the PWA manifest background_color")
 if twa.get("iconUrl") != "https://suksessnbt.vercel.app/icon-512.png":
     errors.append("TWA launcher icon must use the production 512px icon")
 if (ROOT / ".well-known" / "assetlinks.json").exists():
