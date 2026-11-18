@@ -28,8 +28,8 @@ for icon in web.get("icons", []):
         errors.append("PWA icon is missing: " + str(icon.get("src")))
 for page in ("index.html", "akun.html"):
     html = (ROOT / page).read_text(encoding="utf-8")
-    match = re.search(r'<meta\\s+name="theme-color"\\s+content="([^"]+)', html, re.IGNORECASE)
-    if not match or match.group(1).lower() != web.get("theme_color", "").lower():
+    expected_theme_tag = '<meta name="theme-color" content="' + web.get("theme_color", "").lower() + '"'
+    if expected_theme_tag not in html.lower():
         errors.append(page + " theme-color must match the PWA manifest")
 if twa.get("themeColor", "").lower() != web.get("theme_color", "").lower():
     errors.append("Android TWA themeColor must match the PWA manifest theme_color")
