@@ -47,4 +47,18 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     revealTargets.forEach((el) => el.classList.add("is-visible"));
   }
+
+  // Service worker: dukung mode offline (PWA/TWA)
+  if (
+    "serviceWorker" in navigator &&
+    (location.protocol === "https:" ||
+      location.hostname === "localhost" ||
+      location.hostname === "127.0.0.1")
+  ) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch(() => {
+        /* abaikan bila registrasi gagal (mis. mode privat) */
+      });
+    });
+  }
 });
