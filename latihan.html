@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1020">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
   <title>Latihan Penalaran Umum — SNBT Learning Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,11 +34,12 @@
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Lewati ke konten utama</a>
 <header class="header"><div class="container header__inner">
   <a href="index.html" class="brand"><span class="brand__logo">SN</span><span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span></a>
   <a href="dashboard.html" class="nav-download">Dashboard</a>
 </div></header>
-<main class="practice"><div class="container practice-wrap">
+<main class="practice" id="main"><div class="container practice-wrap">
   <div class="practice-top"><a href="materi.html">← Kembali ke materi</a><span class="badge">Latihan · Penalaran Umum</span></div>
   <section class="practice-panel" id="practicePanel" aria-live="polite">
     <div class="practice-meta"><span id="questionCounter">Soal 1 dari 10</span><span id="timer">00:00</span></div>
@@ -51,4 +54,5 @@
   </section>
 </div></main>
 <script type="module" src="js/latihan.js"></script>
+<script src="js/main.js"></script>
 </body></html>

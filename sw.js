@@ -3,9 +3,12 @@
  * - Navigasi (HTML): network-first, fallback cache, lalu halaman offline
  * - Aset statis (CSS/JS/gambar/font): stale-while-revalidate
  */
-const VERSION = "v1";
+const VERSION = "v2";
 const CORE_CACHE = `snbt-core-${VERSION}`;
 const RUNTIME_CACHE = `snbt-runtime-${VERSION}`;
+
+/* Halaman privat: jangan pernah disimpan di cache */
+const PRIVATE_PATHS = ["/login.html", "/dashboard.html"];
 
 const CORE_ASSETS = [
   "/",
@@ -63,6 +66,12 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // Halaman privat: selalu dari jaringan, tanpa cache
+  if (PRIVATE_PATHS.includes(url.pathname)) {
+    event.respondWith(networkOnly(request));
+    return;
+  }
+
   // Navigasi halaman: network-first
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));
@@ -87,6 +96,16 @@ async function networkFirst(request) {
     const cached = await runtime.match(request);
     if (cached) return cached;
 
+    const core = await caches.open(CORE_CACHE);
+    const offline = await core.match("/offline.html");
+    return offline || Response.error();
+  }
+}
+
+async function networkOnly(request) {
+  try {
+    return await fetch(request);
+  } catch (error) {
     const core = await caches.open(CORE_CACHE);
     const offline = await core.match("/offline.html");
     return offline || Response.error();

@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2563eb" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="/icon-192.png" />
+  <meta name="robots" content="noindex, follow" />
   <title>Masuk — SNBT Learning Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,11 +28,12 @@
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
   <header class="header"><div class="container header__inner">
     <a href="index.html" class="brand"><span class="brand__logo">SN</span><span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span></a>
     <a href="materi.html" class="nav-download">Materi</a>
   </div></header>
-  <main class="auth-wrap">
+  <main class="auth-wrap" id="main">
     <section class="auth-card" aria-labelledby="authTitle">
       <div class="auth-logo" aria-hidden="true">SN</div>
       <h1 id="authTitle">Selamat datang kembali!</h1>
@@ -40,5 +44,6 @@
     </section>
   </main>
   <script type="module" src="js/login.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
