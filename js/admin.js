@@ -10,6 +10,9 @@
     const logout = document.querySelector("#logout-button");
     let activeView = "overview";
     let allowed = false;
+    let usersPage = 1;
+    let progressPage = 1;
+    const pageSize = 25;
 
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -71,8 +74,19 @@
         ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Waktu"], recent
       );
     }
-    async function loadUsers() {
-      const data = await callAdmin("users");
+    function renderPager(containerId, page, hasNext, onPrevious, onNext) {
+      const container = document.querySelector("#" + containerId);
+      if (!container) return;
+      container.innerHTML = '<div class="table-pager"><button class="button button-light" type="button" data-page="previous"' +
+        (page <= 1 ? " disabled" : "") + '>Sebelumnya</button><span>Halaman ' + page +
+        '</span><button class="button button-light" type="button" data-page="next"' +
+        (!hasNext ? " disabled" : "") + '>Berikutnya</button></div>';
+      container.querySelector('[data-page="previous"]').addEventListener("click", onPrevious);
+      container.querySelector('[data-page="next"]').addEventListener("click", onNext);
+    }
+    async function loadUsers(page = usersPage) {
+      usersPage = Math.max(1, page);
+      const data = await callAdmin("users", usersPage);
       const rows = (data.users || []).map((user) => [
         escapeHtml(user.email || "—"),
         escapeHtml(user.display_name || "—"),
@@ -83,9 +97,11 @@
       document.querySelector("#users-table").innerHTML = renderTable(
         ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email"], rows
       );
+      renderPager("users-pager", usersPage, data.hasMore, () => loadUsers(usersPage - 1), () => loadUsers(usersPage + 1));
     }
-    async function loadProgress() {
-      const data = await callAdmin("progress");
+    async function loadProgress(page = progressPage) {
+      progressPage = Math.max(1, page);
+      const data = await callAdmin("progress", progressPage);
       const rows = (data.entries || []).map((item) => [
         escapeHtml(item.display_name || item.user_id?.slice(0, 8) || "Pengguna"),
         escapeHtml(item.label || "Aktivitas SNBT"),
@@ -98,6 +114,7 @@
       document.querySelector("#progress-table").innerHTML = renderTable(
         ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Benar", "Total", "Waktu"], rows
       );
+      renderPager("progress-pager", progressPage, data.hasMore, () => loadProgress(progressPage - 1), () => loadProgress(progressPage + 1));
     }
     async function loadView(name) {
       showNotice("Memuat data panel…");
