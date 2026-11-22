@@ -76,9 +76,11 @@ Deno.serve(async (req: Request) => {
     }
 
     if (action === "users") {
+      const page = Math.max(1, Math.min(10000, Number(body.page) || 1));
+      const perPage = 25;
       const { data: userData, error: userError } = await admin.auth.admin.listUsers({
-        page: 1,
-        perPage: 100,
+        page,
+        perPage,
       });
       if (userError) {
         console.error("Admin user listing failed.", userError);
@@ -91,6 +93,7 @@ Deno.serve(async (req: Request) => {
       if (profileResult.error) return json({ error: "Profil pengguna belum dapat dimuat." }, 500);
       const names = new Map((profileResult.data || []).map((profile) => [profile.id, profile.display_name]));
       return json({
+        hasMore: (userData.users || []).length === perPage,
         users: (userData.users || []).map((item) => ({
           id: item.id,
           email: item.email,
@@ -103,9 +106,12 @@ Deno.serve(async (req: Request) => {
     }
 
     if (action === "progress") {
-      const { data: entries, error: entriesError } = await admin.from("progress_entries")
-        .select("user_id,activity_type,label,score,correct_count,total_count,completed_at")
-        .order("completed_at", { ascending: false }).limit(100);
+      const page = Math.max(1, Math.min(10000, Number(body.page) || 1));
+      const perPage = 25;
+      const from = (page - 1) * perPage;
+      const { data: entries, error: entriesError, count } = await admin.from("progress_entries")
+        .select("user_id,activity_type,label,score,correct_count,total_count,completed_at", { count: "exact" })
+        .order("completed_at", { ascending: false }).range(from, from + perPage - 1);
       if (entriesError) {
         console.error("Admin progress listing failed.", entriesError);
         return json({ error: "Riwayat belajar belum dapat dimuat." }, 500);
@@ -118,6 +124,8 @@ Deno.serve(async (req: Request) => {
       const names = new Map((profileResult.data || []).map((profile) => [profile.id, profile.display_name]));
       return json({
         entries: (entries || []).map((row) => ({ ...row, display_name: names.get(row.user_id) || "" })),
+        hasMore: from + (entries || []).length < (count || 0),
+        total: count || 0,
       });
     }
 
