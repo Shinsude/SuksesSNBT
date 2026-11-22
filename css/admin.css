@@ -16,3 +16,15 @@
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+
+/* Tombol ekspor tabel admin */
+.panel-heading > .button {
+  flex-shrink: 0;
+}
+@media (max-width: 640px) {
+  .panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
