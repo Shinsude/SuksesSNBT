@@ -74,6 +74,28 @@
         ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Waktu"], recent
       );
     }
+    function exportTableCsv(tableId, filename) {
+      const table = document.querySelector("#" + tableId + " table");
+      if (!table) {
+        showNotice("Belum ada tabel untuk diunduh.", "error");
+        return;
+      }
+      const csvCell = (value) => '"' + String(value ?? "").replace(/"/g, '""') + '"';
+      const rows = [...table.querySelectorAll("tr")].map((row) =>
+        [...row.querySelectorAll("th, td")].map((cell) => csvCell(cell.textContent.trim())).join(",")
+      );
+      const csv = "\uFEFF" + rows.join("\r\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      showNotice("File CSV berhasil disiapkan untuk diunduh.", "success");
+    }
     function renderPager(containerId, page, hasNext, onPrevious, onNext) {
       const container = document.querySelector("#" + containerId);
       if (!container) return;
@@ -173,6 +195,10 @@
       button.addEventListener("click", () => setView(button.dataset.view));
     });
     refresh.addEventListener("click", () => loadView(activeView));
+    document.querySelector("#export-users-button").addEventListener("click", () =>
+      exportTableCsv("users-table", "snbt-pengguna-halaman-" + usersPage + ".csv"));
+    document.querySelector("#export-progress-button").addEventListener("click", () =>
+      exportTableCsv("progress-table", "snbt-hasil-belajar-halaman-" + progressPage + ".csv"));
     logout.addEventListener("click", async () => {
       logout.disabled = true;
       const result = await db.auth.signOut();
