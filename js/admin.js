@@ -116,10 +116,32 @@
       return;
     }
     const { data, error } = await db.auth.getUser();
-    const user = data?.user;
+    let user = data?.user;
     if (error || !user) {
       showNotice("Silakan masuk terlebih dahulu menggunakan akun Sukses SNBT.", "error");
       return;
+    }
+    if (
+      user.id === "8b2a6f97-3b12-44a9-b1da-59c759a7de24" &&
+      String(user.email || "").toLowerCase() === "alfachriansyah@gmail.com" &&
+      user.app_metadata?.role !== "admin" &&
+      user.app_metadata?.admin !== true &&
+      user.app_metadata?.snbt_admin_bootstrap_claimed !== true
+    ) {
+      showNotice("Mengaktifkan hak administrator untuk akun pemilik…");
+      const { data: bootstrap, error: bootstrapError } = await db.functions.invoke("admin-api", {
+        body: { action: "bootstrap-owner" }
+      });
+      if (bootstrapError || !bootstrap || bootstrap.error) {
+        showNotice(bootstrap?.error || bootstrapError?.message || "Aktivasi admin belum berhasil.", "error");
+        return;
+      }
+      const { data: refreshed, error: refreshError } = await db.auth.refreshSession();
+      if (refreshError || !refreshed?.user) {
+        showNotice("Hak admin sudah diproses. Muat ulang halaman untuk memperbarui sesi.", "error");
+        return;
+      }
+      user = refreshed.user;
     }
     email.textContent = user.email || "";
     const metadata = user.app_metadata || {};
