@@ -85,7 +85,7 @@
         return;
       }
       const csvCell = (value) => '"' + String(value ?? "").replace(/"/g, '""') + '"';
-      const rows = [...table.querySelectorAll("tr")].map((row) =>
+      const rows = [...table.querySelectorAll("tr")].filter((row) => !row.hidden).map((row) =>
         [...row.querySelectorAll("th, td")].map((cell) => csvCell(cell.textContent.trim())).join(",")
       );
       const csv = "\uFEFF" + rows.join("\r\n");
@@ -203,8 +203,14 @@
       button.addEventListener("click", () => setView(button.dataset.view));
     });
     refresh.addEventListener("click", () => loadView(activeView));
-    document.querySelector("#users-search").addEventListener("input", () => loadUsers(usersPage));
-    document.querySelector("#progress-search").addEventListener("input", () => loadProgress(progressPage));
+    const filterVisibleRows = (inputId, tableId) => {
+      const term = document.querySelector("#" + inputId).value.trim().toLocaleLowerCase("id");
+      document.querySelectorAll("#" + tableId + " tbody tr").forEach((row) => {
+        row.hidden = !row.textContent.toLocaleLowerCase("id").includes(term);
+      });
+    };
+    document.querySelector("#users-search").addEventListener("input", () => filterVisibleRows("users-search", "users-table"));
+    document.querySelector("#progress-search").addEventListener("input", () => filterVisibleRows("progress-search", "progress-table"));
     document.querySelector("#export-users-button").addEventListener("click", () =>
       exportTableCsv("users-table", "snbt-pengguna-halaman-" + usersPage + ".csv"));
     document.querySelector("#export-progress-button").addEventListener("click", () =>
