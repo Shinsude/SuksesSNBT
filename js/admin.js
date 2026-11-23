@@ -70,6 +70,10 @@
         escapeHtml(item.score ?? "—"),
         escapeHtml(formatDate(item.completed_at))
       ]);
+      const analytics = document.querySelector("#activity-analytics");
+      const breakdown = data.activityBreakdown || [];
+      const maxCount = Math.max(1, ...breakdown.map((item) => item.count));
+      analytics.innerHTML = breakdown.length ? breakdown.map((item) => '<div class="analytics-row"><div><strong>' + escapeHtml(item.type === "tryout" ? "Tryout" : item.type === "latihan" ? "Latihan" : item.type) + '</strong><span>' + formatNumber(item.count) + ' aktivitas</span></div><div class="analytics-track"><span style="width:' + Math.round(item.count / maxCount * 100) + '%"></span></div></div>').join("") : '<div class="empty-state">Belum ada data aktivitas.</div>';
       document.querySelector("#recent-progress").innerHTML = renderTable(
         ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Waktu"], recent
       );
@@ -116,8 +120,10 @@
         escapeHtml(formatDate(user.last_sign_in_at)),
         user.email_confirmed_at ? '<span class="pill">Terverifikasi</span>' : '<span class="pill">Belum verifikasi</span>'
       ]);
+      const search = (document.querySelector("#users-search")?.value || "").trim().toLocaleLowerCase("id");
+      const filteredRows = rows.filter((row) => row.join(" ").toLocaleLowerCase("id").includes(search));
       document.querySelector("#users-table").innerHTML = renderTable(
-        ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email"], rows
+        ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email"], filteredRows
       );
       renderPager("users-pager", usersPage, data.hasMore, () => loadUsers(usersPage - 1), () => loadUsers(usersPage + 1));
     }
@@ -133,8 +139,10 @@
         escapeHtml(item.total_count ?? 0),
         escapeHtml(formatDate(item.completed_at))
       ]);
+      const search = (document.querySelector("#progress-search")?.value || "").trim().toLocaleLowerCase("id");
+      const filteredRows = rows.filter((row) => row.join(" ").toLocaleLowerCase("id").includes(search));
       document.querySelector("#progress-table").innerHTML = renderTable(
-        ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Benar", "Total", "Waktu"], rows
+        ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Benar", "Total", "Waktu"], filteredRows
       );
       renderPager("progress-pager", progressPage, data.hasMore, () => loadProgress(progressPage - 1), () => loadProgress(progressPage + 1));
     }
@@ -195,6 +203,8 @@
       button.addEventListener("click", () => setView(button.dataset.view));
     });
     refresh.addEventListener("click", () => loadView(activeView));
+    document.querySelector("#users-search").addEventListener("input", () => loadUsers(usersPage));
+    document.querySelector("#progress-search").addEventListener("input", () => loadProgress(progressPage));
     document.querySelector("#export-users-button").addEventListener("click", () =>
       exportTableCsv("users-table", "snbt-pengguna-halaman-" + usersPage + ".csv"));
     document.querySelector("#export-progress-button").addEventListener("click", () =>
