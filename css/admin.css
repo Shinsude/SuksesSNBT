@@ -28,3 +28,15 @@
     flex-direction: column;
   }
 }
+
+
+/* Pencarian tabel dan analitik */
+.table-search{display:grid;gap:7px;max-width:420px;margin:0 0 16px;color:var(--muted);font-size:11px;font-weight:700}
+.table-search input{width:100%;border:1px solid var(--line);border-radius:9px;padding:11px 12px;font:inherit;font-weight:400;color:#243b4d;background:#fff}
+.table-search input:focus{outline:3px solid #d8edf8;border-color:#6ba8ca}
+.analytics-list{display:grid;gap:16px}
+.analytics-row{display:grid;gap:8px}
+.analytics-row>div:first-child{display:flex;justify-content:space-between;gap:12px;font-size:12px}
+.analytics-row strong{color:#395367}.analytics-row span{color:var(--muted)}
+.analytics-track{height:9px;border-radius:99px;background:#edf3f7;overflow:hidden}
+.analytics-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#5aa9d4,#65b99e)}
