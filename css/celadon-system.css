@@ -1,0 +1,31 @@
+/* Shared Celadon-inspired visual system — Soft Sky & Mint */
+:root {
+  --celadon-ink:#263b4d; --celadon-muted:#607789; --celadon-line:#dce8f0;
+  --celadon-surface:#fff; --celadon-shadow:0 14px 36px rgba(48,87,112,.08);
+}
+html { scroll-behavior:smooth; scroll-padding-top:6rem; }
+body { color:var(--celadon-ink); background:radial-gradient(ellipse at 8% 0,rgba(111,184,216,.10),transparent 30rem),#f3f8fc; }
+.site-header,.header { background:rgba(247,251,254,.92)!important; border-bottom:1px solid var(--celadon-line)!important; box-shadow:0 5px 22px rgba(55,91,113,.055); backdrop-filter:blur(16px); }
+.site-footer,.footer { background:#e7f0f5!important; border-top:1px solid #d5e4eb!important; }
+.site-footer a,.footer__col a { color:#347eae!important; }
+.brand-mark,.brand__logo { border-radius:14px!important; box-shadow:0 7px 16px rgba(75,155,201,.18),inset 0 1px 0 rgba(255,255,255,.3); }
+button,.btn { border-radius:999px; }
+.btn--primary,.button-primary,.practice-submit { box-shadow:0 9px 22px rgba(68,151,163,.18); }
+.practice-list-hero,.practice-hero,.page-hero,.materi-hero {
+ background:radial-gradient(ellipse at 82% 10%,rgba(111,184,216,.19),transparent 30rem),linear-gradient(145deg,#edf6fb,#f7fbfd 60%,#eef8f3)!important;
+ border-bottom:1px solid var(--celadon-line);
+}
+.practice-card,.package-card,.progress-stat,.progress-entry,.progress-empty,.progress-subtest-card,.progress-trend-row,.account-card,.result-card,.question-card,.question-nav,.materi-section,.materi-content,.lesson-card,.topic-card,.tryout-card,.tryout-panel {
+ border-radius:20px!important; border:1px solid var(--celadon-line)!important; box-shadow:var(--celadon-shadow);
+}
+.practice-card:hover,.package-card:hover,.topic-card:hover,.lesson-card:hover { box-shadow:0 20px 42px rgba(48,87,112,.12); }
+.materi-main { padding-top:clamp(38px,6vw,68px); padding-bottom:70px; }
+.materi-section { padding:clamp(20px,3vw,30px); background:#fff; }
+.materi-section h2 { border-bottom:1px solid var(--celadon-line); padding-bottom:12px; }
+.account-card { background:linear-gradient(145deg,#fff,#f8fbfd)!important; }
+.account-form input,.account-form select,.account-form textarea { border-radius:13px!important; }
+.progress-page { background:transparent!important; }
+.progress-stat,.progress-entry,.progress-subtest-card,.progress-trend-row { border-radius:18px!important; }
+:focus-visible { outline:3px solid #55ad91!important; outline-offset:3px; }
+::selection { background:#cce8dc; color:#263b4d; }
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;transition-duration:.001ms!important}}
