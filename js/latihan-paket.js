@@ -193,10 +193,9 @@
       refs.title.focus({ preventScroll: true });
     }
     const chosen = () => refs.answers.querySelector("input:checked")?.value;
-    function feedback(correct, explanation, key) {
+    function feedback(correct, explanation) {
       refs.feedback.replaceChildren();
       appendText(refs.feedback, "strong", correct ? "Jawaban benar." : "Jawaban belum tepat.");
-      appendText(refs.feedback, "p", "Kunci jawaban: " + key);
       appendText(refs.feedback, "p", explanation || "Belum ada pembahasan untuk soal ini.");
       refs.feedback.hidden = false;
     }
@@ -209,7 +208,7 @@
         bankState.answered = true;
         if (result.is_correct) bankState.score += 1;
         refs.answers.querySelectorAll("input").forEach((input) => { input.disabled = true; });
-        feedback(result.is_correct, result.explanation, result.correct_answer);
+        feedback(result.is_correct, result.explanation);
         refs.check.hidden = true; refs.next.hidden = false;
         refs.next.textContent = bankState.current === items.length - 1 ? "Lihat Hasil" : "Soal Berikutnya";
         refs.next.focus({ preventScroll: true });
