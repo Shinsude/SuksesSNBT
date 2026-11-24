@@ -237,7 +237,17 @@ Deno.serve(async (req: Request) => {
         console.error("Admin save failed.",action,result.error);
         return fail("Data gagal disimpan. Periksa isian dan relasi datanya.",400);
       }
-      await audit(id?"update":"create",cfg.resource,String(result.data[key]),before,result.data);
+      const auditResult = await audit(id?"update":"create",cfg.resource,String(result.data[key]),before,result.data);
+      if (auditResult.error) {
+        const rollback = id
+          ? await admin.from(cfg.table).update(before as Record<string, unknown>).eq(key,id)
+          : await admin.from(cfg.table).delete().eq(key,result.data[key]);
+        if (rollback.error) {
+          console.error("Admin save rollback failed after audit failure.",action,rollback.error);
+          return fail("Audit gagal dan pemulihan data juga gagal. Periksa log layanan segera.",500);
+        }
+        return fail("Perubahan dibatalkan karena audit log gagal disimpan.",500);
+      }
       return json({item:result.data});
     }
 
@@ -254,7 +264,15 @@ Deno.serve(async (req: Request) => {
       if (old.error || !old.data) return fail("Data tidak ditemukan.",404);
       const {error}=await admin.from(cfg.table).delete().eq(cfg.key,id);
       if (error) return fail("Data tidak dapat dihapus. Pastikan tidak masih digunakan oleh data lain.",409);
-      await audit("delete",cfg.resource,id,old.data,null);
+      const auditResult = await audit("delete",cfg.resource,id,old.data,null);
+      if (auditResult.error) {
+        const {error: rollbackError} = await admin.from(cfg.table).insert(old.data);
+        if (rollbackError) {
+          console.error("Admin delete rollback failed after audit failure.",cfg.resource,rollbackError);
+          return fail("Audit gagal dan pemulihan data juga gagal. Periksa log layanan segera.",500);
+        }
+        return fail("Penghapusan dibatalkan karena audit log gagal disimpan.",500);
+      }
       return json({success:true});
     }
 
