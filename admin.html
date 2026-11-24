@@ -22,6 +22,7 @@
         <button type="button" data-view="progress">Hasil belajar</button>
         <button type="button" data-view="content">Materi &amp; soal</button>
         <button type="button" data-view="settings">Pengaturan</button>
+        <button type="button" data-view="audit">Keamanan &amp; audit</button>
       </nav>
       <a class="back-link" href="index.html">← Kembali ke website</a>
     </aside>
@@ -51,6 +52,7 @@
         </section>
       </div>
       <div id="settings-view" class="view-panel" hidden><section class="panel"><div class="panel-heading"><div><p class="eyebrow">KONFIGURASI APLIKASI</p><h2>Pengaturan sistem</h2><p class="panel-desc">Simpan konfigurasi dalam format JSON. Jangan simpan kata sandi atau secret di sini.</p></div></div><details class="editor-details" open><summary>Tambah / ubah pengaturan</summary><form id="setting-form" class="editor-form"><label>Kunci pengaturan<input name="key" maxlength="100" required placeholder="contoh: maintenance_mode"></label><label>Deskripsi<input name="description" maxlength="500"></label><label>Nilai (JSON)<textarea name="value" rows="5" required>{}</textarea></label><div class="form-actions"><button class="button button-light" type="submit">Simpan pengaturan</button><button class="button button-outline" type="reset">Kosongkan</button></div></form></details><div id="settings-list"></div></section></div>
+      <div id="audit-view" class="view-panel" hidden><section class="panel"><div class="panel-heading"><div><p class="eyebrow">KEAMANAN &amp; AKUNTABILITAS</p><h2>Log aktivitas administrator</h2><p class="panel-desc">Riwayat perubahan materi, bank soal, pertanyaan, dan pengaturan. Catatan ini hanya dapat dibaca administrator.</p></div><button id="refresh-audit-button" class="button button-light" type="button">Muat ulang</button></div><div id="audit-table"></div><div id="audit-pager"></div></section></div>
       </section>
       <footer class="admin-footer">Sukses SNBT Learning Center · Panel internal · Data dilindungi autentikasi dan pemeriksaan peran admin.</footer>
     </section>
