@@ -150,16 +150,16 @@ Deno.serve(async (req: Request) => {
 
     if (action === "user-detail") {
       const id = clean(body.user_id, 64);
-      const [{ data: profile }, { data: activities, error }, { data: authUser, error: authErr }] = await Promise.all([
+      const [{ data: profile }, { data: activities, error, count: activityCount }, { data: authUser, error: authErr }] = await Promise.all([
         admin.from("profiles").select("*").eq("id",id).maybeSingle(),
-        admin.from("progress_entries").select("*").eq("user_id",id).order("completed_at",{ascending:false}).limit(100),
+        admin.from("progress_entries").select("*",{count:"exact"}).eq("user_id",id).order("completed_at",{ascending:false}).limit(100),
         admin.auth.admin.getUserById(id),
       ]);
       if (error || authErr || !authUser?.user) return fail("Detail pengguna belum dapat dimuat.", 404);
       const scores = (activities || []).map(x => Number(x.score)).filter(Number.isFinite);
       return json({ profile: profile || { display_name: authUser.user.user_metadata?.display_name || "", created_at: authUser.user.created_at },
         email: authUser.user.email, last_sign_in_at: authUser.user.last_sign_in_at,
-        activityCount: activities?.length || 0,
+        activityCount: activityCount || activities?.length || 0,
         averageScore: scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : null, activities: activities || [] });
     }
 
