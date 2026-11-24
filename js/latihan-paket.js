@@ -14,7 +14,7 @@
   if (databaseBankId) {
     (async () => {
       const config = window.SNBT_SUPABASE_CONFIG || {};
-      const apiUrl = config.url ? config.url.replace(/\\/$/, "") + "/functions/v1/student-practice-preview" : "";
+      const apiUrl = config.url ? config.url.replace(/\/$/, "") + "/functions/v1/student-practice-preview" : "";
       const apiHeaders = { "Content-Type": "application/json", apikey: config.publishableKey || "" };
       const request = async (payload) => {
         const response = await fetch(apiUrl, { method: "POST", headers: apiHeaders, body: JSON.stringify(payload) });
