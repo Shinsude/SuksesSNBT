@@ -1,7 +1,7 @@
 (() => {
   const params = new URLSearchParams(window.location.search);
   const packageId = params.get("paket");
-  const bankId = params.get("bank");
+  const databaseBankId = params.get("bank");
   const runner = document.querySelector("#runner");
   const invalid = document.querySelector("#invalid-package");
   const breadcrumb = document.querySelector("#breadcrumb-package");
@@ -35,7 +35,7 @@
     invalid.append(title, detail, link);
   };
 
-  if (bankId) {
+  if (databaseBankId) {
     runPublishedBank().catch((error) => showUnavailable(error.message));
     return;
   }
@@ -143,7 +143,7 @@
   renderQuestion();
 
   async function runPublishedBank() {
-    const data = await request({ action: "question", bank_id: bankId });
+    const data = await request({ action: "question", bank_id: databaseBankId });
     const bank = data.bank;
     const items = Array.isArray(data.questions) ? data.questions : [];
     if (!items.length) throw new Error("Bank soal ini belum memiliki soal yang siap dikerjakan.");
