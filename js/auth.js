@@ -11,7 +11,7 @@
     const googleButton = document.querySelector("#google-signin");
     const logoutButton = document.querySelector("#logout-button");
     const syncButton = document.querySelector("#sync-now");
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams(location.search);\n    const nextPage = params.get("next") === "admin.html" ? "admin.html" : null;
     let recoveryMode = params.get("mode") === "update-password" || location.hash.includes("type=recovery");
 
     const showMessage = (text, state = "info") => {
@@ -54,7 +54,7 @@
       try {
         const { error } = await db.auth.signInWithOAuth({
           provider: "google",
-          options: { redirectTo: location.origin + "/akun.html" }
+          options: { redirectTo: location.origin + "/akun.html" + (nextPage ? "?next=admin.html" : "") }
         });
         if (error) {
           googleButton.disabled = false;
@@ -92,7 +92,7 @@
     db.auth.getSession()
       .then(({ data, error }) => {
         if (error) showMessage("Sesi akun belum dapat diperiksa. Muat ulang halaman.", "error");
-        refreshSession(data && data.session);
+        refreshSession(data && data.session);\n        if (nextPage && data?.session?.user && !recoveryMode) location.replace(nextPage);
       })
       .catch(() => showMessage("Koneksi akun terganggu. Periksa internet lalu muat ulang halaman.", "error"));
 
@@ -115,7 +115,7 @@
           password: loginForm.elements.password.value
         });
         if (error) showMessage(error.message, "error");
-        else showMessage("Berhasil masuk. Progres sedang disinkronkan.", "success");
+        else if (nextPage) location.replace(nextPage);\n        else showMessage("Berhasil masuk. Progres sedang disinkronkan.", "success");
       } catch (_) {
         showMessage("Tidak dapat menghubungi layanan akun. Periksa internet lalu coba lagi.", "error");
       } finally {
