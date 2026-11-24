@@ -2,6 +2,7 @@
   "use strict";
   document.addEventListener("DOMContentLoaded", async () => {
     const db = window.snbtSupabase;
+    const adminFunction = location.hostname === "suksessnbt.vercel.app" ? "admin-api" : "admin-api-preview";
     const notice = document.querySelector("#admin-notice");
     const content = document.querySelector("#admin-content");
     const title = document.querySelector("#page-title");
@@ -42,7 +43,7 @@
       if (allowed) loadView(name);
     };
     async function callAdmin(action, page = 1, extra = {}) {
-      const { data, error } = await db.functions.invoke("admin-api", {
+      const { data, error } = await db.functions.invoke(adminFunction, {
         body: { action, page, ...extra }
       });
       if (error) throw new Error(error.message || "Permintaan admin gagal.");
@@ -367,7 +368,7 @@
       user.app_metadata?.snbt_admin_bootstrap_claimed !== true
     ) {
       showNotice("Mengaktifkan hak administrator untuk akun pemilik…");
-      const { data: bootstrap, error: bootstrapError } = await db.functions.invoke("admin-api", {
+      const { data: bootstrap, error: bootstrapError } = await db.functions.invoke(adminFunction, {
         body: { action: "bootstrap-owner" }
       });
       if (bootstrapError || !bootstrap || bootstrap.error) {
