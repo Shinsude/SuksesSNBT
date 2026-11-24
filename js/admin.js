@@ -29,7 +29,7 @@
     };
     const setView = (name) => {
       activeView = name;
-      const names = { overview: "Ringkasan", users: "Pengguna", progress: "Hasil belajar", content: "Materi & soal", settings: "Pengaturan", audit: "Keamanan & audit" };
+      const names = { overview: "Ringkasan", users: "Pengguna", progress: "Hasil belajar", materials: "Materi", questions: "Bank soal", settings: "Pengaturan", audit: "Keamanan & audit" };
       title.textContent = names[name] || names.overview;
       document.querySelectorAll(".view-panel").forEach((panel) => {
         panel.hidden = panel.id !== name + "-view";
@@ -238,7 +238,7 @@
       const result = await callAdmin(action, 1, { item });
       showNotice("Data berhasil disimpan.", "success");
       form.reset();
-      if (activeView === "content") await loadContent();
+      if (activeView === "materials" || activeView === "questions") await loadContent();
       if (activeView === "settings") await loadSettings();
       return result.item;
     }
@@ -273,7 +273,7 @@
         if (!window.confirm("Hapus " + label + "? Tindakan ini tidak dapat dibatalkan.")) return;
         await callAdmin(action, 1, action === "setting-delete" ? { key: id } : { id });
         showNotice(label.charAt(0).toUpperCase() + label.slice(1) + " berhasil dihapus.", "success");
-        if (activeView === "content") await loadContent();
+        if (activeView === "materials" || activeView === "questions") await loadContent();
         if (activeView === "settings") await loadSettings();
         return;
       }
@@ -313,7 +313,7 @@
         if (name === "overview") await loadOverview();
         if (name === "users") await loadUsers();
         if (name === "progress") await loadProgress();
-        if (name === "content") await loadContent();
+        if (name === "materials" || name === "questions") await loadContent();
         if (name === "settings") await loadSettings();
         if (name === "audit") await loadAuditLogs();
         showNotice("Data berhasil dimuat.", "success");
@@ -388,7 +388,8 @@
       } catch (error) { showNotice(error.message, "error"); access.disabled = false; }
     });
     document.querySelector("#close-user-detail").addEventListener("click", () => { document.querySelector("#user-detail-panel").hidden = true; });
-    document.querySelector("#content-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
+    document.querySelector("#materials-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
+    document.querySelector("#questions-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
     document.querySelector("#settings-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
     document.querySelector("#refresh-audit-button").addEventListener("click", () => loadAuditLogs().catch((error) => showNotice(error.message, "error")));
     document.querySelector("#question-bank-select").addEventListener("change", (event) => loadQuestions(event.target.value).catch((error) => showNotice(error.message, "error")));
