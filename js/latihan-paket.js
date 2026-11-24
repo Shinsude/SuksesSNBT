@@ -8,7 +8,8 @@
   if (!runner || !invalid) return;
 
   const config = window.SNBT_SUPABASE_CONFIG || {};
-  const apiUrl = config.url ? config.url.replace(/\\/$/, "") + "/functions/v1/student-practice-preview" : "";
+  const apiBase = config.url ? (config.url.endsWith("/") ? config.url.slice(0, -1) : config.url) : "";
+  const apiUrl = apiBase ? apiBase + "/functions/v1/student-practice-preview" : "";
   const request = async (payload) => {
     if (!apiUrl || !config.publishableKey) throw new Error("Layanan latihan belum tersedia. Silakan coba lagi nanti.");
     const response = await fetch(apiUrl, {
