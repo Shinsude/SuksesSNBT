@@ -23,12 +23,25 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "SNBT Learning Center",
-    "url": "https://suksessnbt.vercel.app/",
-    "description": "Platform belajar UTBK-SNBT gratis: 7 subtes, materi ringkas, contoh soal, pembahasan, latihan, dan mini tryout.",
-    "areaServed": "ID",
-    "inLanguage": "id"
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        "@id": "https://suksessnbt.vercel.app/#organization",
+        "name": "SNBT Learning Center",
+        "url": "https://suksessnbt.vercel.app/",
+        "description": "Platform belajar UTBK-SNBT gratis: 7 subtes, materi ringkas, contoh soal, pembahasan, latihan, dan mini tryout.",
+        "areaServed": "ID",
+        "inLanguage": "id"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://suksessnbt.vercel.app/#website",
+        "url": "https://suksessnbt.vercel.app/",
+        "name": "SNBT Learning Center",
+        "inLanguage": "id",
+        "publisher": { "@id": "https://suksessnbt.vercel.app/#organization" }
+      }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
