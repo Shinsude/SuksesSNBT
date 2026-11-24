@@ -213,9 +213,9 @@
         escapeHtml(item.actor_id?.slice(0, 8) || "—"),
         escapeHtml(JSON.stringify(item.after_data ?? item.before_data ?? {}).slice(0, 160))
       ]);
-      document.querySelector("#audit-table").innerHTML = renderTable(
-        ["Waktu", "Aksi", "Jenis data", "ID data", "Admin", "Ringkasan perubahan"], rows
-      );
+      document.querySelector("#audit-table").innerHTML = rows.length
+        ? renderTable(["Waktu", "Aksi", "Jenis data", "ID data", "Admin", "Ringkasan perubahan"], rows)
+        : '<div class="empty-state">Belum ada aktivitas perubahan yang tercatat. Log akan muncul otomatis setelah admin menambah, mengubah, atau menghapus materi, bank soal, pertanyaan, maupun pengaturan.</div>';
       renderPager("audit-pager", page, data.hasMore, () => loadAuditLogs(page - 1), () => loadAuditLogs(page + 1));
     }
     async function loadSettings() {
@@ -360,6 +360,8 @@
       return;
     }
     content.hidden = false;
+    const loginLink = document.querySelector(".admin-login-link");
+    if (loginLink) loginLink.hidden = true;
     notice.hidden = true;
     document.querySelectorAll("[data-view]").forEach((button) => {
       button.addEventListener("click", () => setView(button.dataset.view));
