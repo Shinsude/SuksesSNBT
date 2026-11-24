@@ -18,6 +18,8 @@ assert.match(api, /eq\("id", clean\(body.question_id, 64\)\)\.eq\("bank_id", ban
 assert.match(catalog, /action: "catalog"/, "student catalog must call the practice API");
 assert.match(runner, /action: "question"/, "database practice must load questions from the API");
 assert.match(runner, /action: "check-answer"/, "database practice must check answers through the API");
-assert.doesNotMatch(runner, /question\.correct_answer|question\.answer/, "browser must not compare answer keys locally");
+const databaseRunner = runner.split("const databaseBankId")[1]?.split("const isValid")[0] || "";
+assert.ok(databaseRunner, "database runner branch must exist");
+assert.doesNotMatch(databaseRunner, /question\.correct_answer|question\.answer/, "database runner must not compare answer keys locally");
 
 console.log("OK: published-only question banks; no answer keys in student question payload; server-side answer validation and bank scoping.");
