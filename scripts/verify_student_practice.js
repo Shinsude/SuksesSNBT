@@ -14,6 +14,7 @@ assert.match(api, /select\("id,bank_id,prompt,options,difficulty,sort_order"\)/,
 assert.doesNotMatch(api, /select\("id,bank_id,prompt,options,correct_answer/, "question payload must never select correct_answer");
 assert.match(api, /action === "check-answer"/, "server must provide answer checking");
 assert.match(api, /select\("id,options,correct_answer,explanation"\)/, "answer key may only be selected for answer checking");
+assert.doesNotMatch(api, /is_correct: isCorrect,[\\s\\S]{0,120}correct_answer/, "student answer-check response must not return the answer key");
 assert.match(api, /eq\("id", clean\(body.question_id, 64\)\)\.eq\("bank_id", bankId\)/, "answer checking must scope question to the requested bank");
 assert.match(catalog, /action: "catalog"/, "student catalog must call the practice API");
 assert.match(runner, /action: "question"/, "database practice must load questions from the API");
