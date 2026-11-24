@@ -285,6 +285,7 @@
         const item = contentState[collection].find((entry) => (entry.id || entry.key) === id);
         if (item) {
           fillForm(document.querySelector(selector), item, collection === "questions" || collection === "settings" ? ["options", "value"] : []);
+          if (collection === "settings") document.querySelector(selector).elements.namedItem("original_key").value = item.key;
           document.querySelector(selector).closest("details")?.setAttribute("open", "");
         }
         return;
