@@ -216,14 +216,32 @@ Deno.serve(async (req: Request) => {
       if (action === "question-save") {
         payload.prompt=clean(payload.prompt,20000); payload.correct_answer=clean(payload.correct_answer,20);
         payload.explanation=clean(payload.explanation,30000); payload.sort_order=Number(payload.sort_order)||0;
-        if (!Array.isArray(payload.options) || payload.options.length < 2 || payload.options.length > 8) return fail("Opsi jawaban harus berupa array berisi 2–8 pilihan.");
+        if (!Array.isArray(payload.options) || payload.options.length < 2 || payload.options.length > 8 ||
+            payload.options.some((option) => typeof option !== "string" || !option.trim())) {
+          return fail("Opsi jawaban harus berupa array berisi 2–8 teks pilihan yang tidak kosong.");
+        }
+        const normalizedOptions = payload.options.map((option) => option.trim());
+        if (new Set(normalizedOptions.map((option) => option.toLocaleLowerCase())).size !== normalizedOptions.length) {
+          return fail("Setiap opsi jawaban harus berbeda.");
+        }
+        const answer = String(payload.correct_answer).trim().toLocaleUpperCase();
+        const answerExists = normalizedOptions.some((option) => {
+          const label = option.match(/^([A-H])(?:[.)\\s:-]|$)/i)?.[1]?.toLocaleUpperCase();
+          return option.toLocaleUpperCase() === answer || label === answer;
+        });
+        if (!answerExists) return fail("Jawaban benar harus cocok dengan salah satu opsi yang tersedia.");
+        payload.options = normalizedOptions;
+        payload.correct_answer = answer;
       }
       if (action === "setting-save") {
         payload.key=clean(payload.key,100); payload.description=clean(payload.description,500);
         payload.updated_by=user.id;
       }
       const key = action === "setting-save" ? "key" : "id";
-      const id = clean(payload[key],128);
+      const id = action === "setting-save"
+        ? clean(payload.original_key || payload.key, 100)
+        : clean(payload[key],128);
+      if (action === "setting-save") delete payload.original_key;
       let before: unknown = null;
       if (id) {
         const old = await admin.from(cfg.table).select("*").eq(key,id).maybeSingle();
@@ -240,7 +258,7 @@ Deno.serve(async (req: Request) => {
       const auditResult = await audit(id?"update":"create",cfg.resource,String(result.data[key]),before,result.data);
       if (auditResult.error) {
         const rollback = id
-          ? await admin.from(cfg.table).update(before as Record<string, unknown>).eq(key,id)
+          ? await admin.from(cfg.table).update(before as Record<string, unknown>).eq(key,result.data[key])
           : await admin.from(cfg.table).delete().eq(key,result.data[key]);
         if (rollback.error) {
           console.error("Admin save rollback failed after audit failure.",action,rollback.error);
