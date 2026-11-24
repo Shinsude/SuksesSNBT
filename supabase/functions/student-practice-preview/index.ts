@@ -86,6 +86,7 @@ Deno.serve(async (req: Request) => {
       const isCorrect = index === correctIndex;
       return json({
         is_correct: isCorrect,
+        correct_answer: correctAnswer,
         explanation: clean(question.explanation, 30000),
       });
     }
