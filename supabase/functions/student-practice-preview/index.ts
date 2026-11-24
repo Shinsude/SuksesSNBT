@@ -74,8 +74,16 @@ Deno.serve(async (req: Request) => {
       if (!question || !Array.isArray(question.options)) return fail("Soal tidak ditemukan.", 404);
       const index = answer.charCodeAt(0) - 65;
       if (index < 0 || index >= question.options.length) return fail("Pilihan jawaban tidak tersedia.");
-      const correctAnswer = clean(question.correct_answer, 8).toUpperCase();
-      const isCorrect = answer === correctAnswer;
+      const storedAnswer = clean(question.correct_answer, 1000).toUpperCase();
+      const correctIndex = question.options.findIndex((option: string, optionIndex: number) => {
+        const optionText = String(option).trim();
+        const optionLabel = optionText.match(/^([A-H])(?:[.)\\s:-]|$)/i)?.[1]?.toUpperCase();
+        return storedAnswer === String.fromCharCode(65 + optionIndex) ||
+          storedAnswer === optionLabel || storedAnswer === optionText.toUpperCase();
+      });
+      if (correctIndex < 0) return fail("Kunci jawaban soal belum valid.", 500);
+      const correctAnswer = String.fromCharCode(65 + correctIndex);
+      const isCorrect = index === correctIndex;
       return json({
         is_correct: isCorrect,
         correct_answer: correctAnswer,
