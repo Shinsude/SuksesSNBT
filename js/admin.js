@@ -85,7 +85,7 @@
     function exportCsv(headers, rows, filename) {
       const csvCell = (value) => {
         let text = String(value ?? "");
-        if (/^[\\t\\r=+@-]/.test(text)) text = "'" + text;
+        if (text && ("=+@-".includes(text[0]) || text.charCodeAt(0) === 9 || text.charCodeAt(0) === 13)) text = "'" + text;
         return '"' + text.replace(/"/g, '""') + '"';
       };
       const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n");
