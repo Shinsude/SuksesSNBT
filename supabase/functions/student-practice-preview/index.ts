@@ -57,7 +57,7 @@ Deno.serve(async (req: Request) => {
       const questions = (data || []).map((item) => ({
         id: item.id, prompt: item.prompt, difficulty: item.difficulty,
         options: Array.isArray(item.options) ? item.options.map((text: string, index: number) => ({
-          id: String.fromCharCode(65 + index), text: String(text).replace(/^[A-H](?:[.)\\s:-]+)?/i, "").trim() || String(text),
+          id: String.fromCharCode(65 + index), text: String(text).replace(/^[A-H](?:[.)\s:-]+)?/i, "").trim() || String(text),
         })) : [],
       })).filter((item) => item.options.length >= 2 && item.options.length <= 8);
       return json({ bank: { id: bank.id, title: bank.title, subject: bank.subject, description: bank.description }, questions });
