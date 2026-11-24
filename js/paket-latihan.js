@@ -54,7 +54,7 @@
     const config = window.SNBT_SUPABASE_CONFIG || {};
     if (!section || !bankList || !config.url || !config.publishableKey) return;
     try {
-      const response = await fetch(config.url.replace(/\\/$/, "") + "/functions/v1/student-practice-preview", {
+      const response = await fetch(config.url.replace(/\/$/, "") + "/functions/v1/student-practice-preview", {
         method: "POST",
         headers: { "Content-Type": "application/json", apikey: config.publishableKey },
         body: JSON.stringify({ action: "catalog" })
