@@ -25,6 +25,8 @@ jobs:
         run: node scripts/verify_content.js
       - name: Smoke-test tryout and subtest package interactions
         run: node scripts/verify_interactions.js
+      - name: Verify student database question bank security
+        run: node scripts/verify_student_practice.js
       - name: Verify progress ownership and offline retention
         run: node scripts/verify_progress_sync.js
       - name: Verify authentication flows and redirect wiring
