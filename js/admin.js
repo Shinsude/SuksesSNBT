@@ -13,6 +13,8 @@
     let usersPage = 1;
     let progressPage = 1;
     const pageSize = 25;
+    let userSearchTimer = null;
+    let progressSearchTimer = null;
     let contentState = { materials: [], banks: [], settings: [], questions: [] };
 
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -80,17 +82,13 @@
         ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Waktu"], recent
       );
     }
-    function exportTableCsv(tableId, filename) {
-      const table = document.querySelector("#" + tableId + " table");
-      if (!table) {
-        showNotice("Belum ada tabel untuk diunduh.", "error");
-        return;
-      }
-      const csvCell = (value) => '"' + String(value ?? "").replace(/"/g, '""') + '"';
-      const rows = [...table.querySelectorAll("tr")].filter((row) => !row.hidden).map((row) =>
-        [...row.querySelectorAll("th, td")].map((cell) => csvCell(cell.textContent.trim())).join(",")
-      );
-      const csv = "\uFEFF" + rows.join("\r\n");
+    function exportCsv(headers, rows, filename) {
+      const csvCell = (value) => {
+        let text = String(value ?? "");
+        if (/^[=+@\\-\\t\\r]/.test(text)) text = "'" + text;
+        return '"' + text.replace(/"/g, '""') + '"';
+      };
+      const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\\r\\n");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -100,7 +98,18 @@
       link.click();
       link.remove();
       URL.revokeObjectURL(url);
-      showNotice("File CSV berhasil disiapkan untuk diunduh.", "success");
+      showNotice("Seluruh data berhasil disiapkan dalam file CSV.", "success");
+    }
+    async function fetchAllPages(action) {
+      const all = [];
+      let page = 1;
+      while (page <= 400) {
+        const data = await callAdmin(action, page);
+        all.push(...(action === "users" ? data.users || [] : data.entries || []));
+        if (!data.hasMore) return all;
+        page += 1;
+      }
+      throw new Error("Ekspor dihentikan karena melewati batas aman 10.000 baris.");
     }
     function renderPager(containerId, page, hasNext, onPrevious, onNext) {
       const container = document.querySelector("#" + containerId);
@@ -114,8 +123,18 @@
     }
     async function loadUsers(page = usersPage) {
       usersPage = Math.max(1, page);
-      const data = await callAdmin("users", usersPage);
-      const rows = (data.users || []).map((user) => [
+      let data = await callAdmin("users", usersPage);
+      const search = (document.querySelector("#users-search")?.value || "").trim().toLocaleLowerCase("id");
+      let users = data.users || [];
+      if (search) {
+        let page = usersPage + 1;
+        while (data.hasMore && page <= 400) {
+          data = await callAdmin("users", page);
+          users.push(...(data.users || []));
+          page += 1;
+        }
+      }
+      const rows = users.map((user) => [
         escapeHtml(user.email || "—"),
         escapeHtml(user.display_name || "—"),
         escapeHtml(formatDate(user.created_at)),
@@ -125,17 +144,26 @@
         '<button class="text-button" type="button" data-user-detail="' + escapeHtml(user.id) + '">Detail</button> ' +
         (user.is_owner ? '<span class="muted">Pemilik</span>' : '<button class="text-button ' + (user.banned_until ? '' : 'danger-text') + '" type="button" data-user-access="' + escapeHtml(user.id) + '" data-next-access="' + (user.banned_until ? 'enable' : 'disable') + '">' + (user.banned_until ? 'Aktifkan' : 'Nonaktifkan') + '</button>')
       ]);
-      const search = (document.querySelector("#users-search")?.value || "").trim().toLocaleLowerCase("id");
       const filteredRows = rows.filter((row) => row.join(" ").toLocaleLowerCase("id").includes(search));
       document.querySelector("#users-table").innerHTML = renderTable(
         ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email", "Akses akun", "Tindakan"], filteredRows
       );
-      renderPager("users-pager", usersPage, data.hasMore, () => loadUsers(usersPage - 1), () => loadUsers(usersPage + 1));
+      renderPager("users-pager", usersPage, search ? false : data.hasMore, () => loadUsers(usersPage - 1), () => loadUsers(usersPage + 1));
     }
     async function loadProgress(page = progressPage) {
       progressPage = Math.max(1, page);
-      const data = await callAdmin("progress", progressPage);
-      const rows = (data.entries || []).map((item) => [
+      let data = await callAdmin("progress", progressPage);
+      const search = (document.querySelector("#progress-search")?.value || "").trim().toLocaleLowerCase("id");
+      let entries = data.entries || [];
+      if (search) {
+        let page = progressPage + 1;
+        while (data.hasMore && page <= 400) {
+          data = await callAdmin("progress", page);
+          entries.push(...(data.entries || []));
+          page += 1;
+        }
+      }
+      const rows = entries.map((item) => [
         escapeHtml(item.display_name || item.user_id?.slice(0, 8) || "Pengguna"),
         escapeHtml(item.label || "Aktivitas SNBT"),
         '<span class="pill">' + escapeHtml(item.activity_type === "tryout" ? "Tryout" : "Latihan") + '</span>',
@@ -144,12 +172,11 @@
         escapeHtml(item.total_count ?? 0),
         escapeHtml(formatDate(item.completed_at))
       ]);
-      const search = (document.querySelector("#progress-search")?.value || "").trim().toLocaleLowerCase("id");
       const filteredRows = rows.filter((row) => row.join(" ").toLocaleLowerCase("id").includes(search));
       document.querySelector("#progress-table").innerHTML = renderTable(
         ["Pengguna", "Aktivitas", "Jenis", "Nilai", "Benar", "Total", "Waktu"], filteredRows
       );
-      renderPager("progress-pager", progressPage, data.hasMore, () => loadProgress(progressPage - 1), () => loadProgress(progressPage + 1));
+      renderPager("progress-pager", progressPage, search ? false : data.hasMore, () => loadProgress(progressPage - 1), () => loadProgress(progressPage + 1));
     }
 
     const formObject = (form) => Object.fromEntries(new FormData(form).entries());
@@ -397,18 +424,32 @@
     document.querySelector("#bank-form").addEventListener("submit", (event) => { event.preventDefault(); saveForm(event.currentTarget, "bank-save").catch((error) => showNotice(error.message, "error")); });
     document.querySelector("#question-form").addEventListener("submit", (event) => { event.preventDefault(); try { const v = formObject(event.currentTarget); v.bank_id = document.querySelector("#question-bank-select").value; v.options = JSON.parse(v.options); v.sort_order = Number(v.sort_order) || 0; saveForm(event.currentTarget, "question-save", () => v).catch((error) => showNotice(error.message, "error")); } catch (error) { showNotice("Format opsi harus berupa JSON array yang valid.", "error"); } });
     document.querySelector("#setting-form").addEventListener("submit", (event) => { event.preventDefault(); try { const v = formObject(event.currentTarget); v.value = JSON.parse(v.value); saveForm(event.currentTarget, "setting-save", () => v).catch((error) => showNotice(error.message, "error")); } catch (error) { showNotice("Nilai pengaturan harus berupa JSON yang valid.", "error"); } });
-    const filterVisibleRows = (inputId, tableId) => {
-      const term = document.querySelector("#" + inputId).value.trim().toLocaleLowerCase("id");
-      document.querySelectorAll("#" + tableId + " tbody tr").forEach((row) => {
-        row.hidden = !row.textContent.toLocaleLowerCase("id").includes(term);
-      });
-    };
-    document.querySelector("#users-search").addEventListener("input", () => filterVisibleRows("users-search", "users-table"));
-    document.querySelector("#progress-search").addEventListener("input", () => filterVisibleRows("progress-search", "progress-table"));
-    document.querySelector("#export-users-button").addEventListener("click", () =>
-      exportTableCsv("users-table", "snbt-pengguna-halaman-" + usersPage + ".csv"));
-    document.querySelector("#export-progress-button").addEventListener("click", () =>
-      exportTableCsv("progress-table", "snbt-hasil-belajar-halaman-" + progressPage + ".csv"));
+    document.querySelector("#users-search").addEventListener("input", () => {
+      window.clearTimeout(userSearchTimer);
+      userSearchTimer = window.setTimeout(() => loadUsers(1).catch((error) => showNotice(error.message, "error")), 250);
+    });
+    document.querySelector("#progress-search").addEventListener("input", () => {
+      window.clearTimeout(progressSearchTimer);
+      progressSearchTimer = window.setTimeout(() => loadProgress(1).catch((error) => showNotice(error.message, "error")), 250);
+    });
+    document.querySelector("#export-users-button").addEventListener("click", async () => {
+      try {
+        showNotice("Menyiapkan seluruh data pengguna…");
+        const users = await fetchAllPages("users");
+        exportCsv(["Email","Nama","Terdaftar","Login terakhir","Status email","Akses akun"],
+          users.map((user) => [user.email || "",user.display_name || "",formatDate(user.created_at),formatDate(user.last_sign_in_at),user.email_confirmed_at ? "Terverifikasi" : "Belum verifikasi",user.banned_until ? "Dinonaktifkan" : "Aktif"]),
+          "snbt-seluruh-pengguna.csv");
+      } catch (error) { showNotice(error.message, "error"); }
+    });
+    document.querySelector("#export-progress-button").addEventListener("click", async () => {
+      try {
+        showNotice("Menyiapkan seluruh hasil belajar…");
+        const entries = await fetchAllPages("progress");
+        exportCsv(["Pengguna","Aktivitas","Jenis","Nilai","Benar","Total","Waktu"],
+          entries.map((item) => [item.display_name || item.user_id || "",item.label || "Aktivitas SNBT",item.activity_type || "",item.score ?? "",item.correct_count ?? 0,item.total_count ?? 0,formatDate(item.completed_at)]),
+          "snbt-seluruh-hasil-belajar.csv");
+      } catch (error) { showNotice(error.message, "error"); }
+    });
     logout.addEventListener("click", async () => {
       logout.disabled = true;
       const result = await db.auth.signOut();
