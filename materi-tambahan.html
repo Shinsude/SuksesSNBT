@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eaf3f9">
+  <title>Materi Tambahan — Sukses SNBT</title>
+  <meta name="description" content="Materi tambahan UTBK-SNBT yang diterbitkan oleh pengelola Sukses SNBT.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/materi.css">
+  <link rel="stylesheet" href="css/ux-refinements.css">
+  <link rel="stylesheet" href="css/celadon-system.css">
+  <style>
+    .published-materials { padding-top: 36px; }
+    .published-material-status { margin: 0 0 22px; color: #526477; }
+    .published-material-status[data-state="error"] { color: #b42318; }
+    .published-material-list { display: grid; gap: 18px; }
+    .published-material-card { display: block; padding: 24px; }
+    .published-material-card .pertemuan-card__body { display: grid; gap: 12px; }
+    .published-material-content { white-space: pre-wrap; line-height: 1.8; color: #34465a; padding-top: 16px; border-top: 1px solid #e4ebf1; }
+    .published-material-card .button { justify-self: start; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="brand"><span class="brand__logo">SN</span><span class="brand__name">Sukses <span class="brand__accent">SNBT</span></span></a>
+      <nav class="nav" id="nav" aria-label="Navigasi utama">
+        <a href="index.html">Beranda</a><a href="materi.html">Materi</a><a href="latihan.html">Latihan</a><a href="tryout.html">Tryout</a><a href="progres.html">Progres</a><a href="akun.html">Akun</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Buka menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="bg-hero-materi">
+      <div class="container">
+        <a href="materi.html" class="head-link-back">← Kembali ke Materi</a>
+        <span class="badge">Perpustakaan Sukses SNBT</span>
+        <h1 class="materi-title" style="margin-top:16px;">Materi Tambahan</h1>
+        <p class="materi-lead" style="max-width:680px;">Materi yang diterbitkan pengelola akan muncul di halaman ini dan dapat dibaca oleh seluruh pengguna.</p>
+      </div>
+    </section>
+    <section class="section published-materials">
+      <div class="container">
+        <p id="published-material-status" class="published-material-status" role="status" aria-live="polite">Memuat materi…</p>
+        <div id="published-material-list" class="published-material-list"></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><div class="container footer__bottom"><p>© 2026 Sukses SNBT · Dibuat untuk para pejuang PTN</p></div></footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/published-content.js"></script>
+</body>
+</html>
