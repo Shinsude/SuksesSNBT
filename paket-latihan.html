@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/practice-shell.css">
   <link rel="stylesheet" href="css/latihan.css">
   <link rel="stylesheet" href="css/paket-latihan.css">
+  <script src="js/supabase-config.js"></script>
   <script src="js/main.js" defer></script>
   <script src="data/latihan-pu.js" defer></script>
   <script src="data/latihan-snbt.js" defer></script>
@@ -63,6 +64,10 @@
           <span class="package-count" id="package-count" aria-live="polite"></span>
         </div>
         <div class="package-grid" id="package-list" aria-live="polite"></div>
+      </section>
+      <section class="package-section" id="published-bank-section" aria-labelledby="published-bank-title" hidden>
+        <div class="section-heading"><div><p class="eyebrow">Bank soal terbaru</p><h2 id="published-bank-title">Latihan dari Bank Soal</h2></div><span class="package-count" id="published-bank-count"></span></div>
+        <div class="package-grid" id="published-bank-list" aria-live="polite"></div>
       </section>
     </div>
   </main>
