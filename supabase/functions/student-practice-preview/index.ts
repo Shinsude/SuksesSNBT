@@ -77,7 +77,7 @@ Deno.serve(async (req: Request) => {
       const storedAnswer = clean(question.correct_answer, 1000).toUpperCase();
       const correctIndex = question.options.findIndex((option: string, optionIndex: number) => {
         const optionText = String(option).trim();
-        const optionLabel = optionText.match(/^([A-H])(?:[.)\\s:-]|$)/i)?.[1]?.toUpperCase();
+        const optionLabel = optionText.match(/^([A-H])(?:[.)\s:-]|$)/i)?.[1]?.toUpperCase();
         return storedAnswer === String.fromCharCode(65 + optionIndex) ||
           storedAnswer === optionLabel || storedAnswer === optionText.toUpperCase();
       });
