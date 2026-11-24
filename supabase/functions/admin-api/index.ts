@@ -226,7 +226,7 @@ Deno.serve(async (req: Request) => {
         }
         const answer = String(payload.correct_answer).trim().toLocaleUpperCase();
         const answerExists = normalizedOptions.some((option) => {
-          const label = option.match(/^([A-H])(?:[.)\\s:-]|$)/i)?.[1]?.toLocaleUpperCase();
+          const label = option.match(/^([A-H])(?:[.)\s:-]|$)/i)?.[1]?.toLocaleUpperCase();
           return option.toLocaleUpperCase() === answer || label === answer;
         });
         if (!answerExists) return fail("Jawaban benar harus cocok dengan salah satu opsi yang tersedia.");
