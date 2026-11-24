@@ -29,7 +29,7 @@
     };
     const setView = (name) => {
       activeView = name;
-      const names = { overview: "Ringkasan", users: "Pengguna", progress: "Hasil belajar", content: "Materi & soal", settings: "Pengaturan" };
+      const names = { overview: "Ringkasan", users: "Pengguna", progress: "Hasil belajar", content: "Materi & soal", settings: "Pengaturan", audit: "Keamanan & audit" };
       title.textContent = names[name] || names.overview;
       document.querySelectorAll(".view-panel").forEach((panel) => {
         panel.hidden = panel.id !== name + "-view";
@@ -60,7 +60,8 @@
       document.querySelector("#metric-grid").innerHTML = [
         ["Akun terdaftar", data.userCount, "Profil yang tersimpan"],
         ["Aktivitas belajar", data.progressCount, "Latihan dan tryout tersinkron"],
-        ["Rata-rata nilai", data.averageScore == null ? "—" : Math.round(data.averageScore), "Dari aktivitas tersimpan"]
+        ["Rata-rata nilai", data.averageScore == null ? "—" : Math.round(data.averageScore), "Dari aktivitas tersimpan"],
+        ["Aktif 30 hari", data.activeLast30Days || 0, "Aktivitas dalam 30 hari terakhir"]
       ].map(([label, value, caption]) => '<article class="metric-card"><span>' + escapeHtml(label) +
         '</span><strong>' + escapeHtml(formatNumber(value)) + '</strong><small>' + escapeHtml(caption) +
         '</small></article>').join("");
@@ -204,6 +205,19 @@
         ])
       );
     }
+    async function loadAuditLogs(page = 1) {
+      const data = await callAdmin("audit-logs", page);
+      const rows = (data.logs || []).map((item) => [
+        escapeHtml(formatDate(item.created_at)), escapeHtml(item.action),
+        escapeHtml(item.resource_type), escapeHtml(item.resource_id || "—"),
+        escapeHtml(item.actor_id?.slice(0, 8) || "—"),
+        escapeHtml(JSON.stringify(item.after_data ?? item.before_data ?? {}).slice(0, 160))
+      ]);
+      document.querySelector("#audit-table").innerHTML = renderTable(
+        ["Waktu", "Aksi", "Jenis data", "ID data", "Admin", "Ringkasan perubahan"], rows
+      );
+      renderPager("audit-pager", page, data.hasMore, () => loadAuditLogs(page - 1), () => loadAuditLogs(page + 1));
+    }
     async function loadSettings() {
       const data = await callAdmin("content-list");
       contentState.settings = data.settings || [];
@@ -299,6 +313,7 @@
         if (name === "progress") await loadProgress();
         if (name === "content") await loadContent();
         if (name === "settings") await loadSettings();
+        if (name === "audit") await loadAuditLogs();
         showNotice("Data berhasil dimuat.", "success");
       } catch (error) {
         showNotice(error.message || "Data belum dapat dimuat.", "error");
@@ -354,6 +369,7 @@
     document.querySelector("#close-user-detail").addEventListener("click", () => { document.querySelector("#user-detail-panel").hidden = true; });
     document.querySelector("#content-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
     document.querySelector("#settings-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
+    document.querySelector("#refresh-audit-button").addEventListener("click", () => loadAuditLogs().catch((error) => showNotice(error.message, "error")));
     document.querySelector("#question-bank-select").addEventListener("change", (event) => loadQuestions(event.target.value).catch((error) => showNotice(error.message, "error")));
     document.querySelector("#material-form").addEventListener("submit", (event) => { event.preventDefault(); saveForm(event.currentTarget, "material-save", (v) => ({ ...v, sort_order: Number(v.sort_order) || 0 })).catch((error) => showNotice(error.message, "error")); });
     document.querySelector("#bank-form").addEventListener("submit", (event) => { event.preventDefault(); saveForm(event.currentTarget, "bank-save").catch((error) => showNotice(error.message, "error")); });
