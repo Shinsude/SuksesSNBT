@@ -114,7 +114,7 @@
             answerList.querySelectorAll("input").forEach((input) => { input.disabled = true; });
             feedback.replaceChildren();
             const heading = document.createElement("strong");
-            heading.textContent = checked.is_correct ? "Jawaban benar." : "Jawaban belum tepat. Kunci: " + checked.correct_answer;
+            heading.textContent = checked.is_correct ? "Jawaban benar." : "Jawaban belum tepat. Pelajari pembahasannya.";
             const explanation = document.createElement("p");
             explanation.textContent = checked.explanation || "Belum ada pembahasan untuk soal ini.";
             feedback.append(heading, explanation);
