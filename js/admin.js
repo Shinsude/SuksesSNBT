@@ -63,7 +63,7 @@
         ["Rata-rata nilai", data.averageScore == null ? "—" : Math.round(data.averageScore), "Dari aktivitas tersimpan"],
         ["Aktif 30 hari", data.activeLast30Days || 0, "Aktivitas dalam 30 hari terakhir"]
       ].map(([label, value, caption]) => '<article class="metric-card"><span>' + escapeHtml(label) +
-        '</span><strong>' + escapeHtml(formatNumber(value)) + '</strong><small>' + escapeHtml(caption) +
+        '</span><strong>' + escapeHtml(typeof value === 'number' ? formatNumber(value) : value) + '</strong><small>' + escapeHtml(caption) +
         '</small></article>').join("");
       const recent = (data.recent || []).map((item) => [
         escapeHtml(item.display_name || item.user_id?.slice(0, 8) || "Pengguna"),
