@@ -119,12 +119,13 @@
         escapeHtml(user.display_name || "—"),
         escapeHtml(formatDate(user.created_at)),
         escapeHtml(formatDate(user.last_sign_in_at)),
-        user.email_confirmed_at ? '<span class="pill">Terverifikasi</span>' : '<span class="pill">Belum verifikasi</span>'
+        user.email_confirmed_at ? '<span class="pill">Terverifikasi</span>' : '<span class="pill">Belum verifikasi</span>',
+        '<button class="text-button" type="button" data-user-detail="' + escapeHtml(user.id) + '">Detail</button>'
       ]);
       const search = (document.querySelector("#users-search")?.value || "").trim().toLocaleLowerCase("id");
       const filteredRows = rows.filter((row) => row.join(" ").toLocaleLowerCase("id").includes(search));
       document.querySelector("#users-table").innerHTML = renderTable(
-        ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email"], filteredRows
+        ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email", "Profil"], filteredRows
       );
       renderPager("users-pager", usersPage, data.hasMore, () => loadUsers(usersPage - 1), () => loadUsers(usersPage + 1));
     }
@@ -262,6 +263,34 @@
       }
     }
 
+
+    async function showUserDetail(userId) {
+      showNotice("Memuat detail pengguna…");
+      const data = await callAdmin("user-detail", 1, { user_id: userId });
+      const panel = document.querySelector("#user-detail-panel");
+      panel.hidden = false;
+      document.querySelector("#user-detail-title").textContent = data.profile?.display_name || "Detail pengguna";
+      document.querySelector("#user-detail-summary").innerHTML = [
+        ["Aktivitas tersimpan", data.activityCount],
+        ["Rata-rata nilai", data.averageScore == null ? "—" : Math.round(data.averageScore)],
+        ["Profil dibuat", formatDate(data.profile?.created_at)]
+      ].map(([label, value]) => '<article class="metric-card"><span>' + escapeHtml(label) + '</span><strong>' + escapeHtml(typeof value === "number" ? formatNumber(value) : value) + '</strong></article>').join("");
+      document.querySelector("#user-detail-activities").innerHTML = renderTable(
+        ["Aktivitas", "Jenis", "Nilai", "Benar", "Salah", "Kosong", "Total", "Waktu"],
+        (data.activities || []).map((item) => [
+          escapeHtml(item.label || "Aktivitas SNBT"),
+          escapeHtml(item.activity_type || "—"),
+          escapeHtml(item.score ?? "—"),
+          escapeHtml(item.correct_count ?? 0),
+          escapeHtml(item.wrong_count ?? 0),
+          escapeHtml(item.blank_count ?? 0),
+          escapeHtml(item.total_count ?? 0),
+          escapeHtml(formatDate(item.completed_at))
+        ])
+      );
+      showNotice("Detail pengguna berhasil dimuat.", "success");
+    }
+
     async function loadView(name) {
       showNotice("Memuat data panel…");
       try {
@@ -321,6 +350,8 @@
       button.addEventListener("click", () => setView(button.dataset.view));
     });
     refresh.addEventListener("click", () => loadView(activeView));
+    document.querySelector("#users-table").addEventListener("click", (event) => { const button = event.target.closest("[data-user-detail]"); if (button) showUserDetail(button.dataset.userDetail).catch((error) => showNotice(error.message, "error")); });
+    document.querySelector("#close-user-detail").addEventListener("click", () => { document.querySelector("#user-detail-panel").hidden = true; });
     document.querySelector("#content-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
     document.querySelector("#settings-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
     document.querySelector("#question-bank-select").addEventListener("change", (event) => loadQuestions(event.target.value).catch((error) => showNotice(error.message, "error")));
