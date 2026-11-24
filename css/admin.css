@@ -56,3 +56,7 @@
 .danger-text{color:#a13c4c}
 #content-view .panel,#settings-view .panel{margin-bottom:20px}
 @media(max-width:600px){.editor-form{grid-template-columns:1fr}.editor-form label{grid-column:1/-1}}
+
+.user-detail-panel{margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:15px;background:#fff}
+.user-detail-panel[hidden]{display:none}
+.user-detail-panel .metric-grid{margin-bottom:16px}
