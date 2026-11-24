@@ -40,3 +40,19 @@
 .analytics-row strong{color:#395367}.analytics-row span{color:var(--muted)}
 .analytics-track{height:9px;border-radius:99px;background:#edf3f7;overflow:hidden}
 .analytics-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#5aa9d4,#65b99e)}
+
+
+/* Editor konten admin */
+.admin-nav{align-content:start}
+.editor-details{border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-bottom:18px;background:#f9fcfe}
+.editor-details summary{cursor:pointer;color:#286b96;font-size:12px;font-weight:800}
+.editor-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin-top:16px}
+.editor-form label{display:grid;gap:6px;color:#587084;font-size:11px;font-weight:700}
+.editor-form label:has(textarea[name="content"]),.editor-form label:has(textarea[name="prompt"]),.editor-form label:has(textarea[name="options"]),.editor-form label:has(textarea[name="explanation"]),.editor-form label:has(textarea[name="value"]){grid-column:1/-1}
+.editor-form input,.editor-form textarea,.editor-form select{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 11px;font:400 12px inherit;color:#243b4d;background:#fff}
+.editor-form textarea{resize:vertical;min-height:70px}
+.editor-form input:focus,.editor-form textarea:focus,.editor-form select:focus{outline:3px solid #d8edf8;border-color:#6ba8ca}
+.form-actions{display:flex;gap:9px;align-items:center;grid-column:1/-1}
+.danger-text{color:#a13c4c}
+#content-view .panel,#settings-view .panel{margin-bottom:20px}
+@media(max-width:600px){.editor-form{grid-template-columns:1fr}.editor-form label{grid-column:1/-1}}
