@@ -13,6 +13,7 @@
     let usersPage = 1;
     let progressPage = 1;
     const pageSize = 25;
+    let contentState = { materials: [], banks: [], settings: [], questions: [] };
 
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
       "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -28,7 +29,7 @@
     };
     const setView = (name) => {
       activeView = name;
-      const names = { overview: "Ringkasan", users: "Pengguna", progress: "Hasil belajar" };
+      const names = { overview: "Ringkasan", users: "Pengguna", progress: "Hasil belajar", content: "Materi & soal", settings: "Pengaturan" };
       title.textContent = names[name] || names.overview;
       document.querySelectorAll(".view-panel").forEach((panel) => {
         panel.hidden = panel.id !== name + "-view";
@@ -38,9 +39,9 @@
       });
       if (allowed) loadView(name);
     };
-    async function callAdmin(action, page = 1) {
+    async function callAdmin(action, page = 1, extra = {}) {
       const { data, error } = await db.functions.invoke("admin-api", {
-        body: { action, page }
+        body: { action, page, ...extra }
       });
       if (error) throw new Error(error.message || "Permintaan admin gagal.");
       if (!data || data.error) throw new Error(data?.error || "Respons server tidak valid.");
@@ -146,12 +147,129 @@
       );
       renderPager("progress-pager", progressPage, data.hasMore, () => loadProgress(progressPage - 1), () => loadProgress(progressPage + 1));
     }
+
+    const formObject = (form) => Object.fromEntries(new FormData(form).entries());
+    const fillForm = (form, item, jsonFields = []) => {
+      form.reset();
+      Object.entries(item || {}).forEach(([key, value]) => {
+        const field = form.elements.namedItem(key);
+        if (field) field.value = jsonFields.includes(key) ? JSON.stringify(value, null, 2) : (value ?? "");
+      });
+    };
+    async function loadContent() {
+      const data = await callAdmin("content-list");
+      contentState.materials = data.materials || [];
+      contentState.banks = data.banks || [];
+      contentState.settings = data.settings || [];
+      document.querySelector("#materials-list").innerHTML = renderTable(
+        ["Materi", "Kategori", "Status", "Diperbarui", "Aksi"],
+        contentState.materials.map((item) => [
+          escapeHtml(item.title), escapeHtml(item.category), escapeHtml(item.status),
+          escapeHtml(formatDate(item.updated_at)),
+          '<button class="text-button" type="button" data-edit-material="' + escapeHtml(item.id) + '">Edit</button> <button class="text-button danger-text" type="button" data-delete-material="' + escapeHtml(item.id) + '">Hapus</button>'
+        ])
+      );
+      document.querySelector("#banks-list").innerHTML = renderTable(
+        ["Bank soal", "Subtes", "Jumlah soal", "Status", "Aksi"],
+        contentState.banks.map((item) => [
+          escapeHtml(item.title), escapeHtml(item.subject),
+          escapeHtml(item.questions?.[0]?.count ?? 0), escapeHtml(item.status),
+          '<button class="text-button" type="button" data-edit-bank="' + escapeHtml(item.id) + '">Edit</button> <button class="text-button danger-text" type="button" data-delete-bank="' + escapeHtml(item.id) + '">Hapus</button>'
+        ])
+      );
+      const select = document.querySelector("#question-bank-select");
+      const current = select.value;
+      select.innerHTML = '<option value="">Pilih bank soal…</option>' + contentState.banks.map((bank) =>
+        '<option value="' + escapeHtml(bank.id) + '">' + escapeHtml(bank.title) + '</option>'
+      ).join("");
+      if (contentState.banks.some((bank) => bank.id === current)) select.value = current;
+      await loadQuestions(select.value);
+    }
+    async function loadQuestions(bankId) {
+      const target = document.querySelector("#questions-list");
+      if (!bankId) {
+        contentState.questions = [];
+        target.innerHTML = '<div class="empty-state">Pilih bank soal untuk melihat pertanyaan.</div>';
+        return;
+      }
+      const data = await callAdmin("questions-list", 1, { bank_id: bankId });
+      contentState.questions = data.questions || [];
+      target.innerHTML = renderTable(
+        ["Pertanyaan", "Kesulitan", "Jawaban", "Aksi"],
+        contentState.questions.map((item) => [
+          escapeHtml(item.prompt.slice(0, 110)), escapeHtml(item.difficulty),
+          escapeHtml(item.correct_answer),
+          '<button class="text-button" type="button" data-edit-question="' + escapeHtml(item.id) + '">Edit</button> <button class="text-button danger-text" type="button" data-delete-question="' + escapeHtml(item.id) + '">Hapus</button>'
+        ])
+      );
+    }
+    async function loadSettings() {
+      const data = await callAdmin("content-list");
+      contentState.settings = data.settings || [];
+      document.querySelector("#settings-list").innerHTML = renderTable(
+        ["Kunci", "Deskripsi", "Nilai", "Diperbarui", "Aksi"],
+        contentState.settings.map((item) => [
+          escapeHtml(item.key), escapeHtml(item.description),
+          escapeHtml(JSON.stringify(item.value)), escapeHtml(formatDate(item.updated_at)),
+          '<button class="text-button" type="button" data-edit-setting="' + escapeHtml(item.key) + '">Edit</button> <button class="text-button danger-text" type="button" data-delete-setting="' + escapeHtml(item.key) + '">Hapus</button>'
+        ])
+      );
+    }
+    async function saveForm(form, action, transform = (value) => value) {
+      const raw = formObject(form);
+      const item = transform(raw);
+      const result = await callAdmin(action, 1, { item });
+      showNotice("Data berhasil disimpan.", "success");
+      form.reset();
+      if (activeView === "content") await loadContent();
+      if (activeView === "settings") await loadSettings();
+      return result.item;
+    }
+    async function handleContentClick(event) {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const actions = [
+        ["edit-material", "materials", "#material-form"],
+        ["edit-bank", "banks", "#bank-form"],
+        ["edit-question", "questions", "#question-form"],
+        ["edit-setting", "settings", "#setting-form"]
+      ];
+      for (const [action, collection, selector] of actions) {
+        const id = button.dataset[action];
+        if (!id) continue;
+        const item = contentState[collection].find((entry) => (entry.id || entry.key) === id);
+        if (item) {
+          fillForm(document.querySelector(selector), item, collection === "questions" || collection === "settings" ? ["options", "value"] : []);
+          document.querySelector(selector).closest("details")?.setAttribute("open", "");
+        }
+        return;
+      }
+      const deletes = [
+        ["delete-material", "material-delete", "materi"],
+        ["delete-bank", "bank-delete", "bank soal"],
+        ["delete-question", "question-delete", "soal"],
+        ["delete-setting", "setting-delete", "pengaturan"]
+      ];
+      for (const [datasetKey, action, label] of deletes) {
+        const id = button.dataset[datasetKey];
+        if (!id) continue;
+        if (!window.confirm("Hapus " + label + "? Tindakan ini tidak dapat dibatalkan.")) return;
+        await callAdmin(action, 1, action === "setting-delete" ? { key: id } : { id });
+        showNotice(label.charAt(0).toUpperCase() + label.slice(1) + " berhasil dihapus.", "success");
+        if (activeView === "content") await loadContent();
+        if (activeView === "settings") await loadSettings();
+        return;
+      }
+    }
+
     async function loadView(name) {
       showNotice("Memuat data panel…");
       try {
         if (name === "overview") await loadOverview();
         if (name === "users") await loadUsers();
         if (name === "progress") await loadProgress();
+        if (name === "content") await loadContent();
+        if (name === "settings") await loadSettings();
         showNotice("Data berhasil dimuat.", "success");
       } catch (error) {
         showNotice(error.message || "Data belum dapat dimuat.", "error");
@@ -203,6 +321,13 @@
       button.addEventListener("click", () => setView(button.dataset.view));
     });
     refresh.addEventListener("click", () => loadView(activeView));
+    document.querySelector("#content-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
+    document.querySelector("#settings-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
+    document.querySelector("#question-bank-select").addEventListener("change", (event) => loadQuestions(event.target.value).catch((error) => showNotice(error.message, "error")));
+    document.querySelector("#material-form").addEventListener("submit", (event) => { event.preventDefault(); saveForm(event.currentTarget, "material-save", (v) => ({ ...v, sort_order: Number(v.sort_order) || 0 })).catch((error) => showNotice(error.message, "error")); });
+    document.querySelector("#bank-form").addEventListener("submit", (event) => { event.preventDefault(); saveForm(event.currentTarget, "bank-save").catch((error) => showNotice(error.message, "error")); });
+    document.querySelector("#question-form").addEventListener("submit", (event) => { event.preventDefault(); try { const v = formObject(event.currentTarget); v.bank_id = document.querySelector("#question-bank-select").value; v.options = JSON.parse(v.options); v.sort_order = Number(v.sort_order) || 0; saveForm(event.currentTarget, "question-save", () => v).catch((error) => showNotice(error.message, "error")); } catch (error) { showNotice("Format opsi harus berupa JSON array yang valid.", "error"); } });
+    document.querySelector("#setting-form").addEventListener("submit", (event) => { event.preventDefault(); try { const v = formObject(event.currentTarget); v.value = JSON.parse(v.value); saveForm(event.currentTarget, "setting-save", () => v).catch((error) => showNotice(error.message, "error")); } catch (error) { showNotice("Nilai pengaturan harus berupa JSON yang valid.", "error"); } });
     const filterVisibleRows = (inputId, tableId) => {
       const term = document.querySelector("#" + inputId).value.trim().toLocaleLowerCase("id");
       document.querySelectorAll("#" + tableId + " tbody tr").forEach((row) => {
