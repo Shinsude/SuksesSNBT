@@ -121,12 +121,14 @@
         escapeHtml(formatDate(user.created_at)),
         escapeHtml(formatDate(user.last_sign_in_at)),
         user.email_confirmed_at ? '<span class="pill">Terverifikasi</span>' : '<span class="pill">Belum verifikasi</span>',
-        '<button class="text-button" type="button" data-user-detail="' + escapeHtml(user.id) + '">Detail</button>'
+        user.banned_until ? '<span class="pill pill-danger">Dinonaktifkan</span>' : '<span class="pill">Aktif</span>',
+        '<button class="text-button" type="button" data-user-detail="' + escapeHtml(user.id) + '">Detail</button> ' +
+        (user.is_owner ? '<span class="muted">Pemilik</span>' : '<button class="text-button ' + (user.banned_until ? '' : 'danger-text') + '" type="button" data-user-access="' + escapeHtml(user.id) + '" data-next-access="' + (user.banned_until ? 'enable' : 'disable') + '">' + (user.banned_until ? 'Aktifkan' : 'Nonaktifkan') + '</button>')
       ]);
       const search = (document.querySelector("#users-search")?.value || "").trim().toLocaleLowerCase("id");
       const filteredRows = rows.filter((row) => row.join(" ").toLocaleLowerCase("id").includes(search));
       document.querySelector("#users-table").innerHTML = renderTable(
-        ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email", "Profil"], filteredRows
+        ["Email", "Nama", "Terdaftar", "Login terakhir", "Status email", "Akses akun", "Tindakan"], filteredRows
       );
       renderPager("users-pager", usersPage, data.hasMore, () => loadUsers(usersPage - 1), () => loadUsers(usersPage + 1));
     }
@@ -367,7 +369,24 @@
       button.addEventListener("click", () => setView(button.dataset.view));
     });
     refresh.addEventListener("click", () => loadView(activeView));
-    document.querySelector("#users-table").addEventListener("click", (event) => { const button = event.target.closest("[data-user-detail]"); if (button) showUserDetail(button.dataset.userDetail).catch((error) => showNotice(error.message, "error")); });
+    document.querySelector("#users-table").addEventListener("click", async (event) => {
+      const detail = event.target.closest("[data-user-detail]");
+      if (detail) { showUserDetail(detail.dataset.userDetail).catch((error) => showNotice(error.message, "error")); return; }
+      const access = event.target.closest("[data-user-access]");
+      if (!access) return;
+      const disable = access.dataset.nextAccess === "disable";
+      const confirmed = window.confirm(disable
+        ? "Nonaktifkan akun ini? Pengguna tidak dapat masuk sampai akun diaktifkan kembali."
+        : "Aktifkan kembali akun ini?");
+      if (!confirmed) return;
+      access.disabled = true;
+      try {
+        await callAdmin("user-access-set", 1, { user_id: access.dataset.userAccess, enabled: !disable });
+        showNotice(disable ? "Akun berhasil dinonaktifkan." : "Akun berhasil diaktifkan kembali.", "success");
+        await loadUsers(usersPage);
+        await loadAuditLogs();
+      } catch (error) { showNotice(error.message, "error"); access.disabled = false; }
+    });
     document.querySelector("#close-user-detail").addEventListener("click", () => { document.querySelector("#user-detail-panel").hidden = true; });
     document.querySelector("#content-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
     document.querySelector("#settings-view").addEventListener("click", (event) => handleContentClick(event).catch((error) => showNotice(error.message, "error")));
