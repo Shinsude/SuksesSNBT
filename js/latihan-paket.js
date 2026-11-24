@@ -35,12 +35,15 @@
         link.textContent = "Kembali ke Paket";
         invalid.append(strong, paragraph, link);
       };
+      invalid.hidden = false;
+      invalid.textContent = "Memuat bank soal...";
       try {
         if (!apiUrl || !config.publishableKey) throw new Error("Konfigurasi layanan belum tersedia. Muat ulang halaman beberapa saat lagi.");
         const result = await request({ action: "question", bank_id: databaseBankId });
         const bank = result.bank;
         const questions = result.questions || [];
         if (!bank || !questions.length) throw new Error("Bank soal ini belum memiliki soal yang siap dikerjakan.");
+        invalid.hidden = true;
         runner.hidden = false;
         breadcrumb.textContent = bank.title;
         document.title = bank.title + " — Sukses SNBT";
