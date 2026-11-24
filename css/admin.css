@@ -60,3 +60,47 @@
 .user-detail-panel{margin-top:22px;padding:20px;border:1px solid var(--line);border-radius:15px;background:#fff}
 .user-detail-panel[hidden]{display:none}
 .user-detail-panel .metric-grid{margin-bottom:16px}
+
+
+/* Penyempurnaan akses dan tata letak ponsel */
+html,body{max-width:100%;overflow-x:hidden}
+.admin-shell,.admin-main,.admin-sidebar,.panel,.user-detail-panel{min-width:0}
+.admin-topbar,.top-actions{min-width:0}
+.admin-login-link{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.admin-email{overflow-wrap:anywhere}
+.table-wrap{max-width:100%;-webkit-overflow-scrolling:touch}
+@media (max-width:850px){
+  .admin-sidebar{position:relative;gap:12px;padding:14px 14px 10px}
+  .admin-brand{padding:2px 4px}
+  .admin-nav{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;padding:2px 0 8px;scrollbar-width:thin;-webkit-overflow-scrolling:touch}
+  .admin-nav button{flex:0 0 auto;padding:11px 13px;font-size:13px}
+  .admin-main{padding:18px 13px}
+  .admin-topbar{gap:13px;margin-bottom:18px}
+  .top-actions{display:flex;gap:8px;width:100%}
+  .top-actions>*{min-height:40px}
+  .admin-email{order:3;flex:1 0 100%;font-size:11px}
+  .admin-login-link{order:0}
+  #refresh-button{order:1}
+  #logout-button{order:2}
+  .panel{padding:15px;border-radius:12px}
+  .panel-heading{align-items:flex-start;flex-wrap:wrap}
+  .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .metric-card{padding:15px}
+  .metric-card strong{font-size:24px}
+  .welcome-panel{padding:18px}
+}
+@media(max-width:480px){
+  .admin-main{padding:15px 10px}
+  .admin-topbar h1{font-size:23px}
+  .top-actions{display:grid;grid-template-columns:1fr 1fr}
+  .admin-login-link{grid-column:1/-1}
+  .admin-email{grid-column:1/-1;order:0}
+  #refresh-button,#logout-button{width:100%}
+  .metric-grid{grid-template-columns:1fr 1fr}
+  .metric-card strong{font-size:21px}
+  .panel{padding:13px}
+  .editor-form{grid-template-columns:minmax(0,1fr)}
+  .form-actions{flex-wrap:wrap}
+  .form-actions .button{flex:1 1 auto}
+  .table-pager{justify-content:space-between;flex-wrap:wrap}
+}
