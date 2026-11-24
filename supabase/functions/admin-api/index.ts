@@ -106,8 +106,32 @@ Deno.serve(async (req: Request) => {
       const names = new Map((p.data || []).map(x => [x.id,x.display_name]));
       return json({ hasMore: (data.users || []).length === perPage, users: (data.users || []).map(x => ({
         id:x.id,email:x.email,created_at:x.created_at,last_sign_in_at:x.last_sign_in_at,
-        email_confirmed_at:x.email_confirmed_at,display_name:names.get(x.id) || x.user_metadata?.display_name || "",
+        email_confirmed_at:x.email_confirmed_at,banned_until:x.banned_until || null,
+        is_owner:x.id === "8b2a6f97-3b12-44a9-b1da-59c759a7de24",
+        display_name:names.get(x.id) || x.user_metadata?.display_name || "",
       })) });
+    }
+
+    if (action === "user-access-set") {
+      const targetId = clean(body.user_id, 64);
+      const enabled = body.enabled === true;
+      if (!targetId || !/^[0-9a-f-]{36}$/i.test(targetId)) return fail("ID pengguna tidak valid.");
+      if (targetId === user.id) return fail("Admin tidak dapat menonaktifkan akunnya sendiri.", 403);
+      if (targetId === "8b2a6f97-3b12-44a9-b1da-59c759a7de24") return fail("Akun pemilik utama tidak dapat dinonaktifkan dari panel.", 403);
+      const { data: target, error: targetError } = await admin.auth.admin.getUserById(targetId);
+      if (targetError || !target?.user) return fail("Pengguna tidak ditemukan.", 404);
+      const before = { banned_until: target.user.banned_until || null, email: target.user.email || null };
+      const { data: updated, error: updateError } = await admin.auth.admin.updateUserById(targetId, {
+        ban_duration: enabled ? "none" : "876000h",
+      });
+      if (updateError || !updated?.user) {
+        console.error("User access update failed.", updateError);
+        return fail("Status akun gagal diperbarui.", 500);
+      }
+      await audit(enabled ? "user_enable" : "user_disable", "pengguna", targetId, before, {
+        banned_until: updated.user.banned_until || null, email: updated.user.email || null,
+      });
+      return json({ success: true, enabled, banned_until: updated.user.banned_until || null });
     }
 
     if (action === "user-detail") {
