@@ -104,3 +104,7 @@ html,body{max-width:100%;overflow-x:hidden}
   .form-actions .button{flex:1 1 auto}
   .table-pager{justify-content:space-between;flex-wrap:wrap}
 }
+
+
+/* Account access state in the admin user table. */
+.pill-danger { color: #9b2c2c; background: #fff0f0; border: 1px solid #f3caca; }
