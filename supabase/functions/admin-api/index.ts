@@ -62,7 +62,11 @@ Deno.serve(async (req: Request) => {
         actor_id: user.id, action: verb, resource_type: resource, resource_id: id,
         before_data: before ?? null, after_data: after ?? null,
       });
-      if (error) console.error("Audit log write failed.", error);
+      if (error) {
+        console.error("Audit log write failed.", error);
+        return { error };
+      }
+      return { error: null };
     };
     const pageNumber = Math.max(1, Math.min(10000, Number(body.page) || 1));
     const perPage = 25;
@@ -128,9 +132,19 @@ Deno.serve(async (req: Request) => {
         console.error("User access update failed.", updateError);
         return fail("Status akun gagal diperbarui.", 500);
       }
-      await audit(enabled ? "user_enable" : "user_disable", "pengguna", targetId, before, {
+      const auditResult = await audit(enabled ? "user_enable" : "user_disable", "pengguna", targetId, before, {
         banned_until: updated.user.banned_until || null, email: updated.user.email || null,
       });
+      if (auditResult?.error) {
+        const previousBan = target.user.banned_until
+          ? Math.max(1, Math.ceil((new Date(target.user.banned_until).getTime() - Date.now()) / 1000)) + "s"
+          : "none";
+        const { error: rollbackError } = await admin.auth.admin.updateUserById(targetId, { ban_duration: previousBan });
+        if (rollbackError) console.error("User access rollback failed after audit failure.", rollbackError);
+        return fail(rollbackError
+          ? "Audit gagal dan pemulihan status akun juga gagal. Periksa log layanan segera."
+          : "Perubahan dibatalkan karena audit log gagal disimpan.", 500);
+      }
       return json({ success: true, enabled, banned_until: updated.user.banned_until || null });
     }
 
