@@ -31,3 +31,5 @@ jobs:
         run: node scripts/verify_progress_sync.js
       - name: Verify authentication flows and redirect wiring
         run: node scripts/verify_auth.js
+      - name: Verify Admin panels, authorization, CRUD and audit contracts
+        run: node scripts/verify_admin.js
