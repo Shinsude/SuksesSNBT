@@ -85,10 +85,10 @@
     function exportCsv(headers, rows, filename) {
       const csvCell = (value) => {
         let text = String(value ?? "");
-        if (/^[=+@\\-\\t\\r]/.test(text)) text = "'" + text;
+        if (/^[\\t\\r=+@-]/.test(text)) text = "'" + text;
         return '"' + text.replace(/"/g, '""') + '"';
       };
-      const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\\r\\n");
+      const csv = "\uFEFF" + [headers, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n");
       const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
