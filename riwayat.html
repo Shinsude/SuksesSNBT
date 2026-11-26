@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="robots" content="noindex,follow">
+  <title>Riwayat Belajar — SNBT Learning Center</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .history{padding:38px 0 76px;min-height:70vh}.history-wrap{max-width:900px;margin:auto}
+    .history-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:22px 0}
+    .history-head h1{margin:0 0 8px}.history-head p{color:var(--muted);margin:0}
+    .history-tools{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+    .history-filter{border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:9px 15px;background:transparent;color:var(--text);font:inherit;cursor:pointer}
+    .history-filter[aria-pressed="true"]{background:var(--primary);border-color:var(--primary);color:#fff}
+    .history-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
+    .history-stat{padding:18px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:var(--surface)}
+    .history-stat strong{display:block;font-size:27px}.history-stat span{color:var(--muted);font-size:13px}
+    .history-list{display:grid;gap:10px}.history-item{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:17px;background:var(--surface);border:1px solid rgba(255,255,255,.1);border-radius:14px}
+    .history-item strong{display:block}.history-item small{display:block;color:var(--muted);margin-top:5px}
+    .history-score{font-weight:800;font-size:22px;color:var(--accent);white-space:nowrap}
+    .history-empty,.history-status{padding:24px;text-align:center;color:var(--muted);background:var(--surface);border-radius:14px}
+    .history-actions{text-align:center;margin:22px 0}.history-actions button{cursor:pointer}
+    @media(max-width:560px){.history-summary{grid-template-columns:1fr 1fr}.history-item{align-items:flex-start}.history-score{font-size:19px}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
+  <header class="header"><div class="container header__inner">
+    <a href="index.html" class="brand"><span class="brand__logo">SN</span><span class="brand__name">SNBT <span class="brand__accent">Learning Center</span></span></a>
+    <a href="dashboard.html" class="nav-download">Dashboard</a>
+  </div></header>
+  <main class="history" id="main"><div class="container history-wrap">
+    <nav aria-label="Breadcrumb" class="materi-crumb"><ol><li><a href="index.html">Beranda</a></li><li><a href="dashboard.html">Dashboard</a></li><li><span aria-current="page">Riwayat belajar</span></li></ol></nav>
+    <div class="history-head"><div><h1>Riwayat belajar</h1><p>Pantau hasil latihan dan tryout yang sudah kamu kerjakan.</p></div><a class="btn btn--primary" href="latihan.html">Mulai latihan →</a></div>
+    <section class="history-summary" aria-label="Ringkasan aktivitas">
+      <div class="history-stat"><strong id="totalCount">—</strong><span>Total aktivitas</span></div>
+      <div class="history-stat"><strong id="averageScore">—</strong><span>Rata-rata nilai</span></div>
+      <div class="history-stat"><strong id="bestScore">—</strong><span>Nilai tertinggi</span></div>
+    </section>
+    <div class="history-tools" role="group" aria-label="Filter aktivitas">
+      <button class="history-filter" data-filter="all" aria-pressed="true">Semua</button>
+      <button class="history-filter" data-filter="latihan" aria-pressed="false">Latihan</button>
+      <button class="history-filter" data-filter="tryout" aria-pressed="false">Tryout</button>
+    </div>
+    <p class="history-status" id="historyStatus" role="status">Memuat riwayat…</p>
+    <section class="history-list" id="historyList" aria-live="polite"></section>
+    <div class="history-actions"><button class="btn secondary" id="loadMore" type="button" hidden>Muat aktivitas berikutnya</button></div>
+  </div></main>
+  <footer class="footer"><div class="container footer__bottom"><p>© 2026 SNBT Learning Center · Terus bertumbuh, satu latihan setiap hari.</p></div></footer>
+  <script type="module" src="js/riwayat.js"></script>
+</body>
+</html>
