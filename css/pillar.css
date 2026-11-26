@@ -124,7 +124,101 @@
   margin-top: 18px;
 }
 
+/* ===== Kamus istilah ===== */
+.glossary {
+  display: grid;
+  gap: 1px;
+  margin: 16px 0 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.glossary__item {
+  background: var(--surface);
+  padding: 16px 18px;
+}
+
+.glossary__item dt {
+  color: var(--text);
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.glossary__item dd {
+  margin: 0;
+  color: #ccd3f2;
+  line-height: 1.7;
+  font-size: 14.5px;
+}
+
+.glossary__item dd a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.glossary__item dd a:hover,
+.glossary__item dd a:focus-visible {
+  text-decoration: underline;
+}
+
+.glossary__label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--primary-2);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* ===== Pemilih subtes latihan ===== */
+.subtest-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  margin: 18px 0 10px;
+}
+
+.subtest-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 13px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color .15s, background .15s, transform .15s;
+}
+
+.subtest-chip:hover,
+.subtest-chip:focus-visible {
+  border-color: rgba(53, 224, 184, 0.45);
+  background: rgba(53, 224, 184, 0.07);
+}
+
+.subtest-chip.is-active {
+  border-color: var(--accent);
+  background: rgba(53, 224, 184, 0.12);
+  transform: translateY(-1px);
+}
+
+.subtest-chip span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
 @media (max-width: 560px) {
   .data-table { font-size: 13px; }
   .subtes-index a { flex-direction: column; gap: 3px; }
+  .glossary__item { padding: 14px; }
+  .subtest-picker { grid-template-columns: 1fr 1fr; }
 }
