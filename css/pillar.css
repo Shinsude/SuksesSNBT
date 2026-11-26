@@ -1,0 +1,130 @@
+/* ===== Halaman Pillar (panduan & kumpulan contoh soal) ===== */
+
+.pillar-toc {
+  border-left: 3px solid var(--accent);
+  background: rgba(53, 224, 184, 0.05);
+}
+
+.pillar-toc ul {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.pillar-toc a {
+  color: var(--primary-2);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pillar-toc a:hover,
+.pillar-toc a:focus-visible {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 14px 0;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+  min-width: 560px;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  vertical-align: top;
+}
+
+.data-table th {
+  color: var(--primary-2);
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.data-table td {
+  color: #ccd3f2;
+}
+
+.data-table td strong {
+  color: var(--text);
+}
+
+.data-table a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.data-table a:hover {
+  text-decoration: underline;
+}
+
+.subtes-index {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.subtes-index a {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: baseline;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.subtes-index a:hover,
+.subtes-index a:focus-visible {
+  border-color: rgba(53, 224, 184, 0.4);
+  background: rgba(53, 224, 184, 0.07);
+}
+
+.subtes-index span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.pillar-note {
+  border-left: 3px solid #ffb35c;
+  background: rgba(255, 179, 92, 0.07);
+}
+
+.question-context {
+  background: rgba(255, 255, 255, 0.035);
+  border-left: 3px solid var(--accent);
+  padding: 15px 17px;
+  border-radius: 8px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 14px 0;
+}
+
+.pillar-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+@media (max-width: 560px) {
+  .data-table { font-size: 13px; }
+  .subtes-index a { flex-direction: column; gap: 3px; }
+}
